@@ -1,6 +1,19 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import get_settings
+from app.routers import addresses as addresses_router
+from app.routers import admin as admin_router
+from app.routers import auth as auth_router
+from app.routers import cart as cart_router
+from app.routers import catalog as catalog_router
+from app.routers import categories as categories_router
+from app.routers import checkout as checkout_router
+from app.routers import orders as orders_router
+from app.routers import products as products_router
+from app.routers import reviews as reviews_router
+from app.routers import search as search_router
+from app.routers import users as users_router
+from app.routers import wishlist as wishlist_router
 
 settings = get_settings()
 
@@ -18,6 +31,21 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+app.include_router(auth_router.router, prefix="/v1")
+app.include_router(users_router.router, prefix="/v1")
+app.include_router(categories_router.router, prefix="/v1")
+app.include_router(products_router.router, prefix="/v1")
+app.include_router(catalog_router.router, prefix="/v1")
+app.include_router(admin_router.router, prefix="/v1")
+app.include_router(cart_router.router, prefix="/v1")
+app.include_router(checkout_router.router, prefix="/v1")
+app.include_router(orders_router.router, prefix="/v1")
+app.include_router(addresses_router.router, prefix="/v1")
+app.include_router(reviews_router.router, prefix="/v1")
+app.include_router(search_router.router, prefix="/v1")
+app.include_router(wishlist_router.router, prefix="/v1")
 
 
 @app.get("/health", tags=["system"])

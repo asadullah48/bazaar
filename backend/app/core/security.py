@@ -1,18 +1,19 @@
 from datetime import datetime, timedelta, timezone
+import secrets
 from jose import JWTError, jwt
-from passlib.context import CryptContext
+import bcrypt
 from app.core.config import get_settings
 
 settings = get_settings()
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto", bcrypt__rounds=12)
+_BCRYPT_ROUNDS = 12
 
 
 def hash_password(password: str) -> str:
-    return pwd_context.hash(password)
+    return bcrypt.hashpw(password.encode(), bcrypt.gensalt(rounds=_BCRYPT_ROUNDS)).decode()
 
 
 def verify_password(plain: str, hashed: str) -> bool:
-    return pwd_context.verify(plain, hashed)
+    return bcrypt.checkpw(plain.encode(), hashed.encode())
 
 
 def create_access_token(subject: str, role: str) -> str:
@@ -20,7 +21,7 @@ def create_access_token(subject: str, role: str) -> str:
         minutes=settings.access_token_expire_minutes
     )
     return jwt.encode(
-        {"sub": subject, "role": role, "exp": expire},
+        {"sub": subject, "role": role, "exp": expire, "jti": secrets.token_hex(16)},
         settings.jwt_secret_key,
         algorithm=settings.jwt_algorithm,
     )
@@ -31,7 +32,7 @@ def create_refresh_token(subject: str) -> str:
         days=settings.refresh_token_expire_days
     )
     return jwt.encode(
-        {"sub": subject, "type": "refresh", "exp": expire},
+        {"sub": subject, "type": "refresh", "exp": expire, "jti": secrets.token_hex(16)},
         settings.jwt_secret_key,
         algorithm=settings.jwt_algorithm,
     )
