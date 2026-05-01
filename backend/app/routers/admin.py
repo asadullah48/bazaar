@@ -4,12 +4,14 @@ from datetime import datetime, timezone
 from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Query
-from sqlalchemy import func, select
+from sqlalchemy import distinct, func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.database import get_db
 from app.core.deps import require_admin
 from app.models.catalog import Product
+from app.models.order import Order
+from app.models.payout import PayoutRecord
 from app.models.user import SellerProfile, User
 from app.schemas.admin import (
     AdminPaginatedProducts,
@@ -19,6 +21,13 @@ from app.schemas.admin import (
     AdminSellerItem,
     RejectPayload,
 )
+from app.schemas.payout import (
+    MarkPaidRequest,
+    PaginatedPayouts,
+    PayoutCalculateRequest,
+    PayoutRecordResponse,
+)
+from app.services.commission import calculate_payout
 
 router = APIRouter(prefix="/admin", tags=["admin"])
 
@@ -205,3 +214,112 @@ async def suspend_seller(
         "status": sp.status,
         "created_at": sp.created_at,
     }
+
+
+# ── Payout endpoints ──────────────────────────────────────────────────────────
+
+def _payout_to_response(r: PayoutRecord) -> PayoutRecordResponse:
+    return PayoutRecordResponse(
+        id=r.id,
+        seller_id=r.seller_id,
+        period_start=r.period_start,
+        period_end=r.period_end,
+        gross_amount=float(r.gross_amount),
+        commission_amount=float(r.commission_amount),
+        processing_fees=float(r.processing_fees),
+        net_amount=float(r.net_amount),
+        status=r.status,
+        bank_ref=r.bank_ref,
+        paid_at=r.paid_at,
+        created_at=r.created_at,
+        line_items=[],  # not loaded in list/calculate responses
+    )
+
+
+@router.post("/payouts/calculate")
+async def admin_calculate_payouts(
+    payload: PayoutCalculateRequest,
+    _admin: User = Depends(require_admin),
+    db: AsyncSession = Depends(get_db),
+):
+    if payload.seller_id:
+        seller_ids = [payload.seller_id]
+    else:
+        rows = (
+            await db.execute(
+                select(distinct(Order.seller_id)).where(
+                    Order.status == "completed",
+                    Order.seller_id.isnot(None),
+                    Order.created_at >= payload.period_start,
+                    Order.created_at <= payload.period_end,
+                )
+            )
+        ).scalars().all()
+        seller_ids = list(rows)
+
+    results = []
+    for sid in seller_ids:
+        record = await calculate_payout(sid, payload.period_start, payload.period_end, db)
+        if record:
+            results.append(record)
+
+    await db.commit()
+    return [_payout_to_response(r) for r in results]
+
+
+@router.get("/payouts", response_model=PaginatedPayouts)
+async def list_payouts(
+    status: Optional[str] = Query(None),
+    seller_id: Optional[uuid.UUID] = Query(None),
+    page: int = Query(1, ge=1),
+    limit: int = Query(20, ge=1, le=50),
+    _admin: User = Depends(require_admin),
+    db: AsyncSession = Depends(get_db),
+):
+    conditions = []
+    if status:
+        conditions.append(PayoutRecord.status == status)
+    if seller_id:
+        conditions.append(PayoutRecord.seller_id == seller_id)
+
+    count_q = select(func.count(PayoutRecord.id))
+    if conditions:
+        count_q = count_q.where(*conditions)
+    total: int = (await db.execute(count_q)).scalar() or 0
+
+    data_q = (
+        select(PayoutRecord)
+        .order_by(PayoutRecord.created_at.desc())
+        .offset((page - 1) * limit)
+        .limit(limit)
+    )
+    if conditions:
+        data_q = data_q.where(*conditions)
+
+    records = (await db.execute(data_q)).scalars().all()
+    return PaginatedPayouts(
+        items=[_payout_to_response(r) for r in records],
+        total=total,
+        page=page,
+        pages=math.ceil(total / limit) if total else 0,
+    )
+
+
+@router.put("/payouts/{payout_id}/mark-paid", response_model=PayoutRecordResponse)
+async def mark_payout_paid(
+    payout_id: uuid.UUID,
+    payload: MarkPaidRequest,
+    _admin: User = Depends(require_admin),
+    db: AsyncSession = Depends(get_db),
+):
+    record = (
+        await db.execute(select(PayoutRecord).where(PayoutRecord.id == payout_id))
+    ).scalar_one_or_none()
+    if record is None:
+        raise HTTPException(status_code=404, detail="Payout record not found")
+    record.status = "paid"
+    record.bank_ref = payload.bank_ref
+    record.paid_at = datetime.now(timezone.utc).replace(tzinfo=None)
+    await db.commit()
+    await db.refresh(record)
+    return _payout_to_response(record)
