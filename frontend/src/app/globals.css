@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-inter: "Inter", sans-serif;
+  --font-arabic: "Noto Kufi Arabic", sans-serif;
+}
+
+html[dir="rtl"] {
+  font-family: var(--font-arabic);
+}
+
+html[dir="ltr"] {
+  font-family: var(--font-inter);
+}

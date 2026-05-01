@@ -1,0 +1,55 @@
+{
+  "nav": {
+    "home": "Home",
+    "cart": "Cart",
+    "account": "Account",
+    "orders": "Orders",
+    "sell": "Sell on Bazaar",
+    "admin": "Admin"
+  },
+  "home": {
+    "hero_title": "Pakistan's Marketplace",
+    "hero_subtitle": "Textiles, Electronics, Furniture, Toys & More",
+    "shop_now": "Shop Now",
+    "categories": "Browse Categories",
+    "featured": "Featured Products",
+    "new_arrivals": "New Arrivals"
+  },
+  "product": {
+    "add_to_cart": "Add to Cart",
+    "add_to_wishlist": "Add to Wishlist",
+    "out_of_stock": "Out of Stock",
+    "reviews": "Reviews",
+    "in_stock": "In Stock",
+    "quantity": "Quantity",
+    "sku": "SKU",
+    "sold_by": "Sold by"
+  },
+  "cart": {
+    "title": "Shopping Cart",
+    "empty": "Your cart is empty",
+    "checkout": "Proceed to Checkout",
+    "total": "Total",
+    "remove": "Remove",
+    "quantity": "Qty"
+  },
+  "auth": {
+    "sign_in": "Sign In",
+    "sign_out": "Sign Out",
+    "register": "Register",
+    "email": "Email",
+    "password": "Password",
+    "forgot_password": "Forgot password?"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "retry": "Retry",
+    "save": "Save",
+    "cancel": "Cancel",
+    "search": "Search products...",
+    "price": "Price",
+    "free_shipping": "Free Shipping",
+    "sold": "sold"
+  }
+}
