@@ -7,13 +7,16 @@ from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.database import get_db
-from app.models.catalog import Product, ProductB2BTier, ProductVariant
+from app.models.catalog import Product, ProductB2BTier, ProductImage, ProductVariant
 from app.models.user import SellerProfile
 from app.schemas.product import (
     B2BTierResponse,
     CatalogListItem,
     CatalogProductDetail,
     PaginatedCatalog,
+    PublicProduct,
+    PublicProductImage,
+    PublicProductSeller,
     SellerStorefrontResponse,
     VariantResponse,
 )
@@ -121,15 +124,24 @@ async def list_products(
     }
 
 
-@router.get("/products/{product_id}", response_model=CatalogProductDetail)
-async def get_product(product_id: uuid.UUID, db: AsyncSession = Depends(get_db)):
+@router.get("/products/{slug}", response_model=PublicProduct)
+async def get_product(slug: str, db: AsyncSession = Depends(get_db)):
     result = await db.execute(
-        select(Product).where(Product.id == product_id, Product.status == "published")
+        select(Product).where(Product.slug == slug, Product.status == "published")
     )
     product = result.scalar_one_or_none()
     if product is None:
         raise HTTPException(status_code=404, detail="Product not found")
 
+    # Images
+    images_result = await db.execute(
+        select(ProductImage)
+        .where(ProductImage.product_id == product.id)
+        .order_by(ProductImage.is_primary.desc(), ProductImage.sort_order)
+    )
+    images = images_result.scalars().all()
+
+    # Cheapest active variant price → product.price
     variants_result = await db.execute(
         select(ProductVariant).where(
             ProductVariant.product_id == product.id,
@@ -137,34 +149,41 @@ async def get_product(product_id: uuid.UUID, db: AsyncSession = Depends(get_db))
         )
     )
     variants = variants_result.scalars().all()
+    prices = [float(v.price) for v in variants if v.price is not None]
+    price = min(prices) if prices else 0.0
+    stock_qty = sum(v.stock_qty for v in variants)
 
-    tiers = []
-    if product.is_b2b_eligible:
-        tiers_result = await db.execute(
-            select(ProductB2BTier)
-            .where(ProductB2BTier.product_id == product.id)
-            .order_by(ProductB2BTier.sort_order)
-        )
-        tiers = tiers_result.scalars().all()
+    # Seller profile
+    sp_result = await db.execute(
+        select(SellerProfile).where(SellerProfile.user_id == product.seller_id)
+    )
+    sp = sp_result.scalar_one_or_none()
 
-    return {
-        "id": product.id,
-        "seller_id": product.seller_id,
-        "title": product.title,
-        "slug": product.slug,
-        "description": product.description,
-        "brand": product.brand,
-        "condition": product.condition,
-        "category_id": product.category_id,
-        "tags": product.tags,
-        "attributes": product.attributes,
-        "is_b2b_eligible": product.is_b2b_eligible,
-        "b2b_moq": product.b2b_moq,
-        "status": product.status,
-        "created_at": product.created_at,
-        "variants": [VariantResponse.model_validate(v) for v in variants],
-        "b2b_tiers": [B2BTierResponse.model_validate(t) for t in tiers],
-    }
+    return PublicProduct(
+        id=product.id,
+        name=product.title,
+        slug=product.slug,
+        price=price,
+        compare_price=None,
+        stock_qty=stock_qty,
+        avg_rating=float(sp.total_rating) / sp.review_count if sp and sp.review_count else None,
+        review_count=sp.review_count if sp else 0,
+        is_b2b_eligible=product.is_b2b_eligible,
+        images=[
+            PublicProductImage(
+                id=img.id,
+                url=img.url,
+                alt=None,
+                is_primary=img.is_primary,
+            )
+            for img in images
+        ],
+        seller=PublicProductSeller(
+            id=str(product.seller_id),
+            display_name=sp.store_name if sp else "Unknown",
+            slug=sp.store_slug if sp else "",
+        ),
+    )
 
 
 @router.get("/sellers/{slug}", response_model=SellerStorefrontResponse)
