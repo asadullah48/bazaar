@@ -71,9 +71,13 @@ export function ProductCard({ product, locale }: ProductCardProps) {
 
       {/* Info */}
       <div className="flex flex-col flex-1 p-3 gap-2">
-        <p className="text-xs text-gray-400 dark:text-gray-500 truncate">
+        <Link
+          href={`/${locale}/sellers/${product.seller.slug}`}
+          onClick={(e) => e.stopPropagation()}
+          className="text-xs text-gray-400 dark:text-gray-500 truncate hover:text-orange-500 transition-colors"
+        >
           {product.seller.display_name}
-        </p>
+        </Link>
         <h3 className="text-sm font-medium text-gray-900 dark:text-white line-clamp-2 leading-snug">
           {product.name}
         </h3>
