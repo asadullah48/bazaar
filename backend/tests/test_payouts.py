@@ -4,6 +4,7 @@ from datetime import datetime, timezone
 from httpx import ASGITransport, AsyncClient
 from sqlalchemy import delete
 
+from app.core.security import create_access_token, hash_password
 from app.main import app
 from app.models.catalog import Category, Product, ProductVariant
 from app.models.order import Order, OrderLineItem
@@ -37,9 +38,19 @@ async def _register_login(client, role="consumer"):
     return email, token, uuid.UUID(me["id"])
 
 
+async def _create_admin() -> tuple[str, str, uuid.UUID]:
+    email = _email("admin")
+    user_id = uuid.uuid4()
+    async with _TestSession() as db:
+        db.add(User(id=user_id, email=email, password_hash=hash_password("Pass123!"), role="admin"))
+        await db.commit()
+    token = create_access_token(str(user_id), "admin")
+    return email, token, user_id
+
+
 @pytest.fixture
 async def admin_user(client):
-    email, token, user_id = await _register_login(client, "admin")
+    email, token, user_id = await _create_admin()
     yield {"email": email, "token": token, "headers": {"Authorization": f"Bearer {token}"}, "id": user_id}
     async with _TestSession() as db:
         await db.execute(delete(User).where(User.email == email))

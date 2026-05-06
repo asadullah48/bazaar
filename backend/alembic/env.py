@@ -15,7 +15,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 # Load .env manually so DATABASE_URL is available
 from dotenv import load_dotenv
-load_dotenv(Path(__file__).resolve().parents[1] / ".env")
+load_dotenv(Path(__file__).resolve().parents[1] / ".env", override=True)
 
 from app.core.database import Base  # noqa: E402
 import app.models  # noqa: E402  — registers all models with Base.metadata
