@@ -1,5 +1,7 @@
 "use client";
+import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { ShoppingCart, Search, User } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useLocale } from "next-intl";
@@ -10,8 +12,15 @@ import { useCartStore } from "@/store/cart-store";
 export function Header() {
   const t = useTranslations();
   const locale = useLocale();
+  const router = useRouter();
   const { openCart, totalItems } = useCartStore();
   const count = totalItems();
+  const [query, setQuery] = useState("");
+
+  function handleSearch(e: React.FormEvent) {
+    e.preventDefault();
+    if (query.trim()) router.push(`/${locale}/search?q=${encodeURIComponent(query.trim())}`);
+  }
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-gray-800 bg-white/90 dark:bg-gray-950/90 backdrop-blur-sm">
@@ -26,7 +35,7 @@ export function Header() {
           </Link>
 
           {/* Search */}
-          <div className="flex-1 max-w-xl mx-auto">
+          <form onSubmit={handleSearch} className="flex-1 max-w-xl mx-auto">
             <div className="relative">
               <Search
                 size={16}
@@ -34,11 +43,13 @@ export function Header() {
               />
               <input
                 type="search"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
                 placeholder={t("common.search")}
                 className="w-full ps-9 pe-4 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 dark:text-gray-100 placeholder:text-gray-400"
               />
             </div>
-          </div>
+          </form>
 
           {/* Right controls */}
           <nav className="flex items-center gap-2 flex-shrink-0">
