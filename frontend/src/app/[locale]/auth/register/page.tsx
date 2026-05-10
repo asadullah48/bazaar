@@ -12,7 +12,7 @@ type Role = "consumer" | "business_buyer" | "seller";
 const ROLES: { value: Role; label: string; desc: string }[] = [
   { value: "consumer",       label: "Shopper",         desc: "Buy products for personal use" },
   { value: "business_buyer", label: "Business Buyer",  desc: "Bulk orders & B2B pricing" },
-  { value: "seller",         label: "Sell on Bazaar",  desc: "List & sell your products" },
+  { value: "seller",         label: "Sell on ShopUnity",  desc: "List & sell your products" },
 ];
 
 export default function RegisterPage() {
@@ -47,7 +47,7 @@ export default function RegisterPage() {
     <div className="min-h-[80vh] flex items-center justify-center px-4 py-10">
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-orange-500">Bazaar</h1>
+          <h1 className="text-3xl font-bold text-orange-500">ShopUnity</h1>
           <p className="mt-2 text-gray-600 dark:text-gray-400">{t("register")}</p>
         </div>
 

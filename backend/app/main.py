@@ -20,7 +20,7 @@ from app.routers import wishlist as wishlist_router
 settings = get_settings()
 
 app = FastAPI(
-    title="Bazaar API",
+    title="ShopUnity API",
     version="1.0.0",
     docs_url="/docs" if settings.app_env != "production" else None,
     redoc_url="/redoc" if settings.app_env != "production" else None,
