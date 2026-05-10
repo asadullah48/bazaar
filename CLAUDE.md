@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Bazaar is a Pakistan-focused dual-mode B2C/B2B marketplace. The monorepo currently contains a FastAPI backend; a Next.js 14 frontend is planned but not yet scaffolded.
+ShopUnity is a Pakistan-focused dual-mode B2C/B2B marketplace. The monorepo currently contains a FastAPI backend; a Next.js 14 frontend is planned but not yet scaffolded.
 
 ## Commands
 

@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import Link from "next/link";
 import { ShoppingCart, Search, User, Package, LogOut } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -8,18 +9,34 @@ import { LanguageSwitcher } from "./language-switcher";
 import { ThemeToggle } from "./theme-toggle";
 import { useCartStore } from "@/store/cart-store";
 import { useAuthStore } from "@/store/auth-store";
+import { authApi } from "@/lib/api";
 
 export function Header() {
   const t = useTranslations();
+  const tAuth = useTranslations("auth");
   const locale = useLocale();
   const router = useRouter();
   const { openCart, totalItems } = useCartStore();
-  const { accessToken, clearTokens } = useAuthStore();
   const count = totalItems();
+  const [query, setQuery] = useState("");
 
-  function signOut() {
+  const isAuthenticated = useAuthStore((s) => !!s.accessToken);
+  const role = useAuthStore((s) => s.role);
+  const accessToken = useAuthStore((s) => s.accessToken);
+  const refreshToken = useAuthStore((s) => s.refreshToken);
+  const clearTokens = useAuthStore((s) => s.clearTokens);
+
+  function handleSearch(e: React.FormEvent) {
+    e.preventDefault();
+    if (query.trim()) router.push(`/${locale}/search?q=${encodeURIComponent(query.trim())}`);
+  }
+
+  async function handleSignOut() {
+    if (refreshToken) {
+      try { await authApi.logout(refreshToken); } catch {}
+    }
     clearTokens();
-    router.push(`/${locale}/auth/login`);
+    router.push(`/${locale}`);
   }
 
   return (
@@ -31,11 +48,11 @@ export function Header() {
             href={`/${locale}`}
             className="flex-shrink-0 font-bold text-2xl text-orange-500 tracking-tight"
           >
-            Bazaar
+            ShopUnity
           </Link>
 
           {/* Search */}
-          <div className="flex-1 max-w-xl mx-auto">
+          <form onSubmit={handleSearch} className="flex-1 max-w-xl mx-auto">
             <div className="relative">
               <Search
                 size={16}
@@ -43,23 +60,39 @@ export function Header() {
               />
               <input
                 type="search"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
                 placeholder={t("common.search")}
                 className="w-full ps-9 pe-4 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 dark:text-gray-100 placeholder:text-gray-400"
               />
             </div>
-          </div>
+          </form>
 
           {/* Right controls */}
           <nav className="flex items-center gap-2 flex-shrink-0">
             <LanguageSwitcher />
             <ThemeToggle />
-            <Link
-              href={`/${locale}/account`}
-              className="p-2 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-              aria-label={t("nav.account")}
-            >
-              <User size={20} />
-            </Link>
+            {isAuthenticated ? (
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-medium text-gray-500 dark:text-gray-400 hidden sm:block">
+                  {role}
+                </span>
+                <button
+                  onClick={handleSignOut}
+                  className="text-sm text-gray-600 dark:text-gray-400 hover:text-red-500 transition-colors px-2 py-1"
+                >
+                  {tAuth("sign_out")}
+                </button>
+              </div>
+            ) : (
+              <Link
+                href={`/${locale}/auth/login`}
+                aria-label={tAuth("sign_in")}
+                className="p-2 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              >
+                <User size={20} />
+              </Link>
+            )}
 
             {accessToken && (
               <>
@@ -71,7 +104,7 @@ export function Header() {
                   <Package size={20} />
                 </Link>
                 <button
-                  onClick={signOut}
+                  onClick={handleSignOut}
                   className="p-2 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
                   aria-label={t("auth.sign_out")}
                 >

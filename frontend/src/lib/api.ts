@@ -191,3 +191,69 @@ export const addressesApi = {
   delete: (token: string, id: string) =>
     request<void>(`/v1/users/me/addresses/${id}`, { method: "DELETE" }, token),
 };
+
+// ── Sellers ───────────────────────────────────────────────────────────────────
+
+export interface CatalogListItem {
+  id: string;
+  title: string;
+  slug: string;
+  brand: string | null;
+  condition: string;
+  min_price: number | null;
+  is_b2b_eligible: boolean;
+  seller_id: string;
+  category_id: string | null;
+  created_at: string;
+}
+
+export interface SellerStorefrontResponse {
+  store_name: string;
+  description: string | null;
+  city: string | null;
+  total_rating: number;
+  review_count: number;
+  approved_at: string | null;
+  products: {
+    items: CatalogListItem[];
+    total: number;
+    page: number;
+    pages: number;
+  };
+}
+
+export const sellersApi = {
+  storefront: (slug: string, page = 1) =>
+    request<SellerStorefrontResponse>(
+      `/v1/sellers/${slug}?page=${page}&limit=16`
+    ),
+};
+
+// ── Search ────────────────────────────────────────────────────────────────────
+
+export interface SearchItem {
+  id: string;
+  title: string;
+  slug: string | null;
+  brand: string | null;
+  condition: string | null;
+  category_id: string | null;
+  seller_id: string;
+  min_price: number | null;
+  is_b2b_eligible: boolean;
+  created_at: string;
+}
+
+export interface SearchListResponse {
+  items: SearchItem[];
+  total: number;
+  page: number;
+  pages: number;
+}
+
+export const searchApi = {
+  search: (q: string, page = 1) =>
+    request<SearchListResponse>(
+      `/v1/search?q=${encodeURIComponent(q)}&page=${page}&limit=20`
+    ),
+};
