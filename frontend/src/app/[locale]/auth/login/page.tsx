@@ -38,7 +38,7 @@ export default function LoginPage() {
     <div className="min-h-[80vh] flex items-center justify-center px-4">
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-orange-500">Bazaar</h1>
+          <h1 className="text-3xl font-bold text-orange-500">ShopUnity</h1>
           <p className="mt-2 text-gray-600 dark:text-gray-400">
             {t("sign_in")}
           </p>

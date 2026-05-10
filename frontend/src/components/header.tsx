@@ -1,17 +1,36 @@
 "use client";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { ShoppingCart, Search, User } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useLocale } from "next-intl";
 import { LanguageSwitcher } from "./language-switcher";
 import { ThemeToggle } from "./theme-toggle";
 import { useCartStore } from "@/store/cart-store";
+import { useAuthStore } from "@/store/auth-store";
+import { authApi } from "@/lib/api";
 
 export function Header() {
   const t = useTranslations();
+  const tAuth = useTranslations("auth");
   const locale = useLocale();
+  const router = useRouter();
   const { openCart, totalItems } = useCartStore();
   const count = totalItems();
+
+  // Granular selectors — avoids full-store subscription and unnecessary rerenders
+  const isAuthenticated = useAuthStore((s) => !!s.accessToken);
+  const role = useAuthStore((s) => s.role);
+  const refreshToken = useAuthStore((s) => s.refreshToken);
+  const clearTokens = useAuthStore((s) => s.clearTokens);
+
+  async function handleSignOut() {
+    if (refreshToken) {
+      try { await authApi.logout(refreshToken); } catch {}
+    }
+    clearTokens();
+    router.push(`/${locale}`);
+  }
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-gray-800 bg-white/90 dark:bg-gray-950/90 backdrop-blur-sm">
@@ -22,7 +41,7 @@ export function Header() {
             href={`/${locale}`}
             className="flex-shrink-0 font-bold text-2xl text-orange-500 tracking-tight"
           >
-            Bazaar
+            ShopUnity
           </Link>
 
           {/* Search */}
@@ -44,13 +63,27 @@ export function Header() {
           <nav className="flex items-center gap-2 flex-shrink-0">
             <LanguageSwitcher />
             <ThemeToggle />
-            <Link
-              href={`/${locale}/account`}
-              className="p-2 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-              aria-label={t("nav.account")}
-            >
-              <User size={20} />
-            </Link>
+            {isAuthenticated ? (
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-medium text-gray-500 dark:text-gray-400 hidden sm:block">
+                  {role}
+                </span>
+                <button
+                  onClick={handleSignOut}
+                  className="text-sm text-gray-600 dark:text-gray-400 hover:text-red-500 transition-colors px-2 py-1"
+                >
+                  {tAuth("sign_out")}
+                </button>
+              </div>
+            ) : (
+              <Link
+                href={`/${locale}/auth/login`}
+                aria-label={tAuth("sign_in")}
+                className="p-2 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              >
+                <User size={20} />
+              </Link>
+            )}
 
             {/* Cart button with badge */}
             <button
