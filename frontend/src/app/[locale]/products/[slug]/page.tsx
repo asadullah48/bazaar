@@ -7,6 +7,7 @@ import { toProduct } from "@/lib/to-product";
 import { ProductGallery } from "@/components/product/product-gallery";
 import { ProductPrice } from "@/components/product/product-price";
 import { Rating } from "@/components/product/rating";
+import { ProductReviews } from "@/components/product/product-reviews";
 import { AddToCartButton } from "@/components/product/add-to-cart-button";
 
 interface Props {
@@ -113,6 +114,9 @@ export default async function ProductDetailPage({ params }: Props) {
           </p>
         </div>
       </div>
+
+      {/* Reviews */}
+      <ProductReviews productId={apiProduct.id} />
     </div>
   );
 }
