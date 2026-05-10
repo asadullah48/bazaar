@@ -1,17 +1,26 @@
 "use client";
 import Link from "next/link";
-import { ShoppingCart, Search, User } from "lucide-react";
+import { ShoppingCart, Search, User, Package, LogOut } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useLocale } from "next-intl";
+import { useRouter } from "next/navigation";
 import { LanguageSwitcher } from "./language-switcher";
 import { ThemeToggle } from "./theme-toggle";
 import { useCartStore } from "@/store/cart-store";
+import { useAuthStore } from "@/store/auth-store";
 
 export function Header() {
   const t = useTranslations();
   const locale = useLocale();
+  const router = useRouter();
   const { openCart, totalItems } = useCartStore();
+  const { accessToken, clearTokens } = useAuthStore();
   const count = totalItems();
+
+  function signOut() {
+    clearTokens();
+    router.push(`/${locale}/auth/login`);
+  }
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-gray-800 bg-white/90 dark:bg-gray-950/90 backdrop-blur-sm">
@@ -51,6 +60,25 @@ export function Header() {
             >
               <User size={20} />
             </Link>
+
+            {accessToken && (
+              <>
+                <Link
+                  href={`/${locale}/orders`}
+                  className="p-2 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                  aria-label={t("nav.orders")}
+                >
+                  <Package size={20} />
+                </Link>
+                <button
+                  onClick={signOut}
+                  className="p-2 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                  aria-label={t("auth.sign_out")}
+                >
+                  <LogOut size={20} />
+                </button>
+              </>
+            )}
 
             {/* Cart button with badge */}
             <button
