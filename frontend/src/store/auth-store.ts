@@ -16,10 +16,18 @@ export const useAuthStore = create<AuthState>()(
       accessToken: null,
       refreshToken: null,
       role: null,
-      setTokens: (access, refresh, role) =>
-        set({ accessToken: access, refreshToken: refresh, role }),
-      clearTokens: () =>
-        set({ accessToken: null, refreshToken: null, role: null }),
+      setTokens: (access, refresh, role) => {
+        set({ accessToken: access, refreshToken: refresh, role });
+        if (typeof document !== "undefined") {
+          document.cookie = `bazaar-auth=${JSON.stringify({ state: { accessToken: access } })}; path=/; max-age=${7 * 24 * 3600}; SameSite=Lax`;
+        }
+      },
+      clearTokens: () => {
+        set({ accessToken: null, refreshToken: null, role: null });
+        if (typeof document !== "undefined") {
+          document.cookie = "bazaar-auth=; path=/; max-age=0";
+        }
+      },
       isAuthenticated: () => !!get().accessToken,
     }),
     {
