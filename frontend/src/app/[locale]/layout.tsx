@@ -14,7 +14,7 @@ const notoKufi = Noto_Kufi_Arabic({
 });
 
 export const metadata: Metadata = {
-  title: "Bazaar — Pakistan's Marketplace",
+  title: "ShopUnity — Pakistan's Marketplace",
   description: "Shop textiles, electronics, furniture, toys and more",
 };
 

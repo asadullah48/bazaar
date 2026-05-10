@@ -124,3 +124,40 @@ export const productsApi = {
 
   get: (slug: string) => request<ApiProduct>(`/v1/products/${slug}`),
 };
+
+// ── Sellers ───────────────────────────────────────────────────────────────────
+
+export interface CatalogListItem {
+  id: string;
+  title: string;
+  slug: string;
+  brand: string | null;
+  condition: string;
+  min_price: number | null;
+  is_b2b_eligible: boolean;
+  seller_id: string;
+  category_id: string | null;
+  created_at: string;
+}
+
+export interface SellerStorefrontResponse {
+  store_name: string;
+  description: string | null;
+  city: string | null;
+  total_rating: number;
+  review_count: number;
+  approved_at: string | null;
+  products: {
+    items: CatalogListItem[];
+    total: number;
+    page: number;
+    pages: number;
+  };
+}
+
+export const sellersApi = {
+  storefront: (slug: string, page = 1) =>
+    request<SellerStorefrontResponse>(
+      `/v1/sellers/${slug}?page=${page}&limit=16`
+    ),
+};
