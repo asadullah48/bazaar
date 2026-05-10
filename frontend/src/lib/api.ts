@@ -125,7 +125,7 @@ export const productsApi = {
   get: (slug: string) => request<ApiProduct>(`/v1/products/${slug}`),
 };
 
-// ── Sellers ───────────────────────────────────────────────────────────────────
+// -- Sellers ------------------------------------------------------------------
 
 export interface CatalogListItem {
   id: string;
@@ -159,5 +159,34 @@ export const sellersApi = {
   storefront: (slug: string, page = 1) =>
     request<SellerStorefrontResponse>(
       `/v1/sellers/${slug}?page=${page}&limit=16`
+    ),
+};
+
+// -- Search -------------------------------------------------------------------
+
+export interface SearchItem {
+  id: string;
+  title: string;
+  slug: string | null;
+  brand: string | null;
+  condition: string | null;
+  category_id: string | null;
+  seller_id: string;
+  min_price: number | null;
+  is_b2b_eligible: boolean;
+  created_at: string;
+}
+
+export interface SearchListResponse {
+  items: SearchItem[];
+  total: number;
+  page: number;
+  pages: number;
+}
+
+export const searchApi = {
+  search: (q: string, page = 1) =>
+    request<SearchListResponse>(
+      `/v1/search?q=${encodeURIComponent(q)}&page=${page}&limit=20`
     ),
 };
