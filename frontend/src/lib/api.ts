@@ -124,3 +124,98 @@ export const productsApi = {
 
   get: (slug: string) => request<ApiProduct>(`/v1/products/${slug}`),
 };
+
+// ── Seller Products ──────────────────────────────────────────────────────────
+
+export interface SellerProductListItem {
+  id: string;
+  title: string;
+  slug: string;
+  status: string;
+  category_id: string | null;
+  created_at: string;
+}
+
+export interface ProductVariant {
+  id: string;
+  sku_code: string;
+  price: number;
+  sale_price: number | null;
+  stock_qty: number;
+  is_active: boolean;
+  option1_name: string | null;
+  option1_value: string | null;
+  option2_name: string | null;
+  option2_value: string | null;
+}
+
+export interface SellerProduct {
+  id: string;
+  title: string;
+  slug: string;
+  description: string | null;
+  category_id: string | null;
+  status: string;
+  is_b2b_eligible: boolean;
+  b2b_moq: number | null;
+  attributes: Record<string, unknown>;
+  variants: ProductVariant[];
+  images: { id: string; url: string; alt: string | null; is_primary: boolean }[];
+  created_at: string;
+}
+
+export interface VariantCreate {
+  price: number;
+  stock_qty: number;
+  sku_code: string;
+  sale_price?: number;
+  option1_name?: string;
+  option1_value?: string;
+  option2_name?: string;
+  option2_value?: string;
+}
+
+export interface ProductCreate {
+  title: string;
+  slug: string;
+  description?: string;
+  category_id?: string;
+  is_b2b_eligible?: boolean;
+  b2b_moq?: number;
+  variants: VariantCreate[];
+}
+
+export const sellerProductsApi = {
+  list: (token: string, params?: { page?: number; size?: number }) => {
+    const qs = new URLSearchParams();
+    if (params?.page) qs.set("page", String(params.page));
+    if (params?.size) qs.set("size", String(params.size));
+    return request<{ items: SellerProductListItem[]; total: number; page: number; size: number }>(
+      `/v1/seller/products?${qs}`,
+      {},
+      token
+    );
+  },
+  get: (token: string, id: string) =>
+    request<SellerProduct>(`/v1/seller/products/${id}`, {}, token),
+  create: (token: string, data: ProductCreate) =>
+    request<SellerProduct>("/v1/seller/products", { method: "POST", body: JSON.stringify(data) }, token),
+  publish: (token: string, id: string) =>
+    request<SellerProduct>(`/v1/seller/products/${id}/publish`, { method: "PUT" }, token),
+  archive: (token: string, id: string) =>
+    request<SellerProduct>(`/v1/seller/products/${id}`, { method: "DELETE" }, token),
+};
+
+// ── Categories ───────────────────────────────────────────────────────────────
+
+export interface CategoryNode {
+  id: string;
+  name: string;
+  slug: string;
+  icon_url: string | null;
+  children: CategoryNode[];
+}
+
+export const categoriesApi = {
+  tree: () => request<CategoryNode[]>("/v1/categories"),
+};
