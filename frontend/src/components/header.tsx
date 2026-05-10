@@ -1,10 +1,10 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { ShoppingCart, Search, User } from "lucide-react";
+import { ShoppingCart, Search, User, Package, LogOut } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useLocale } from "next-intl";
+import { useRouter } from "next/navigation";
 import { LanguageSwitcher } from "./language-switcher";
 import { ThemeToggle } from "./theme-toggle";
 import { useCartStore } from "@/store/cart-store";
@@ -20,16 +20,16 @@ export function Header() {
   const count = totalItems();
   const [query, setQuery] = useState("");
 
+  const isAuthenticated = useAuthStore((s) => !!s.accessToken);
+  const role = useAuthStore((s) => s.role);
+  const accessToken = useAuthStore((s) => s.accessToken);
+  const refreshToken = useAuthStore((s) => s.refreshToken);
+  const clearTokens = useAuthStore((s) => s.clearTokens);
+
   function handleSearch(e: React.FormEvent) {
     e.preventDefault();
     if (query.trim()) router.push(`/${locale}/search?q=${encodeURIComponent(query.trim())}`);
   }
-
-  // Granular selectors — avoids full-store subscription and unnecessary rerenders
-  const isAuthenticated = useAuthStore((s) => !!s.accessToken);
-  const role = useAuthStore((s) => s.role);
-  const refreshToken = useAuthStore((s) => s.refreshToken);
-  const clearTokens = useAuthStore((s) => s.clearTokens);
 
   async function handleSignOut() {
     if (refreshToken) {
@@ -92,6 +92,25 @@ export function Header() {
               >
                 <User size={20} />
               </Link>
+            )}
+
+            {accessToken && (
+              <>
+                <Link
+                  href={`/${locale}/orders`}
+                  className="p-2 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                  aria-label={t("nav.orders")}
+                >
+                  <Package size={20} />
+                </Link>
+                <button
+                  onClick={handleSignOut}
+                  className="p-2 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                  aria-label={t("auth.sign_out")}
+                >
+                  <LogOut size={20} />
+                </button>
+              </>
             )}
 
             {/* Cart button with badge */}
