@@ -190,3 +190,39 @@ class SellerStorefrontResponse(BaseModel):
     products: PaginatedCatalog
 
     model_config = {"from_attributes": True}
+
+
+# ── Frontend-facing product shape (matches ApiProduct in frontend/src/lib/api.ts) ──
+
+class PublicProductImage(BaseModel):
+    id: uuid.UUID
+    url: str
+    alt: Optional[str] = None
+    is_primary: bool
+
+
+class PublicProductSeller(BaseModel):
+    id: uuid.UUID
+    display_name: str
+    slug: str
+
+
+class PublicProduct(BaseModel):
+    id: uuid.UUID
+    name: str
+    slug: str
+    price: float
+    compare_price: Optional[float] = None
+    stock_qty: int
+    avg_rating: Optional[float] = None
+    review_count: int
+    is_b2b_eligible: bool
+    images: List[PublicProductImage]
+    seller: PublicProductSeller
+
+
+class PublicProductList(BaseModel):
+    items: List[PublicProduct]
+    total: int
+    page: int
+    size: int

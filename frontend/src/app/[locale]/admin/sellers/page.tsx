@@ -1,0 +1,153 @@
+"use client";
+import { useEffect, useState } from "react";
+import { useAuthStore } from "@/store/auth-store";
+import { adminApi, AdminSellerItem } from "@/lib/api";
+
+const STATUS_TABS = ["pending", "approved", "suspended"] as const;
+
+const STATUS_BADGE: Record<string, string> = {
+  pending: "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400",
+  approved: "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400",
+  suspended: "bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400",
+};
+
+export default function AdminSellersPage() {
+  const { accessToken } = useAuthStore();
+  const [tab, setTab] = useState<string>("pending");
+  const [sellers, setSellers] = useState<AdminSellerItem[]>([]);
+  const [total, setTotal] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  const load = (status: string) => {
+    if (!accessToken) return;
+    setLoading(true);
+    setError("");
+    adminApi
+      .listSellers(accessToken, { status })
+      .then((data) => {
+        setSellers(data.items);
+        setTotal(data.total);
+      })
+      .catch(() => setError("Failed to load sellers"))
+      .finally(() => setLoading(false));
+  };
+
+  useEffect(() => {
+    load(tab);
+  }, [accessToken, tab]);
+
+  const handleApprove = async (id: string) => {
+    if (!accessToken) return;
+    try {
+      await adminApi.approveSeller(accessToken, id);
+      load(tab);
+    } catch {
+      setError("Failed to approve seller");
+    }
+  };
+
+  const handleSuspend = async (id: string) => {
+    if (!accessToken || !confirm("Suspend this seller?")) return;
+    try {
+      await adminApi.suspendSeller(accessToken, id);
+      load(tab);
+    } catch {
+      setError("Failed to suspend seller");
+    }
+  };
+
+  return (
+    <div>
+      <div className="mb-4">
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Sellers</h1>
+        <p className="text-sm text-gray-400 mt-0.5">
+          {total} {tab}
+        </p>
+      </div>
+
+      <div className="flex gap-1 mb-6 bg-gray-100 dark:bg-gray-800/50 rounded-lg p-1 w-fit">
+        {STATUS_TABS.map((s) => (
+          <button
+            key={s}
+            onClick={() => setTab(s)}
+            className={`px-4 py-1.5 rounded-md text-sm font-medium transition-colors capitalize ${
+              tab === s
+                ? "bg-white dark:bg-gray-900 text-gray-900 dark:text-white shadow-sm"
+                : "text-gray-500 dark:text-gray-400 hover:text-gray-700"
+            }`}
+          >
+            {s}
+          </button>
+        ))}
+      </div>
+
+      {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
+
+      {loading ? (
+        <p className="text-gray-400">Loading…</p>
+      ) : sellers.length === 0 ? (
+        <p className="text-gray-400 text-center py-16">No {tab} sellers.</p>
+      ) : (
+        <div className="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-2xl overflow-hidden">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-gray-100 dark:border-gray-800">
+                <th className="text-start px-4 py-3 font-semibold text-gray-500 dark:text-gray-400">Store</th>
+                <th className="text-start px-4 py-3 font-semibold text-gray-500 dark:text-gray-400">Email</th>
+                <th className="text-start px-4 py-3 font-semibold text-gray-500 dark:text-gray-400">Status</th>
+                <th className="text-start px-4 py-3 font-semibold text-gray-500 dark:text-gray-400">Joined</th>
+                <th className="text-end px-4 py-3 font-semibold text-gray-500 dark:text-gray-400">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {sellers.map((s) => (
+                <tr
+                  key={s.id}
+                  className="border-b border-gray-50 dark:border-gray-800/50 last:border-0"
+                >
+                  <td className="px-4 py-3 font-medium text-gray-900 dark:text-white">
+                    {s.store_name}
+                  </td>
+                  <td className="px-4 py-3 text-gray-500">{s.email}</td>
+                  <td className="px-4 py-3">
+                    <span
+                      className={`text-xs font-semibold px-2.5 py-1 rounded-full ${
+                        STATUS_BADGE[s.status] ?? "bg-gray-100 text-gray-600"
+                      }`}
+                    >
+                      {s.status}
+                    </span>
+                  </td>
+                  <td className="px-4 py-3 text-gray-400">
+                    {new Date(s.created_at).toLocaleDateString()}
+                  </td>
+                  <td className="px-4 py-3">
+                    <div className="flex items-center justify-end gap-2">
+                      {s.status === "pending" && (
+                        <button
+                          onClick={() => handleApprove(s.id)}
+                          className="text-xs px-2.5 py-1.5 rounded-lg bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400 hover:bg-green-100 transition-colors font-medium"
+                        >
+                          Approve
+                        </button>
+                      )}
+                      {s.status !== "suspended" && (
+                        <button
+                          onClick={() => handleSuspend(s.id)}
+                          className="text-xs px-2.5 py-1.5 rounded-lg bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 hover:bg-red-100 transition-colors font-medium"
+                        >
+                          Suspend
+                        </button>
+                      )}
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  );
+}

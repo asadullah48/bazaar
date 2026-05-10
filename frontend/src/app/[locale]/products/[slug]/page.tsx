@@ -1,7 +1,11 @@
 import { notFound } from "next/navigation";
-import Image from "next/image";
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
+import { Heart, Store, ChevronRight } from "lucide-react";
 import { productsApi, ApiError } from "@/lib/api";
+import { toProduct } from "@/lib/to-product";
+import { ProductGallery } from "@/components/product/product-gallery";
+import { ProductPrice } from "@/components/product/product-price";
 import { Rating } from "@/components/product/rating";
 import { ProductReviews } from "@/components/product/product-reviews";
 import { AddToCartButton } from "@/components/product/add-to-cart-button";
@@ -12,95 +16,107 @@ interface Props {
 
 export default async function ProductDetailPage({ params }: Props) {
   const { locale, slug } = await params;
+  const t = await getTranslations("product");
 
-  let product;
+  let apiProduct;
   try {
-    product = await productsApi.get(slug);
+    apiProduct = await productsApi.get(slug);
   } catch (err) {
     if (err instanceof ApiError && err.status === 404) notFound();
-    throw err;
+    notFound();
   }
 
-  const primaryImage =
-    product.images.find((i) => i.is_primary) ?? product.images[0];
-
-  const fmt = (n: number) =>
-    new Intl.NumberFormat("en-PK", {
-      style: "currency",
-      currency: "PKR",
-      maximumFractionDigits: 0,
-    }).format(n);
+  const product = toProduct(apiProduct);
 
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      {/* Breadcrumb */}
+      <nav className="flex items-center gap-1 text-xs text-gray-400 mb-6">
+        <Link href={`/${locale}`} className="hover:text-orange-500 transition-colors">
+          Home
+        </Link>
+        <ChevronRight size={12} />
+        <Link href={`/${locale}/products`} className="hover:text-orange-500 transition-colors">
+          Products
+        </Link>
+        <ChevronRight size={12} />
+        <span className="text-gray-600 dark:text-gray-300 truncate max-w-xs">
+          {product.name}
+        </span>
+      </nav>
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-        {/* Images */}
-        <div className="aspect-square relative rounded-2xl overflow-hidden bg-gray-100 dark:bg-gray-800">
-          {primaryImage ? (
-            <Image
-              src={primaryImage.url}
-              alt={primaryImage.alt ?? product.name}
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, 50vw"
-              priority
-            />
-          ) : (
-            <div className="w-full h-full flex items-center justify-center text-gray-300 text-sm">
-              No image
-            </div>
-          )}
-        </div>
+        {/* Gallery */}
+        <ProductGallery images={product.images} name={product.name} />
 
-        {/* Details */}
-        <div className="flex flex-col">
-          <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">
-            Sold by{" "}
-            <Link
-              href={`/${locale}/sellers/${product.seller.slug}`}
-              className="text-orange-500 hover:underline"
-            >
-              {product.seller.display_name}
-            </Link>
-          </p>
+        {/* Info */}
+        <div className="flex flex-col gap-5">
+          {/* Seller */}
+          <Link
+            href={`/${locale}/sellers/${product.seller.slug}`}
+            className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-orange-500 transition-colors w-fit"
+          >
+            <Store size={14} />
+            {product.seller.display_name}
+          </Link>
 
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white leading-tight">
             {product.name}
           </h1>
 
-          {product.avg_rating !== null && (
-            <div className="flex items-center gap-2 mb-4">
-              <Rating value={product.avg_rating} count={product.review_count} size={16} />
-            </div>
+          <Rating value={product.avg_rating} count={product.review_count} size={16} />
+
+          <ProductPrice
+            price={product.price}
+            comparePrice={product.compare_price}
+            className="text-xl"
+          />
+
+          {/* Stock status */}
+          <div className="flex items-center gap-2">
+            <span
+              className={`inline-flex items-center gap-1.5 text-sm font-medium ${
+                product.stock_qty > 0
+                  ? "text-green-600 dark:text-green-400"
+                  : "text-red-500"
+              }`}
+            >
+              <span
+                className={`w-2 h-2 rounded-full ${
+                  product.stock_qty > 0 ? "bg-green-500" : "bg-red-500"
+                }`}
+              />
+              {product.stock_qty > 0
+                ? `${t("in_stock")} (${product.stock_qty} available)`
+                : t("out_of_stock")}
+            </span>
+          </div>
+
+          {/* B2B badge */}
+          {product.is_b2b_eligible && (
+            <span className="inline-flex items-center gap-1 text-xs font-semibold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 px-3 py-1 rounded-full w-fit">
+              B2B Wholesale Available
+            </span>
           )}
 
-          <div className="flex items-baseline gap-3 mb-6">
-            <span className="text-3xl font-bold text-orange-500">
-              {fmt(product.price)}
-            </span>
-            {product.compare_price && (
-              <span className="text-lg text-gray-400 line-through">
-                {fmt(product.compare_price)}
-              </span>
-            )}
-          </div>
-
-          <div className="mb-6">
-            {product.stock_qty > 0 ? (
-              <span className="text-sm text-green-600 dark:text-green-400 font-medium">
-                In stock ({product.stock_qty} available)
-              </span>
-            ) : (
-              <span className="text-sm text-red-500 font-medium">Out of stock</span>
-            )}
-          </div>
-
+          {/* Add to cart */}
           <AddToCartButton product={product} />
+
+          {/* Wishlist */}
+          <button className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-red-500 transition-colors w-fit">
+            <Heart size={16} />
+            {t("add_to_wishlist")}
+          </button>
+
+          {/* SKU */}
+          <p className="text-xs text-gray-400 dark:text-gray-600">
+            {t("sku")}: {product.id.slice(0, 8).toUpperCase()}
+          </p>
         </div>
       </div>
 
       {/* Reviews */}
-      <ProductReviews productId={product.id} />
+      <ProductReviews productId={apiProduct.id} />
     </div>
   );
 }
