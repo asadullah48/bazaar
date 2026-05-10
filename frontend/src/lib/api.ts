@@ -124,3 +124,47 @@ export const productsApi = {
 
   get: (slug: string) => request<ApiProduct>(`/v1/products/${slug}`),
 };
+
+// ── Reviews ───────────────────────────────────────────────────────────────────
+
+export interface ReviewResponse {
+  id: string;
+  order_id: string | null;
+  product_id: string | null;
+  buyer_id: string | null;
+  rating: number;
+  title: string | null;
+  body: string | null;
+  helpful_count: number;
+  created_at: string;
+}
+
+export interface PaginatedReviews {
+  items: ReviewResponse[];
+  total: number;
+  page: number;
+  pages: number;
+}
+
+export const reviewsApi = {
+  list: (productId: string, page = 1) =>
+    request<PaginatedReviews>(
+      `/v1/products/${productId}/reviews?page=${page}&limit=10`
+    ),
+
+  create: (
+    token: string,
+    payload: {
+      order_id: string;
+      product_id: string;
+      rating: number;
+      body: string;
+      title?: string;
+    }
+  ) =>
+    request<ReviewResponse>(
+      "/v1/reviews",
+      { method: "POST", body: JSON.stringify(payload) },
+      token
+    ),
+};
