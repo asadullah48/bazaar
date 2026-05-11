@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { HeroCarousel } from "@/components/home/hero-carousel";
 import { CategoryStrip } from "@/components/home/category-strip";
@@ -51,10 +52,44 @@ export default async function HomePage({
       <HeroCarousel />
       <CategoryStrip locale={locale} />
 
+      {/* B2B Business Strip */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10">
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
-          {t("featured")}
-        </h2>
+        <div className="rounded-2xl overflow-hidden bg-gradient-to-r from-cyan-600 to-teal-700 p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div>
+            <span className="inline-block text-xs font-semibold bg-white/20 text-white px-3 py-1 rounded-full mb-2">
+              B2B Marketplace
+            </span>
+            <h2 className="text-xl sm:text-2xl font-bold text-white leading-tight">
+              Buying in bulk? Get competitive quotes instantly.
+            </h2>
+            <p className="text-cyan-100 text-sm mt-1">
+              Post an RFQ and let verified Pakistani suppliers come to you.
+            </p>
+          </div>
+          <div className="flex gap-3 shrink-0">
+            <Link
+              href={`/${locale}/rfq/new`}
+              className="inline-flex items-center gap-2 bg-white text-cyan-700 font-semibold text-sm px-5 py-2.5 rounded-xl hover:bg-cyan-50 transition-colors whitespace-nowrap"
+            >
+              Post RFQ
+            </Link>
+            <Link
+              href={`/${locale}/rfq`}
+              className="inline-flex items-center gap-2 border border-white/40 text-white font-semibold text-sm px-5 py-2.5 rounded-xl hover:bg-white/10 transition-colors whitespace-nowrap"
+            >
+              View RFQs
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10">
+        <div className="flex items-center gap-3 mb-6">
+          <div className="w-1 h-6 rounded-full bg-brand-gradient" />
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+            {t("featured")}
+          </h2>
+        </div>
         <Suspense fallback={<ProductGridSkeleton count={8} />}>
           <FeaturedProducts locale={locale} />
         </Suspense>

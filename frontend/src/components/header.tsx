@@ -1,7 +1,8 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
-import { ShoppingCart, Search, User, Package, LogOut } from "lucide-react";
+import Image from "next/image";
+import { ShoppingCart, Search, User, Package, LogOut, FileText } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useLocale } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -40,15 +41,19 @@ export function Header() {
   }
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-gray-800 bg-white/90 dark:bg-gray-950/90 backdrop-blur-sm">
+    <header className="sticky top-0 z-50 w-full border-b border-gray-100 dark:border-gray-800 bg-white/90 dark:bg-gray-950/90 backdrop-blur-sm relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center h-16 gap-4">
           {/* Logo */}
-          <Link
-            href={`/${locale}`}
-            className="flex-shrink-0 font-bold text-2xl text-orange-500 tracking-tight"
-          >
-            ShopUnity
+          <Link href={`/${locale}`} className="flex-shrink-0">
+            <Image
+              src="/ShopUnity.png"
+              alt="ShopUnity"
+              width={140}
+              height={40}
+              className="h-9 w-auto object-contain"
+              priority
+            />
           </Link>
 
           {/* Search */}
@@ -96,6 +101,16 @@ export function Header() {
 
             {accessToken && (
               <>
+                {(role === "consumer" || role === "business_buyer") && (
+                  <Link
+                    href={`/${locale}/rfq`}
+                    className="p-2 rounded-lg text-cyan-600 dark:text-cyan-400 hover:bg-cyan-50 dark:hover:bg-cyan-900/20 transition-colors"
+                    aria-label="RFQ"
+                    title="Request for Quotes"
+                  >
+                    <FileText size={20} />
+                  </Link>
+                )}
                 <Link
                   href={`/${locale}/orders`}
                   className="p-2 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
@@ -129,6 +144,8 @@ export function Header() {
           </nav>
         </div>
       </div>
+      {/* Brand gradient accent line */}
+      <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-orange-500 via-orange-400 to-cyan-500 opacity-80" />
     </header>
   );
 }

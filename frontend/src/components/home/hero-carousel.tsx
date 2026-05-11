@@ -16,6 +16,7 @@ interface Slide {
   cta: string;
   href: string;
   bg: string;
+  ctaCls?: string;
 }
 
 const SLIDES: Slide[] = [
@@ -27,27 +28,28 @@ const SLIDES: Slide[] = [
     sub: "Lawn, Linen & Embroidered Suits — up to 40% off",
     cta: "Shop Textiles",
     href: "/en/categories/textiles",
-    bg: "from-orange-600 to-amber-500",
+    bg: "from-orange-500 to-orange-700",
   },
   {
     id: "2",
-    image: "https://placehold.co/1200x480/3b82f6/white?text=Electronics",
-    badge: "Best Deals",
-    heading: "Top Electronics & Mobiles",
-    sub: "Latest smartphones, laptops & accessories",
-    cta: "Shop Electronics",
-    href: "/en/categories/electronics",
-    bg: "from-blue-600 to-indigo-500",
+    image: "https://placehold.co/1200x480/0891b2/white?text=B2B+Wholesale",
+    badge: "Wholesale Deals",
+    heading: "Bulk Orders for Your Business",
+    sub: "Request quotes from verified suppliers across Pakistan",
+    cta: "Post an RFQ",
+    href: "/en/rfq/new",
+    bg: "from-cyan-600 to-teal-700",
+    ctaCls: "bg-white text-cyan-700 hover:bg-cyan-50",
   },
   {
     id: "3",
-    image: "https://placehold.co/1200x480/22c55e/white?text=Furniture",
+    image: "https://placehold.co/1200x480/ea580c/white?text=Top+Sellers",
     badge: "New Arrivals",
-    heading: "Modern Furniture & Home Décor",
-    sub: "Transform your space with quality pieces",
-    cta: "Shop Furniture",
-    href: "/en/categories/furniture",
-    bg: "from-green-600 to-teal-500",
+    heading: "Discover Top Sellers",
+    sub: "Electronics, furniture, tools & more — all in one place",
+    cta: "Browse All",
+    href: "/en/products",
+    bg: "from-orange-600 to-cyan-600",
   },
 ];
 
@@ -100,7 +102,7 @@ export function HeroCarousel() {
                   <p className="mt-2 text-white/80 text-sm sm:text-base">{slide.sub}</p>
                   <Link
                     href={slide.href}
-                    className="mt-5 inline-flex items-center gap-2 bg-white text-orange-600 font-semibold text-sm px-5 py-2.5 rounded-xl hover:bg-orange-50 transition-colors"
+                    className={`mt-5 inline-flex items-center gap-2 font-semibold text-sm px-5 py-2.5 rounded-xl transition-colors ${slide.ctaCls ?? "bg-white text-orange-600 hover:bg-orange-50"}`}
                   >
                     {slide.cta}
                     <ChevronRight size={16} />

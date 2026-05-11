@@ -16,6 +16,20 @@ const notoKufi = Noto_Kufi_Arabic({
 export const metadata: Metadata = {
   title: "ShopUnity — Pakistan's Marketplace",
   description: "Shop textiles, electronics, furniture, toys and more",
+  manifest: "/manifest.webmanifest",
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon-32.png", type: "image/png", sizes: "32x32" },
+    ],
+    apple: { url: "/icons/icon-192.png", sizes: "192x192" },
+  },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "ShopUnity",
+  },
+  formatDetection: { telephone: false },
 };
 
 export default async function LocaleLayout({

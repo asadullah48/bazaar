@@ -86,9 +86,10 @@ export default function OrdersPage() {
       ) : (
         <div className="space-y-3">
           {orders.map((order) => (
-            <div
+            <Link
               key={order.id}
-              className="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-2xl p-5 flex items-center justify-between gap-4"
+              href={`/${locale}/orders/${order.id}`}
+              className="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-2xl p-5 flex items-center justify-between gap-4 hover:border-orange-200 dark:hover:border-orange-900 transition-colors"
             >
               <div>
                 <p className="font-semibold text-gray-900 dark:text-white">
@@ -110,7 +111,7 @@ export default function OrdersPage() {
                   {fmt(order.total_amount)}
                 </p>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       )}

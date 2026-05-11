@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ShoppingCart, Heart } from "lucide-react";
@@ -7,6 +8,8 @@ import { Product } from "@/types";
 import { ProductPrice } from "./product-price";
 import { Rating } from "./rating";
 import { useCartStore } from "@/store/cart-store";
+import { useAuthStore } from "@/store/auth-store";
+import { wishlistApi } from "@/lib/api";
 
 interface ProductCardProps {
   product: Product;
@@ -16,11 +19,27 @@ interface ProductCardProps {
 export function ProductCard({ product, locale }: ProductCardProps) {
   const t = useTranslations("product");
   const addItem = useCartStore((s) => s.addItem);
+  const { accessToken } = useAuthStore();
+  const [wishlisted, setWishlisted] = useState(false);
 
   const primaryImage =
     product.images.find((img) => img.is_primary) ?? product.images[0];
 
   const isOutOfStock = product.stock_qty === 0;
+
+  async function toggleWishlist(e: React.MouseEvent) {
+    e.preventDefault();
+    if (!accessToken) return;
+    try {
+      if (wishlisted) {
+        await wishlistApi.remove(accessToken, product.id);
+        setWishlisted(false);
+      } else {
+        await wishlistApi.add(accessToken, product.id);
+        setWishlisted(true);
+      }
+    } catch {}
+  }
 
   function handleAddToCart(e: React.MouseEvent) {
     e.preventDefault();
@@ -40,10 +59,10 @@ export function ProductCard({ product, locale }: ProductCardProps) {
   return (
     <Link
       href={`/${locale}/products/${product.slug}`}
-      className="group relative flex flex-col rounded-2xl border border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200"
+      className="group relative flex flex-col rounded-2xl border border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 overflow-hidden shadow-brand hover:shadow-brand-hover hover:border-cyan-200 dark:hover:border-cyan-800 transition-all duration-200"
     >
       {/* Image */}
-      <div className="relative aspect-square overflow-hidden bg-gray-50 dark:bg-gray-800">
+      <div className="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-orange-50 to-cyan-50 dark:from-gray-800 dark:to-gray-800/60">
         <Image
           src={primaryImage?.url ?? "https://placehold.co/300x300"}
           alt={primaryImage?.alt ?? product.name}
@@ -61,11 +80,11 @@ export function ProductCard({ product, locale }: ProductCardProps) {
         )}
         {/* Wishlist button */}
         <button
-          onClick={(e) => e.preventDefault()}
+          onClick={toggleWishlist}
           className="absolute top-2 end-2 p-1.5 rounded-full bg-white dark:bg-gray-800 shadow opacity-0 group-hover:opacity-100 transition-opacity"
           aria-label={t("add_to_wishlist")}
         >
-          <Heart size={16} className="text-gray-500 dark:text-gray-400" />
+          <Heart size={16} className={wishlisted ? "text-red-500 fill-red-500" : "text-gray-500 dark:text-gray-400"} />
         </button>
       </div>
 
@@ -74,11 +93,11 @@ export function ProductCard({ product, locale }: ProductCardProps) {
         <Link
           href={`/${locale}/sellers/${product.seller.slug}`}
           onClick={(e) => e.stopPropagation()}
-          className="text-xs text-gray-400 dark:text-gray-500 truncate hover:text-orange-500 transition-colors"
+          className="text-xs font-medium text-cyan-600 dark:text-cyan-400 truncate hover:text-orange-500 transition-colors"
         >
           {product.seller.display_name}
         </Link>
-        <h3 className="text-sm font-medium text-gray-900 dark:text-white line-clamp-2 leading-snug">
+        <h3 className="text-sm font-semibold text-gray-900 dark:text-white line-clamp-2 leading-snug">
           {product.name}
         </h3>
         <Rating value={product.avg_rating} count={product.review_count} />

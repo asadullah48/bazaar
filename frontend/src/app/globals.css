@@ -5,6 +5,12 @@
 :root {
   --font-inter: "Inter", sans-serif;
   --font-arabic: "Noto Kufi Arabic", sans-serif;
+
+  --brand-orange: #f97316;
+  --brand-orange-dark: #ea580c;
+  --brand-teal: #0891b2;
+  --brand-teal-dark: #0e7490;
+  --brand-gradient: linear-gradient(135deg, #f97316 0%, #0891b2 100%);
 }
 
 html[dir="rtl"] {
@@ -13,4 +19,21 @@ html[dir="rtl"] {
 
 html[dir="ltr"] {
   font-family: var(--font-inter);
+}
+
+@layer utilities {
+  .text-brand-gradient {
+    background: var(--brand-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .shadow-brand {
+    box-shadow: 0 4px 24px -4px rgba(249, 115, 22, 0.18), 0 2px 12px -2px rgba(8, 145, 178, 0.12);
+  }
+
+  .shadow-brand-hover {
+    box-shadow: 0 8px 32px -6px rgba(249, 115, 22, 0.24), 0 4px 16px -2px rgba(8, 145, 178, 0.18);
+  }
 }

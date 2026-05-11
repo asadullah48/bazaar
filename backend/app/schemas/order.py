@@ -43,6 +43,7 @@ class OrderResponse(BaseModel):
 
 
 class CheckoutResponse(BaseModel):
+    checkout_session_id: uuid.UUID
     orders: List[OrderResponse]
     total_orders: int
 

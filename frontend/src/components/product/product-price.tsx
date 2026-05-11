@@ -33,7 +33,7 @@ export function ProductPrice({
           <span className="text-sm text-gray-400 line-through">
             {fmt(comparePrice)}
           </span>
-          <span className="text-xs font-semibold text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/30 px-1.5 py-0.5 rounded">
+          <span className="text-xs font-semibold text-cyan-700 dark:text-cyan-300 bg-cyan-50 dark:bg-cyan-900/30 px-1.5 py-0.5 rounded-md">
             -{discountPct}%
           </span>
         </>

@@ -38,7 +38,7 @@ def _order_number() -> str:
 def _initial_status(payment_method: str) -> str:
     if payment_method in ("cod", "bank_transfer"):
         return "payment_confirmed"
-    return "pending_payment"
+    return "pending_payment"  # online gateway — awaits callback
 
 
 @router.post("/checkout", response_model=CheckoutResponse)
@@ -216,6 +216,7 @@ async def checkout(
     await db.commit()
 
     return CheckoutResponse(
+        checkout_session_id=session.id,
         orders=[OrderResponse(**o) for o in created_orders],
         total_orders=len(created_orders),
     )

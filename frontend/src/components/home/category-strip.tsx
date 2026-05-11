@@ -12,14 +12,14 @@ import {
 } from "lucide-react";
 
 const CATEGORIES = [
-  { slug: "textiles",    label: "Textiles",      Icon: Shirt,           color: "bg-orange-50 text-orange-600 dark:bg-orange-900/20" },
-  { slug: "electronics", label: "Electronics",    Icon: Smartphone,      color: "bg-blue-50 text-blue-600 dark:bg-blue-900/20" },
-  { slug: "furniture",   label: "Furniture",      Icon: Sofa,            color: "bg-green-50 text-green-600 dark:bg-green-900/20" },
-  { slug: "kitchen",     label: "Kitchen",        Icon: UtensilsCrossed, color: "bg-yellow-50 text-yellow-600 dark:bg-yellow-900/20" },
-  { slug: "auto-parts",  label: "Auto Parts",     Icon: Car,             color: "bg-red-50 text-red-600 dark:bg-red-900/20" },
-  { slug: "toys",        label: "Toys & Kids",    Icon: Baby,            color: "bg-pink-50 text-pink-600 dark:bg-pink-900/20" },
-  { slug: "tools",       label: "Tools",          Icon: Wrench,          color: "bg-gray-50 text-gray-600 dark:bg-gray-900/20" },
-  { slug: "all",         label: "All Categories", Icon: ShoppingBag,     color: "bg-purple-50 text-purple-600 dark:bg-purple-900/20" },
+  { slug: "textiles",    label: "Textiles",      Icon: Shirt,           color: "bg-orange-50 text-orange-600 dark:bg-orange-900/20 group-hover:bg-orange-100 dark:group-hover:bg-orange-900/40" },
+  { slug: "electronics", label: "Electronics",    Icon: Smartphone,      color: "bg-cyan-50 text-cyan-700 dark:bg-cyan-900/20 group-hover:bg-cyan-100 dark:group-hover:bg-cyan-900/40" },
+  { slug: "furniture",   label: "Furniture",      Icon: Sofa,            color: "bg-amber-50 text-amber-600 dark:bg-amber-900/20 group-hover:bg-amber-100 dark:group-hover:bg-amber-900/40" },
+  { slug: "kitchen",     label: "Kitchen",        Icon: UtensilsCrossed, color: "bg-teal-50 text-teal-700 dark:bg-teal-900/20 group-hover:bg-teal-100 dark:group-hover:bg-teal-900/40" },
+  { slug: "auto-parts",  label: "Auto Parts",     Icon: Car,             color: "bg-orange-50 text-orange-700 dark:bg-orange-900/20 group-hover:bg-orange-100 dark:group-hover:bg-orange-900/40" },
+  { slug: "toys",        label: "Toys & Kids",    Icon: Baby,            color: "bg-cyan-50 text-cyan-600 dark:bg-cyan-900/20 group-hover:bg-cyan-100 dark:group-hover:bg-cyan-900/40" },
+  { slug: "tools",       label: "Tools",          Icon: Wrench,          color: "bg-amber-50 text-amber-700 dark:bg-amber-900/20 group-hover:bg-amber-100 dark:group-hover:bg-amber-900/40" },
+  { slug: "all",         label: "All Categories", Icon: ShoppingBag,     color: "bg-gradient-to-br from-orange-50 to-cyan-50 text-orange-600 dark:bg-cyan-900/20 group-hover:from-orange-100 group-hover:to-cyan-100" },
 ] as const;
 
 export function CategoryStrip({ locale }: { locale: string }) {
@@ -27,7 +27,7 @@ export function CategoryStrip({ locale }: { locale: string }) {
 
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
-      <h3 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-4">
+      <h3 className="text-sm font-semibold uppercase tracking-wider mb-4 text-brand-gradient">
         {t("categories")}
       </h3>
       <div className="grid grid-cols-4 sm:grid-cols-8 gap-3">

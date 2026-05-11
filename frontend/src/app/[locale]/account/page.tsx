@@ -3,25 +3,33 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useLocale } from "next-intl";
 import { useAuthStore } from "@/store/auth-store";
+import Link from "next/link";
+import { Heart, Trash2 } from "lucide-react";
 import {
   usersApi,
   addressesApi,
+  wishlistApi,
   UserMe,
   Address,
   AddressPayload,
+  WishlistItem,
 } from "@/lib/api";
 
 export default function AccountPage() {
   const locale = useLocale();
   const router = useRouter();
   const { accessToken } = useAuthStore();
-  const [tab, setTab] = useState<"profile" | "addresses">("profile");
+  const [tab, setTab] = useState<"profile" | "addresses" | "wishlist">("profile");
 
   // Profile state
   const [user, setUser] = useState<UserMe | null>(null);
   const [phone, setPhone] = useState("");
   const [saving, setSaving] = useState(false);
   const [toast, setToast] = useState("");
+
+  // Wishlist state
+  const [wishlist, setWishlist] = useState<WishlistItem[]>([]);
+  const [wishlistLoading, setWishlistLoading] = useState(false);
 
   // Address state
   const [addresses, setAddresses] = useState<Address[]>([]);
@@ -54,6 +62,14 @@ export default function AccountPage() {
         .then(setAddresses)
         .catch(() => {})
         .finally(() => setAddrLoading(false));
+    }
+    if (tab === "wishlist" && accessToken) {
+      setWishlistLoading(true);
+      wishlistApi
+        .get(accessToken)
+        .then(setWishlist)
+        .catch(() => {})
+        .finally(() => setWishlistLoading(false));
     }
   }, [tab, accessToken]);
 
@@ -102,6 +118,16 @@ export default function AccountPage() {
     }
   }
 
+  async function removeFromWishlist(productId: string) {
+    if (!accessToken) return;
+    try {
+      await wishlistApi.remove(accessToken, productId);
+      setWishlist((prev) => prev.filter((w) => w.product_id !== productId));
+    } catch {
+      showToast("Failed to remove item");
+    }
+  }
+
   async function deleteAddress(id: string) {
     if (!accessToken) return;
     if (!confirm("Delete this address?")) return;
@@ -135,7 +161,7 @@ export default function AccountPage() {
 
       {/* Tab switcher */}
       <div className="flex gap-1 mb-6 bg-gray-100 dark:bg-gray-800 p-1 rounded-xl w-fit">
-        {(["profile", "addresses"] as const).map((t) => (
+        {(["profile", "addresses", "wishlist"] as const).map((t) => (
           <button
             key={t}
             onClick={() => setTab(t)}
@@ -191,6 +217,48 @@ export default function AccountPage() {
           >
             {saving ? "Saving..." : "Save Changes"}
           </button>
+        </div>
+      )}
+
+      {/* Wishlist tab */}
+      {tab === "wishlist" && (
+        <div className="space-y-3">
+          {wishlistLoading ? (
+            <p className="text-gray-400 text-sm">Loading…</p>
+          ) : wishlist.length === 0 ? (
+            <div className="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-2xl p-8 text-center">
+              <Heart size={40} className="mx-auto text-gray-200 dark:text-gray-700 mb-3" />
+              <p className="text-gray-400 text-sm">No saved items yet.</p>
+            </div>
+          ) : (
+            wishlist.map((item) => (
+              <div key={item.product_id} className="flex items-center gap-4 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-2xl p-4">
+                <div className="flex-1 min-w-0">
+                  <Link
+                    href={item.slug ? `/${locale}/products/${item.slug}` : "#"}
+                    className="font-medium text-sm text-gray-900 dark:text-white hover:text-orange-500 line-clamp-1"
+                  >
+                    {item.title}
+                  </Link>
+                  {item.min_price != null && (
+                    <p className="text-xs text-gray-400 mt-0.5">
+                      {new Intl.NumberFormat("en-PK", { style: "currency", currency: "PKR", maximumFractionDigits: 0 }).format(item.min_price)}
+                    </p>
+                  )}
+                  {!item.is_available && (
+                    <span className="text-xs bg-red-100 text-red-600 px-2 py-0.5 rounded-full mt-1 inline-block">Out of stock</span>
+                  )}
+                </div>
+                <button
+                  onClick={() => removeFromWishlist(item.product_id)}
+                  className="p-2 rounded-lg text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+                  aria-label="Remove from wishlist"
+                >
+                  <Trash2 size={16} />
+                </button>
+              </div>
+            ))
+          )}
         </div>
       )}
 

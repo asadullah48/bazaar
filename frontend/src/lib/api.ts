@@ -78,6 +78,18 @@ export const authApi = {
       method: "POST",
       body: JSON.stringify({ refresh_token }),
     }),
+
+  forgotPassword: (email: string) =>
+    request<{ message: string }>("/v1/auth/password-reset", {
+      method: "POST",
+      body: JSON.stringify({ email }),
+    }),
+
+  resetPassword: (token: string, new_password: string) =>
+    request<{ message: string }>(`/v1/auth/password-reset/${token}`, {
+      method: "PUT",
+      body: JSON.stringify({ new_password }),
+    }),
 };
 
 // ── Products (public) ─────────────────────────────────────────────────────────
@@ -478,6 +490,73 @@ export const sellersApi = {
     ),
 };
 
+// ── Checkout & Payments ───────────────────────────────────────────────────────
+
+export type GatewayName =
+  | "jazzcash"
+  | "easypaisa"
+  | "nayapay"
+  | "meezan"
+  | "alfalah"
+  | "checkout";
+
+export interface CheckoutResponse {
+  checkout_session_id: string;
+  orders: { id: string; total_amount: number; seller_id: string }[];
+  total_amount: number;
+}
+
+export interface GatewayConfig {
+  name: string;
+  is_active: boolean;
+  supported_currencies: string[];
+  min_amount: number;
+  max_amount: number;
+  environment: string;
+}
+
+export interface InitiatePaymentResponse {
+  success: boolean;
+  transaction_id?: string;
+  redirect_url?: string;
+  payment_data?: Record<string, string>;
+  error?: string;
+}
+
+export const checkoutApi = {
+  place: (
+    token: string,
+    payload: {
+      items: { product_id: string; quantity: number; is_b2b: boolean }[];
+      delivery_address_id?: string;
+    }
+  ) =>
+    request<CheckoutResponse>(
+      "/v1/checkout",
+      { method: "POST", body: JSON.stringify({ ...payload, payment_method: "online" }) },
+      token
+    ),
+};
+
+export const paymentsApi = {
+  gateways: () => request<GatewayConfig[]>("/v1/payments/gateways"),
+
+  initiate: (
+    token: string,
+    payload: {
+      checkout_session_id: string;
+      gateway: GatewayName;
+      currency?: string;
+      customer_info?: { name?: string; email?: string; phone?: string };
+    }
+  ) =>
+    request<InitiatePaymentResponse>(
+      "/v1/payments/initiate",
+      { method: "POST", body: JSON.stringify(payload) },
+      token
+    ),
+};
+
 // ── Search ────────────────────────────────────────────────────────────────────
 
 export interface SearchItem {
@@ -504,5 +583,232 @@ export const searchApi = {
   search: (q: string, page = 1) =>
     request<SearchListResponse>(
       `/v1/search?q=${encodeURIComponent(q)}&page=${page}&limit=20`
+    ),
+};
+
+// ── Orders (buyer) ────────────────────────────────────────────────────────────
+
+export interface OrderLineItemDetail {
+  variant_id: string | null;
+  product_snapshot: Record<string, unknown>;
+  quantity: number;
+  unit_price: number;
+  line_total: number;
+}
+
+export interface OrderDetail {
+  id: string;
+  order_number: string;
+  seller_id: string | null;
+  buyer_id: string | null;
+  status: string;
+  tracking_number: string | null;
+  payment_method: string | null;
+  subtotal: number;
+  shipping_cost: number;
+  total_amount: number;
+  delivery_address: Record<string, unknown>;
+  created_at: string;
+  items: OrderLineItemDetail[];
+}
+
+export interface PaginatedOrders {
+  items: OrderDetail[];
+  total: number;
+  page: number;
+  pages: number;
+}
+
+export const ordersApi = {
+  list: (token: string, page = 1) =>
+    request<PaginatedOrders>(`/v1/orders?page=${page}&limit=20`, {}, token),
+
+  get: (token: string, id: string) =>
+    request<OrderDetail>(`/v1/orders/${id}`, {}, token),
+
+  cancel: (token: string, id: string) =>
+    request<OrderDetail>(`/v1/orders/${id}/cancel`, { method: "PUT" }, token),
+};
+
+// ── Seller orders ─────────────────────────────────────────────────────────────
+
+export const sellerOrdersApi = {
+  list: (token: string, page = 1) =>
+    request<PaginatedOrders>(`/v1/seller/orders?page=${page}&limit=20`, {}, token),
+
+  get: (token: string, id: string) =>
+    request<OrderDetail>(`/v1/seller/orders/${id}`, {}, token),
+
+  advance: (token: string, id: string, payload?: { note?: string; tracking_number?: string }) =>
+    request<OrderDetail>(
+      `/v1/seller/orders/${id}/advance`,
+      { method: "PUT", body: JSON.stringify(payload ?? {}) },
+      token
+    ),
+
+  cancel: (token: string, id: string) =>
+    request<OrderDetail>(`/v1/seller/orders/${id}/cancel`, { method: "PUT" }, token),
+};
+
+// ── Seller payouts ────────────────────────────────────────────────────────────
+
+export interface SellerPayout {
+  id: string;
+  period_start: string;
+  period_end: string;
+  gross_amount: number;
+  commission_amount: number;
+  processing_fees: number;
+  net_amount: number;
+  status: string;
+  bank_ref: string | null;
+  paid_at: string | null;
+  created_at: string;
+}
+
+export const sellerPayoutsApi = {
+  list: (token: string, page = 1) =>
+    request<{ items: SellerPayout[]; total: number; page: number; pages: number }>(
+      `/v1/seller/payouts?page=${page}&limit=20`,
+      {},
+      token
+    ),
+};
+
+// ── Wishlist ──────────────────────────────────────────────────────────────────
+
+export interface WishlistItem {
+  product_id: string;
+  title: string;
+  slug: string | null;
+  min_price: number | null;
+  added_at: string;
+  is_available: boolean;
+}
+
+export const wishlistApi = {
+  get: (token: string) =>
+    request<WishlistItem[]>("/v1/wishlist", {}, token),
+
+  add: (token: string, productId: string) =>
+    request<{ product_id: string; added_at: string }>(
+      `/v1/wishlist/${productId}`,
+      { method: "POST" },
+      token
+    ),
+
+  remove: (token: string, productId: string) =>
+    request<void>(`/v1/wishlist/${productId}`, { method: "DELETE" }, token),
+};
+
+// ── RFQ ───────────────────────────────────────────────────────────────────────
+
+export interface RFQListItem {
+  id: string;
+  title: string;
+  quantity: number;
+  status: string;
+  created_at: string;
+  deadline_date: string | null;
+  seller_id: string | null;
+}
+
+export interface RFQQuoteItem {
+  id: string;
+  rfq_id: string;
+  seller_id: string;
+  unit_price: number;
+  lead_time_days: number | null;
+  valid_until: string | null;
+  notes: string | null;
+  status: string;
+  counter_price: number | null;
+  created_at: string;
+}
+
+export interface RFQDetail {
+  id: string;
+  buyer_id: string;
+  seller_id: string | null;
+  product_id: string | null;
+  title: string;
+  description: string | null;
+  quantity: number;
+  target_price: number | null;
+  delivery_city: string | null;
+  payment_terms: string | null;
+  deadline_date: string | null;
+  status: string;
+  expires_at: string | null;
+  created_at: string;
+  quotes: RFQQuoteItem[];
+}
+
+export interface PaginatedRFQs {
+  items: RFQListItem[];
+  total: number;
+  page: number;
+  pages: number;
+}
+
+export const rfqApi = {
+  list: (token: string, status?: string, page = 1) => {
+    const qs = new URLSearchParams({ page: String(page), limit: "20" });
+    if (status) qs.set("status", status);
+    return request<PaginatedRFQs>(`/v1/rfqs?${qs}`, {}, token);
+  },
+
+  get: (token: string, id: string) =>
+    request<RFQDetail>(`/v1/rfqs/${id}`, {}, token),
+
+  create: (
+    token: string,
+    payload: {
+      title: string;
+      quantity: number;
+      description?: string;
+      seller_id?: string;
+      product_id?: string;
+      target_price?: number;
+      delivery_city?: string;
+      payment_terms?: string;
+      deadline_date?: string;
+    }
+  ) =>
+    request<RFQDetail>("/v1/rfqs", { method: "POST", body: JSON.stringify(payload) }, token),
+
+  close: (token: string, id: string) =>
+    request<void>(`/v1/rfqs/${id}`, { method: "DELETE" }, token),
+
+  submitQuote: (
+    token: string,
+    rfqId: string,
+    payload: { unit_price: number; lead_time_days?: number; valid_until?: string; notes?: string }
+  ) =>
+    request<RFQQuoteItem>(
+      `/v1/rfqs/${rfqId}/quotes`,
+      { method: "POST", body: JSON.stringify(payload) },
+      token
+    ),
+
+  acceptQuote: (token: string, rfqId: string, quoteId: string) =>
+    request<{ order_id: string; order_number: string; total_amount: number }>(
+      `/v1/rfqs/${rfqId}/quotes/${quoteId}/accept`,
+      { method: "PUT" },
+      token
+    ),
+
+  rejectQuote: (token: string, rfqId: string, quoteId: string) =>
+    request<void>(
+      `/v1/rfqs/${rfqId}/quotes/${quoteId}/reject`,
+      { method: "PUT" },
+      token
+    ),
+
+  counterQuote: (token: string, rfqId: string, quoteId: string, counterPrice: number) =>
+    request<RFQQuoteItem>(
+      `/v1/rfqs/${rfqId}/quotes/${quoteId}/counter`,
+      { method: "PUT", body: JSON.stringify({ counter_price: counterPrice }) },
+      token
     ),
 };

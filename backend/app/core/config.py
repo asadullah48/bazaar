@@ -34,6 +34,46 @@ class Settings(BaseSettings):
     stripe_secret_key: str = ""
     stripe_webhook_secret: str = ""
 
+    # ── JazzCash ──────────────────────────────────────────────────────────────
+    jazzcash_merchant_id: str = ""
+    jazzcash_password: str = ""
+    jazzcash_integrity_salt: str = ""
+    jazzcash_env: str = "sandbox"
+    jazzcash_return_url: str = ""
+
+    # ── EasyPaisa ─────────────────────────────────────────────────────────────
+    easypaisa_store_id: str = ""
+    easypaisa_hash_key: str = ""
+    easypaisa_env: str = "sandbox"
+    easypaisa_return_url: str = ""
+
+    # ── Naya Pay ──────────────────────────────────────────────────────────────
+    nayapay_client_id: str = ""
+    nayapay_client_secret: str = ""
+    nayapay_env: str = "sandbox"
+    nayapay_return_url: str = ""
+
+    # ── Meezan Bank ───────────────────────────────────────────────────────────
+    meezan_merchant_id: str = ""
+    meezan_password: str = ""
+    meezan_integrity_salt: str = ""
+    meezan_env: str = "sandbox"
+    meezan_return_url: str = ""
+
+    # ── Bank Alfalah ──────────────────────────────────────────────────────────
+    alfalah_merchant_id: str = ""
+    alfalah_merchant_key: str = ""
+    alfalah_channel_id: str = "1001"
+    alfalah_env: str = "sandbox"
+    alfalah_return_url: str = ""
+
+    # ── Checkout.com (international cards) ────────────────────────────────────
+    checkout_secret_key: str = ""
+    checkout_public_key: str = ""
+    checkout_env: str = "sandbox"
+    checkout_success_url: str = ""
+    checkout_failure_url: str = ""
+
     arq_redis_url: str = "redis://localhost:6379/1"
 
 
