@@ -27,7 +27,8 @@ async def revenue_summary(
     )
     order_count = await db.execute(
         select(func.count(Order.id))
-        .where(Order.seller_id == seller.id, Order.created_at >= since)
+        .where(Order.seller_id == seller.id, Order.created_at >= since,
+               Order.payment_status == "paid")
     )
     top_products = await db.execute(
         select(Product.title, func.sum(OrderLineItem.quantity).label("units_sold"))
