@@ -144,3 +144,31 @@ class ShippingZone(Base):
     rate: Mapped[float] = mapped_column(Numeric(10, 2), nullable=False)
     free_above: Mapped[float | None] = mapped_column(Numeric(10, 2))
     estimated_days: Mapped[int] = mapped_column(Integer, default=3)
+
+
+class InventoryAlert(Base):
+    __tablename__ = "inventory_alerts"
+
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    variant_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("product_variants.id", ondelete="CASCADE"), unique=True)
+    threshold: Mapped[int] = mapped_column(Integer, nullable=False, default=5)
+    auto_pause: Mapped[bool] = mapped_column(Boolean, default=True)
+    is_active: Mapped[bool] = mapped_column(Boolean, default=True)
+    created_at: Mapped[datetime] = mapped_column(server_default=func.now())
+
+    variant: Mapped["ProductVariant"] = relationship()
+
+
+class StockMovement(Base):
+    __tablename__ = "stock_movements"
+
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    variant_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("product_variants.id", ondelete="CASCADE"))
+    changed_by: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True), ForeignKey("users.id"))
+    delta: Mapped[int] = mapped_column(Integer, nullable=False)
+    reason: Mapped[str] = mapped_column(String(50), nullable=False)
+    note: Mapped[str | None] = mapped_column(Text)
+    qty_after: Mapped[int] = mapped_column(Integer, nullable=False)
+    created_at: Mapped[datetime] = mapped_column(server_default=func.now())
+
+    variant: Mapped["ProductVariant"] = relationship()
