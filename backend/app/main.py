@@ -14,6 +14,7 @@ from app.routers import reviews as reviews_router
 from app.routers import search as search_router
 from app.routers import users as users_router
 from app.routers import payouts as payouts_router
+from app.routers import payout_schedule as payout_schedule_router
 from app.routers import rfq as rfq_router
 from app.routers import payments as payments_router
 from app.routers import wishlist as wishlist_router
@@ -51,10 +52,12 @@ app.include_router(addresses_router.router, prefix="/v1")
 app.include_router(reviews_router.router, prefix="/v1")
 app.include_router(search_router.router, prefix="/v1")
 app.include_router(payouts_router.router, prefix="/v1")
+app.include_router(payout_schedule_router.router, prefix="/v1")
 app.include_router(rfq_router.router, prefix="/v1")
 app.include_router(payments_router.router, prefix="/v1")
 app.include_router(wishlist_router.router, prefix="/v1")
 app.include_router(inventory_router.router, prefix="/v1")
+app.include_router(seller_analytics_router.router, prefix="/v1")
 
 
 @app.get("/health", tags=["system"])
