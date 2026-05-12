@@ -1,5 +1,5 @@
 import uuid
-from sqlalchemy import String, Boolean, ForeignKey, Numeric, Integer, Text, ARRAY
+from sqlalchemy import String, Boolean, ForeignKey, Numeric, Integer, Text, ARRAY, Float, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.dialects.postgresql import UUID, JSONB
 from sqlalchemy.sql import func
@@ -172,3 +172,33 @@ class StockMovement(Base):
     created_at: Mapped[datetime] = mapped_column(server_default=func.now())
 
     variant: Mapped["ProductVariant"] = relationship(foreign_keys="StockMovement.variant_id")
+
+
+class Currency(Base):
+    __tablename__ = "currencies"
+
+    code: Mapped[str] = mapped_column(String(3), primary_key=True)
+    name: Mapped[str] = mapped_column(String(50), nullable=False)
+    symbol: Mapped[str] = mapped_column(String(5), nullable=False)
+    is_default: Mapped[bool] = mapped_column(Boolean, default=False)
+    is_active: Mapped[bool] = mapped_column(Boolean, default=True)
+    exchange_rate_to_pkr: Mapped[float] = mapped_column(Float, default=1.0)
+    updated_at: Mapped[datetime] = mapped_column(server_default=func.now(), onupdate=func.now())
+
+
+class PriceOverride(Base):
+    __tablename__ = "price_overrides"
+
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    product_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("products.id", ondelete="CASCADE")
+    )
+    currency_code: Mapped[str] = mapped_column(
+        String(3), ForeignKey("currencies.code", ondelete="CASCADE")
+    )
+    price: Mapped[float] = mapped_column(Float, nullable=False)
+    is_active: Mapped[bool] = mapped_column(Boolean, default=False)
+
+    __table_args__ = (
+        UniqueConstraint("product_id", "currency_code", name="uq_price_override_product_currency"),
+    )
