@@ -46,9 +46,24 @@ export default async function HomePage({
 }) {
   const { locale } = await params;
   const t = await getTranslations("home");
+  const base = process.env.NEXT_PUBLIC_BASE_URL ?? "https://shopunity.pk";
+
+  const orgJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "ShopUnity",
+    url: base,
+    description: "Pakistan's premier B2C/B2B marketplace",
+    address: {
+      "@type": "PostalAddress",
+      addressCountry: "PK",
+    },
+  };
+  void orgJsonLd;
 
   return (
     <div className="pb-16">
+      {/* JSON-LD: <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }} /> */}
       <HeroCarousel />
       <CategoryStrip locale={locale} />
 
