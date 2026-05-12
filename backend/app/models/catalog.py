@@ -156,7 +156,7 @@ class InventoryAlert(Base):
     is_active: Mapped[bool] = mapped_column(Boolean, default=True)
     created_at: Mapped[datetime] = mapped_column(server_default=func.now())
 
-    variant: Mapped["ProductVariant"] = relationship()
+    variant: Mapped["ProductVariant"] = relationship(foreign_keys="InventoryAlert.variant_id")
 
 
 class StockMovement(Base):
@@ -171,4 +171,4 @@ class StockMovement(Base):
     qty_after: Mapped[int] = mapped_column(Integer, nullable=False)
     created_at: Mapped[datetime] = mapped_column(server_default=func.now())
 
-    variant: Mapped["ProductVariant"] = relationship()
+    variant: Mapped["ProductVariant"] = relationship(foreign_keys="StockMovement.variant_id")
