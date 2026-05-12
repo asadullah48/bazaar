@@ -1,5 +1,5 @@
 import uuid
-from sqlalchemy import String, ForeignKey, Numeric, Date
+from sqlalchemy import String, ForeignKey, Numeric, Date, Boolean
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.sql import func
@@ -40,3 +40,17 @@ class PayoutLineItem(Base):
     seller_payout: Mapped[float] = mapped_column(Numeric(12, 2), nullable=False)
 
     payout: Mapped["PayoutRecord"] = relationship(back_populates="line_items")
+
+
+class SellerPayoutSchedule(Base):
+    __tablename__ = "seller_payout_schedules"
+
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    seller_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), ForeignKey("users.id", ondelete="CASCADE"), unique=True)
+    frequency: Mapped[str] = mapped_column(String(20), default="weekly")  # "weekly" | "biweekly"
+    bank_name: Mapped[str | None] = mapped_column(String(100))
+    account_number: Mapped[str | None] = mapped_column(String(50))
+    account_title: Mapped[str | None] = mapped_column(String(100))
+    is_active: Mapped[bool] = mapped_column(Boolean, default=True)
+    created_at: Mapped[datetime] = mapped_column(server_default=func.now())
+    updated_at: Mapped[datetime] = mapped_column(server_default=func.now(), onupdate=func.now())
