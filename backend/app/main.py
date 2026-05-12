@@ -20,6 +20,7 @@ from app.routers import payments as payments_router
 from app.routers import wishlist as wishlist_router
 from app.routers import inventory as inventory_router
 from app.routers import seller_analytics as seller_analytics_router
+from app.routers import translate as translate_router
 
 settings = get_settings()
 
@@ -58,6 +59,7 @@ app.include_router(payments_router.router, prefix="/v1")
 app.include_router(wishlist_router.router, prefix="/v1")
 app.include_router(inventory_router.router, prefix="/v1")
 app.include_router(seller_analytics_router.router, prefix="/v1")
+app.include_router(translate_router.router)
 
 
 @app.get("/health", tags=["system"])

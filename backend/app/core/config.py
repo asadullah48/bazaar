@@ -41,6 +41,8 @@ class Settings(BaseSettings):
     jazzcash_env: str = "sandbox"
     jazzcash_return_url: str = ""
 
+    deepl_api_key: str = ""
+
     # ── EasyPaisa ─────────────────────────────────────────────────────────────
     easypaisa_store_id: str = ""
     easypaisa_hash_key: str = ""
