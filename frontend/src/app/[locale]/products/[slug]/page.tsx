@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
@@ -14,6 +15,32 @@ interface Props {
   params: Promise<{ locale: string; slug: string }>;
 }
 
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale, slug } = await params;
+  const base = process.env.NEXT_PUBLIC_BASE_URL ?? "https://shopunity.pk";
+  let product;
+  try {
+    product = await productsApi.get(slug);
+  } catch {
+    return {};
+  }
+  return {
+    title: `${product.name} — ShopUnity`,
+    alternates: {
+      canonical: `${base}/${locale}/products/${slug}`,
+      languages: {
+        en: `${base}/en/products/${slug}`,
+        ar: `${base}/ar/products/${slug}`,
+        ur: `${base}/ur/products/${slug}`,
+      },
+    },
+    openGraph: {
+      title: product.name,
+      images: product.images?.[0] ? [{ url: product.images[0].url }] : [],
+    },
+  };
+}
+
 export default async function ProductDetailPage({ params }: Props) {
   const { locale, slug } = await params;
   const t = await getTranslations("product");
@@ -27,9 +54,39 @@ export default async function ProductDetailPage({ params }: Props) {
   }
 
   const product = toProduct(apiProduct);
+  const base = process.env.NEXT_PUBLIC_BASE_URL ?? "https://shopunity.pk";
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.name,
+    sku: product.id.slice(0, 8).toUpperCase(),
+    image: product.images.map((img) => img.url),
+    offers: {
+      "@type": "Offer",
+      priceCurrency: "PKR",
+      price: product.price,
+      availability:
+        product.stock_qty > 0
+          ? "https://schema.org/InStock"
+          : "https://schema.org/OutOfStock",
+      url: `${base}/${locale}/products/${slug}`,
+    },
+    ...(product.avg_rating && product.review_count
+      ? {
+          aggregateRating: {
+            "@type": "AggregateRating",
+            ratingValue: product.avg_rating,
+            reviewCount: product.review_count,
+          },
+        }
+      : {}),
+  };
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      {/* JSON-LD structured data — add this line manually (security hook blocks dangerouslySetInnerHTML): */}
+      {/* <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} /> */}
       {/* Breadcrumb */}
       <nav className="flex items-center gap-1 text-xs text-gray-400 mb-6">
         <Link href={`/${locale}`} className="hover:text-orange-500 transition-colors">
