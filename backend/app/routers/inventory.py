@@ -63,19 +63,27 @@ async def export_inventory(
     db: AsyncSession = Depends(get_db),
 ):
     rows = await db.execute(
-        select(ProductVariant, Product.title)
+        select(ProductVariant, Product.title, InventoryAlert)
         .join(Product, ProductVariant.product_id == Product.id)
+        .outerjoin(InventoryAlert, InventoryAlert.variant_id == ProductVariant.id)
         .where(Product.seller_id == seller.id)
         .order_by(Product.title)
     )
     output = io.StringIO()
     writer = csv.writer(output)
     writer.writerow(["product_title", "sku_code", "option1_name", "option1_value",
-                     "stock_qty", "low_stock_threshold", "is_active"])
-    for variant, title in rows:
-        writer.writerow([title, variant.sku_code or "", variant.option1_name or "",
-                         variant.option1_value or "", variant.stock_qty,
-                         variant.low_stock_threshold, variant.is_active])
+                     "stock_qty", "alert_threshold", "auto_pause", "is_active"])
+    for variant, title, alert in rows:
+        writer.writerow([
+            title,
+            variant.sku_code or "",
+            variant.option1_name or "",
+            variant.option1_value or "",
+            variant.stock_qty,
+            alert.threshold if alert else "",
+            alert.auto_pause if alert else "",
+            variant.is_active,
+        ])
     output.seek(0)
     return StreamingResponse(
         iter([output.getvalue()]),
