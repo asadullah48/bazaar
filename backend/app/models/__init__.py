@@ -8,6 +8,7 @@ from app.models.rfq import RFQ, RFQQuote
 from app.models.review import Review
 from app.models.payout import PayoutRecord, PayoutLineItem
 from app.models.notification import NotificationLog
+from app.models.campaign import Campaign, CampaignProduct, UserEvent, SlotEvent
 
 __all__ = [
     "User", "UserProfile", "SellerProfile", "Address", "RefreshToken",
@@ -18,4 +19,5 @@ __all__ = [
     "Review",
     "PayoutRecord", "PayoutLineItem",
     "NotificationLog",
+    "Campaign", "CampaignProduct", "UserEvent", "SlotEvent",
 ]

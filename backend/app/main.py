@@ -21,6 +21,10 @@ from app.routers import wishlist as wishlist_router
 from app.routers import inventory as inventory_router
 from app.routers import seller_analytics as seller_analytics_router
 from app.routers import translate as translate_router
+from app.routers import campaign as campaign_router
+from app.routers import slots as slots_router
+from app.routers import events as events_router
+from app.routers import recommendations as recommendations_router
 
 settings = get_settings()
 
@@ -60,6 +64,10 @@ app.include_router(wishlist_router.router, prefix="/v1")
 app.include_router(inventory_router.router, prefix="/v1")
 app.include_router(seller_analytics_router.router, prefix="/v1")
 app.include_router(translate_router.router)
+app.include_router(campaign_router.router)
+app.include_router(slots_router.router)
+app.include_router(events_router.router)
+app.include_router(recommendations_router.router)
 
 
 @app.get("/health", tags=["system"])

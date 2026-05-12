@@ -10,6 +10,8 @@ import { ProductPrice } from "@/components/product/product-price";
 import { Rating } from "@/components/product/rating";
 import { ProductReviews } from "@/components/product/product-reviews";
 import { AddToCartButton } from "@/components/product/add-to-cart-button";
+import { Recommendations } from "@/components/product/recommendations";
+import { ProductViewTracker } from "@/components/product/product-view-tracker";
 
 interface Props {
   params: Promise<{ locale: string; slug: string }>;
@@ -172,8 +174,10 @@ export default async function ProductDetailPage({ params }: Props) {
         </div>
       </div>
 
+      <ProductViewTracker productId={apiProduct.id} />
       {/* Reviews */}
       <ProductReviews productId={apiProduct.id} />
+      <Recommendations productId={apiProduct.id} locale={locale} />
     </div>
   );
 }

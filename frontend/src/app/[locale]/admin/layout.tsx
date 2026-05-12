@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useLocale } from "next-intl";
 import Link from "next/link";
-import { LayoutDashboard, Users, Package, Banknote } from "lucide-react";
+import { LayoutDashboard, Users, Package, Banknote, Zap } from "lucide-react";
 import { useAuthStore } from "@/store/auth-store";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -25,6 +25,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     { href: `/${locale}/admin/sellers`, label: "Sellers", icon: Users },
     { href: `/${locale}/admin/products`, label: "Products", icon: Package },
     { href: `/${locale}/admin/payouts`, label: "Payouts", icon: Banknote },
+    { href: `/${locale}/admin/campaigns`, label: "Campaigns", icon: Zap },
   ];
 
   return (

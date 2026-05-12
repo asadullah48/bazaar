@@ -7,6 +7,7 @@ import { ProductCard } from "@/components/product/product-card";
 import { ProductGridSkeleton } from "@/components/product/product-grid-skeleton";
 import { productsApi } from "@/lib/api";
 import { toProduct } from "@/lib/to-product";
+import { FlashDeals } from "@/components/home/flash-deals";
 
 async function FeaturedProducts({ locale }: { locale: string }) {
   let products = [];
@@ -66,6 +67,7 @@ export default async function HomePage({
       {/* JSON-LD: <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }} /> */}
       <HeroCarousel />
       <CategoryStrip locale={locale} />
+      <FlashDeals locale={locale} />
 
       {/* B2B Business Strip */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10">
