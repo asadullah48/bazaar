@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useLocale } from "next-intl";
 import Link from "next/link";
-import { LayoutDashboard, Package, ShoppingBag, Banknote } from "lucide-react";
+import { LayoutDashboard, Package, ShoppingBag, Banknote, Boxes, DollarSign, BarChart3 } from "lucide-react";
 import { useAuthStore } from "@/store/auth-store";
 
 export default function SellerLayout({ children }: { children: React.ReactNode }) {
@@ -25,6 +25,9 @@ export default function SellerLayout({ children }: { children: React.ReactNode }
     { href: `/${locale}/seller/products`, label: "Products", icon: Package },
     { href: `/${locale}/seller/orders`, label: "Orders", icon: ShoppingBag },
     { href: `/${locale}/seller/payouts`, label: "Payouts", icon: Banknote },
+    { href: `/${locale}/seller/inventory`, label: "Inventory", icon: Boxes },
+    { href: `/${locale}/seller/financials`, label: "Financials", icon: DollarSign },
+    { href: `/${locale}/seller/analytics`, label: "Analytics", icon: BarChart3 },
   ];
 
   return (
