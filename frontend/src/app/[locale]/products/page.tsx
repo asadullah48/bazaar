@@ -38,7 +38,7 @@ async function ProductGrid({
   } catch {
     return (
       <p className="text-sm text-gray-400 py-16 text-center col-span-full">
-        Could not load products. Make sure the backend is running on port 8000.
+        Products are temporarily unavailable. Please try again shortly.
       </p>
     );
   }

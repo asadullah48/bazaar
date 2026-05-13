@@ -19,7 +19,7 @@ async function FeaturedProducts({ locale }: { locale: string }) {
     // Backend may not be running in dev — graceful fallback
     return (
       <p className="text-sm text-gray-400 dark:text-gray-600 py-8 text-center">
-        Could not load products. Make sure the backend is running on port 8000.
+        Products are temporarily unavailable. Please try again shortly.
       </p>
     );
   }
