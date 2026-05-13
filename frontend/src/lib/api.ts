@@ -7,6 +7,21 @@ export class ApiError extends Error {
   }
 }
 
+// Authenticated fetch helper — reads access token from auth store at call time.
+// Returns the raw Response so callers can .json() or check .ok themselves.
+export function apiFetch(path: string, init: RequestInit = {}): Promise<Response> {
+  // Import lazily to avoid circular deps and SSR issues
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const { useAuthStore } = require("@/store/auth-store") as typeof import("@/store/auth-store");
+  const token = useAuthStore.getState().accessToken;
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+    ...(init.headers as Record<string, string>),
+  };
+  if (token) headers["Authorization"] = `Bearer ${token}`;
+  return fetch(`${BASE}${path}`, { ...init, headers });
+}
+
 async function request<T>(
   path: string,
   init: RequestInit = {},
