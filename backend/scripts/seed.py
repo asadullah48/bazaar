@@ -179,7 +179,7 @@ async def seed():
                     city=s["city"],
                     description=s["description"],
                     status="approved",
-                    approved_at=datetime.now(timezone.utc),
+                    approved_at=datetime.now(timezone.utc).replace(tzinfo=None),
                 )
                 session.add(seller_profile)
                 await session.flush()
