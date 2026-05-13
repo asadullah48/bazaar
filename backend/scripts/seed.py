@@ -204,7 +204,7 @@ async def seed():
                     slug=p_data["slug"],
                     description=p_data["description"],
                     condition="new",
-                    status="approved",
+                    status="published",
                 )
                 session.add(product)
                 await session.flush()
