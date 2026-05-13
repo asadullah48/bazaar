@@ -116,7 +116,7 @@ PRODUCTS = [
 
 async def seed():
     engine = create_async_engine(settings.database_url, echo=False)
-    async_session = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
+    async_session = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False, autoflush=False)
 
     async with async_session() as session:
         # ── Categories ────────────────────────────────────────────────────────
@@ -150,6 +150,7 @@ async def seed():
             session.add(admin_user)
             await session.flush()
             session.add(UserProfile(user_id=admin_user.id, full_name="Admin"))
+            await session.flush()
             print(f"  [+] Admin: {admin_user.email}")
         else:
             print(f"  [=] Admin exists: {admin_user.email}")
@@ -181,12 +182,11 @@ async def seed():
                     approved_at=datetime.now(timezone.utc),
                 )
                 session.add(seller_profile)
+                await session.flush()
                 print(f"  [+] Seller: {seller_user.email} ({s['store_name']})")
             else:
                 print(f"  [=] Seller exists: {seller_user.email}")
             seller_users.append(seller_user)
-
-        await session.flush()
 
         # ── Products ──────────────────────────────────────────────────────────
         for p_data in PRODUCTS:
@@ -233,4 +233,10 @@ async def seed():
 
 if __name__ == "__main__":
     print("Seeding ShopUnity database...")
-    asyncio.run(seed())
+    try:
+        asyncio.run(seed())
+    except Exception as exc:
+        import traceback
+        traceback.print_exc()
+        print(f"\n[seed] FAILED: {exc}", flush=True)
+        sys.exit(1)
