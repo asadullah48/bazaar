@@ -78,6 +78,9 @@ class Settings(BaseSettings):
 
     arq_redis_url: str = "redis://localhost:6379/1"
 
+    anthropic_api_key: str | None = None
+    base_url: str = "https://shopunity.pk"
+
 
 @lru_cache
 def get_settings() -> Settings:

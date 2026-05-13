@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Script from "next/script";
 import { getTranslations } from "next-intl/server";
 import { Heart, Store, ChevronRight } from "lucide-react";
 import { productsApi, ApiError } from "@/lib/api";
@@ -12,6 +13,7 @@ import { ProductReviews } from "@/components/product/product-reviews";
 import { AddToCartButton } from "@/components/product/add-to-cart-button";
 import { Recommendations } from "@/components/product/recommendations";
 import { ProductViewTracker } from "@/components/product/product-view-tracker";
+import { ProductQr } from "@/components/product/product-qr";
 
 interface Props {
   params: Promise<{ locale: string; slug: string }>;
@@ -26,8 +28,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   } catch {
     return {};
   }
+  const seo = product.seo_data as Record<string, string> | null | undefined;
   return {
-    title: `${product.name} — ShopUnity`,
+    title: seo?.title ?? `${product.name} — ShopUnity`,
+    description: seo?.meta_description,
     alternates: {
       canonical: `${base}/${locale}/products/${slug}`,
       languages: {
@@ -37,7 +41,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       },
     },
     openGraph: {
-      title: product.name,
+      title: seo?.title ?? product.name,
+      description: seo?.meta_description,
       images: product.images?.[0] ? [{ url: product.images[0].url }] : [],
     },
   };
@@ -87,8 +92,7 @@ export default async function ProductDetailPage({ params }: Props) {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      {/* JSON-LD structured data — add this line manually (security hook blocks dangerouslySetInnerHTML): */}
-      {/* <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} /> */}
+      <Script id="product-jsonld" type="application/ld+json">{JSON.stringify(jsonLd)}</Script>
       {/* Breadcrumb */}
       <nav className="flex items-center gap-1 text-xs text-gray-400 mb-6">
         <Link href={`/${locale}`} className="hover:text-orange-500 transition-colors">
@@ -171,6 +175,8 @@ export default async function ProductDetailPage({ params }: Props) {
           <p className="text-xs text-gray-400 dark:text-gray-600">
             {t("sku")}: {product.id.slice(0, 8).toUpperCase()}
           </p>
+
+          <ProductQr productId={apiProduct.id} />
         </div>
       </div>
 

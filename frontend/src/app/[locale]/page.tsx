@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import Link from "next/link";
+import Script from "next/script";
 import { getTranslations } from "next-intl/server";
 import { HeroCarousel } from "@/components/home/hero-carousel";
 import { CategoryStrip } from "@/components/home/category-strip";
@@ -60,11 +61,9 @@ export default async function HomePage({
       addressCountry: "PK",
     },
   };
-  void orgJsonLd;
-
   return (
     <div className="pb-16">
-      {/* JSON-LD: <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }} /> */}
+      <Script id="org-jsonld" type="application/ld+json">{JSON.stringify(orgJsonLd)}</Script>
       <HeroCarousel />
       <CategoryStrip locale={locale} />
       <FlashDeals locale={locale} />

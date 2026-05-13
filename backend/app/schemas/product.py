@@ -48,6 +48,8 @@ class ProductResponse(BaseModel):
     b2b_moq: Optional[int] = None
     status: str
     created_at: datetime
+    seo_data: Optional[Dict] = None
+    qr_data: Optional[Dict] = None
 
     model_config = {"from_attributes": True}
 
@@ -219,6 +221,7 @@ class PublicProduct(BaseModel):
     is_b2b_eligible: bool
     images: List[PublicProductImage]
     seller: PublicProductSeller
+    seo_data: Optional[Dict] = None
 
 
 class PublicProductList(BaseModel):

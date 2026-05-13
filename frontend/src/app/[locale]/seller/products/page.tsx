@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { useLocale } from "next-intl";
 import Link from "next/link";
-import { PlusCircle, Eye, Trash2 } from "lucide-react";
+import { PlusCircle, Eye, Trash2, Sparkles, QrCode } from "lucide-react";
 import { useAuthStore } from "@/store/auth-store";
 import { sellerProductsApi, SellerProductListItem } from "@/lib/api";
 
@@ -54,6 +54,24 @@ export default function SellerProductsPage() {
       loadProducts();
     } catch {
       setError("Failed to archive product");
+    }
+  };
+
+  const handleGenerateSeo = async (id: string) => {
+    if (!accessToken) return;
+    try {
+      await sellerProductsApi.generateSeo(accessToken, id);
+    } catch {
+      setError("Failed to generate SEO — check that ANTHROPIC_API_KEY is set");
+    }
+  };
+
+  const handleGenerateQr = async (id: string) => {
+    if (!accessToken) return;
+    try {
+      await sellerProductsApi.generateQr(accessToken, id);
+    } catch {
+      setError("Failed to queue QR generation");
     }
   };
 
@@ -122,6 +140,22 @@ export default function SellerProductsPage() {
                   </td>
                   <td className="px-4 py-3">
                     <div className="flex items-center justify-end gap-2">
+                      <button
+                        onClick={() => handleGenerateSeo(p.id)}
+                        title="Generate SEO"
+                        className="flex items-center gap-1 text-xs px-2.5 py-1.5 rounded-lg bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-400 hover:bg-purple-100 transition-colors font-medium"
+                      >
+                        <Sparkles size={12} />
+                        SEO
+                      </button>
+                      <button
+                        onClick={() => handleGenerateQr(p.id)}
+                        title="Generate QR code"
+                        className="flex items-center gap-1 text-xs px-2.5 py-1.5 rounded-lg bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400 hover:bg-blue-100 transition-colors font-medium"
+                      >
+                        <QrCode size={12} />
+                        QR
+                      </button>
                       {p.status === "draft" && (
                         <button
                           onClick={() => handlePublish(p.id)}

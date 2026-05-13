@@ -183,7 +183,24 @@ async def get_product(slug: str, db: AsyncSession = Depends(get_db)):
             display_name=sp.store_name if sp else "Unknown",
             slug=sp.store_slug if sp else "",
         ),
+        seo_data=product.seo_data,
     )
+
+
+@router.get("/products/{product_id}/qr")
+async def get_product_qr(product_id: uuid.UUID, db: AsyncSession = Depends(get_db)):
+    from app.core.redis import get_redis
+    redis = await get_redis()
+    cached = await redis.get(f"qr:{product_id}")
+    if cached:
+        return {"qr_code_url": cached, "cached": True}
+
+    result = await db.execute(select(Product).where(Product.id == product_id))
+    product = result.scalar_one_or_none()
+    if product is None or product.qr_data is None:
+        raise HTTPException(status_code=404, detail="QR not generated yet")
+
+    return product.qr_data
 
 
 @router.get("/sellers/{slug}", response_model=SellerStorefrontResponse)

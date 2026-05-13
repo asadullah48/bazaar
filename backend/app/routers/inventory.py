@@ -131,6 +131,18 @@ async def adjust_stock(
     if alert and alert.auto_pause and new_qty == 0:
         variant.is_active = False
 
+    should_notify = new_qty == 0 or (
+        alert and alert.threshold and new_qty <= alert.threshold
+    )
+
+    # Fetch product title before commit while session is open
+    product_title = str(variant_id)
+    if should_notify:
+        title_result = await db.execute(
+            select(Product.title).where(Product.id == variant.product_id)
+        )
+        product_title = title_result.scalar_one_or_none() or str(variant_id)
+
     movement = StockMovement(
         variant_id=variant_id,
         changed_by=seller.id,
@@ -142,4 +154,16 @@ async def adjust_stock(
     db.add(movement)
     await db.commit()
     await db.refresh(movement)
+
+    if should_notify:
+        from app.core.arq import get_arq_pool
+        pool = await get_arq_pool()
+        await pool.enqueue_job(
+            "notify_low_stock",
+            str(variant_id),
+            product_title,
+            new_qty,
+            str(seller.id),
+        )
+
     return movement

@@ -2,14 +2,12 @@
 import { useCallback, useEffect, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
-import Image from "next/image";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import clsx from "clsx";
 
 interface Slide {
   id: string;
-  image: string;
   badge?: string;
   heading: string;
   sub: string;
@@ -22,7 +20,6 @@ interface Slide {
 const SLIDES: Slide[] = [
   {
     id: "1",
-    image: "https://placehold.co/1200x480/f97316/white?text=Textiles+Sale",
     badge: "Summer Sale",
     heading: "Premium Pakistani Textiles",
     sub: "Lawn, Linen & Embroidered Suits — up to 40% off",
@@ -32,7 +29,6 @@ const SLIDES: Slide[] = [
   },
   {
     id: "2",
-    image: "https://placehold.co/1200x480/0891b2/white?text=B2B+Wholesale",
     badge: "Wholesale Deals",
     heading: "Bulk Orders for Your Business",
     sub: "Request quotes from verified suppliers across Pakistan",
@@ -43,7 +39,6 @@ const SLIDES: Slide[] = [
   },
   {
     id: "3",
-    image: "https://placehold.co/1200x480/ea580c/white?text=Top+Sellers",
     badge: "New Arrivals",
     heading: "Discover Top Sellers",
     sub: "Electronics, furniture, tools & more — all in one place",
@@ -82,15 +77,7 @@ export function HeroCarousel() {
             <div key={slide.id} className="relative flex-[0_0_100%] min-w-0">
               <div className={`bg-gradient-to-r ${slide.bg} absolute inset-0`} />
               <div className="relative aspect-[5/2] flex items-center">
-                <Image
-                  src={slide.image}
-                  alt={slide.heading}
-                  fill
-                  priority
-                  className="object-cover opacity-20 mix-blend-overlay"
-                  sizes="100vw"
-                />
-                <div className="relative z-10 px-8 sm:px-14 py-10 max-w-xl">
+                <div className="px-8 sm:px-14 py-10 max-w-xl">
                   {slide.badge && (
                     <span className="inline-block bg-white/20 backdrop-blur-sm text-white text-xs font-semibold px-3 py-1 rounded-full mb-3">
                       {slide.badge}

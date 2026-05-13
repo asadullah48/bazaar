@@ -50,6 +50,8 @@ class Product(Base):
     condition: Mapped[str] = mapped_column(String(20), default="new")
     tags: Mapped[list[str] | None] = mapped_column(ARRAY(String))
     attributes: Mapped[dict | None] = mapped_column(JSONB)
+    seo_data: Mapped[dict | None] = mapped_column(JSONB)
+    qr_data: Mapped[dict | None] = mapped_column(JSONB)
     is_b2b_eligible: Mapped[bool] = mapped_column(Boolean, default=False)
     b2b_moq: Mapped[int | None] = mapped_column(Integer)
     status: Mapped[str] = mapped_column(String(20), default="draft")

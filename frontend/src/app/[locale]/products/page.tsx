@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+import Script from "next/script";
 import { ProductCard } from "@/components/product/product-card";
 import { ProductGridSkeleton } from "@/components/product/product-grid-skeleton";
 import { productsApi } from "@/lib/api";
@@ -107,11 +108,9 @@ export default async function ProductsPage({ params, searchParams }: Props) {
       { "@type": "ListItem", position: 2, name: "Products", item: `${base}/${locale}/products` },
     ],
   };
-  void breadcrumbJsonLd;
-
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      {/* JSON-LD: <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} /> */}
+      <Script id="breadcrumb-jsonld" type="application/ld+json">{JSON.stringify(breadcrumbJsonLd)}</Script>
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
           All Products

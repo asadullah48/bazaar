@@ -106,6 +106,7 @@ export interface ApiProduct {
   is_b2b_eligible: boolean;
   images: { id: string; url: string; alt: string | null; is_primary: boolean }[];
   seller: { id: string; display_name: string; slug: string };
+  seo_data?: Record<string, unknown> | null;
 }
 
 export interface ProductListResponse {
@@ -370,6 +371,18 @@ export const sellerProductsApi = {
     request<SellerProduct>(`/v1/seller/products/${id}/publish`, { method: "PUT" }, token),
   archive: (token: string, id: string) =>
     request<SellerProduct>(`/v1/seller/products/${id}`, { method: "DELETE" }, token),
+  generateSeo: (token: string, id: string) =>
+    request<Record<string, unknown>>(`/v1/seller/products/${id}/seo`, { method: "POST" }, token),
+  generateQr: (token: string, id: string) =>
+    request<{ status: string; job_id: string }>(`/v1/seller/products/${id}/qr`, { method: "POST" }, token),
+  aiDescribe: (token: string, data: { title: string; description?: string }) =>
+    request<{ description: string }>("/v1/seller/ai-describe", { method: "POST", body: JSON.stringify(data) }, token),
+  aiCategorize: (token: string, data: { title: string }) =>
+    request<{ category_name: string; category_id: string | null; confidence: number }>(
+      "/v1/seller/ai-categorize",
+      { method: "POST", body: JSON.stringify(data) },
+      token
+    ),
 };
 
 // ── Categories ───────────────────────────────────────────────────────────────

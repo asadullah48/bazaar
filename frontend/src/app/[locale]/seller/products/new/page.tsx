@@ -2,9 +2,24 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useLocale } from "next-intl";
-import { ChevronRight, ChevronLeft, Check } from "lucide-react";
+import { ChevronRight, ChevronLeft, Check, Sparkles, Loader2 } from "lucide-react";
 import { useAuthStore } from "@/store/auth-store";
 import { sellerProductsApi, categoriesApi, CategoryNode } from "@/lib/api";
+
+function calcSeoScore(title: string, description: string, categoryId: string): number {
+  let score = 0;
+  if (title.length >= 20) score += 20;
+  else if (title.length >= 10) score += 10;
+  if (title.length >= 40 && title.length <= 70) score += 10;
+  if (description.length >= 150) score += 30;
+  else if (description.length >= 50) score += 15;
+  if (categoryId) score += 20;
+  const titleWords = title.toLowerCase().split(/\s+/).filter(Boolean);
+  const descLower = description.toLowerCase();
+  const matching = titleWords.filter((w) => w.length > 3 && descLower.includes(w)).length;
+  score += Math.min(matching * 5, 20);
+  return Math.min(score, 100);
+}
 
 function flattenCategories(nodes: CategoryNode[], depth = 0): { id: string; label: string }[] {
   return nodes.flatMap((n) => [
@@ -30,6 +45,9 @@ export default function NewProductPage() {
   const [description, setDescription] = useState("");
   const [categoryId, setCategoryId] = useState("");
 
+  const [aiImproving, setAiImproving] = useState(false);
+  const [catSuggestion, setCatSuggestion] = useState<{ name: string; confidence: number } | null>(null);
+
   const [price, setPrice] = useState("");
   const [stockQty, setStockQty] = useState("");
   const [skuCode, setSkuCode] = useState("");
@@ -42,6 +60,32 @@ export default function NewProductPage() {
   const autoSlug = (val: string) => {
     setTitle(val);
     setSlug(val.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""));
+  };
+
+  const handleTitleBlur = async () => {
+    if (!accessToken || title.trim().length < 5) return;
+    try {
+      const res = await sellerProductsApi.aiCategorize(accessToken, { title });
+      setCatSuggestion({ name: res.category_name, confidence: res.confidence });
+      if (res.confidence >= 0.85 && res.category_id && !categoryId) {
+        setCategoryId(res.category_id);
+      }
+    } catch {
+      // silent — AI is optional
+    }
+  };
+
+  const handleImproveDescription = async () => {
+    if (!accessToken) return;
+    setAiImproving(true);
+    try {
+      const res = await sellerProductsApi.aiDescribe(accessToken, { title, description });
+      setDescription(res.description);
+    } catch {
+      // silent
+    } finally {
+      setAiImproving(false);
+    }
   };
 
   const handleSubmit = async () => {
@@ -129,10 +173,38 @@ export default function NewProductPage() {
             <input
               value={title}
               onChange={(e) => autoSlug(e.target.value)}
+              onBlur={handleTitleBlur}
               className="w-full px-3 py-2 border border-gray-200 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-900 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-orange-400"
               placeholder="Product title"
             />
           </div>
+
+          {/* SEO score */}
+          {title && (
+            <div className="flex items-center gap-3">
+              {(() => {
+                const score = calcSeoScore(title, description, categoryId);
+                const color = score >= 70 ? "bg-green-500" : score >= 40 ? "bg-yellow-400" : "bg-red-400";
+                return (
+                  <>
+                    <div className="flex-1 h-1.5 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
+                      <div className={`h-full ${color} transition-all`} style={{ width: `${score}%` }} />
+                    </div>
+                    <span className="text-xs font-semibold text-gray-500 w-16 text-right">
+                      SEO {score}/100
+                    </span>
+                  </>
+                );
+              })()}
+            </div>
+          )}
+
+          {catSuggestion && (
+            <p className="text-xs text-purple-600 dark:text-purple-400">
+              ✨ AI suggested: <strong>{catSuggestion.name}</strong> ({Math.round(catSuggestion.confidence * 100)}% confidence)
+              {catSuggestion.confidence >= 0.85 ? " — auto-selected" : ""}
+            </p>
+          )}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Slug *
@@ -162,9 +234,20 @@ export default function NewProductPage() {
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-              Description
-            </label>
+            <div className="flex items-center justify-between mb-1">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                Description
+              </label>
+              <button
+                type="button"
+                onClick={handleImproveDescription}
+                disabled={!title || aiImproving}
+                className="flex items-center gap-1 text-xs px-2.5 py-1 rounded-lg bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-400 hover:bg-purple-100 disabled:opacity-40 transition-colors font-medium"
+              >
+                {aiImproving ? <Loader2 size={11} className="animate-spin" /> : <Sparkles size={11} />}
+                Improve with AI
+              </button>
+            </div>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
@@ -172,6 +255,7 @@ export default function NewProductPage() {
               className="w-full px-3 py-2 border border-gray-200 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-900 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-orange-400 resize-none"
               placeholder="Optional product description"
             />
+            <p className="text-xs text-gray-400 mt-0.5">{description.length} chars — aim for 150+ for best SEO</p>
           </div>
         </div>
       )}

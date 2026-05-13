@@ -12,7 +12,7 @@ from app.models.catalog import Product, ProductImage, ProductVariant
 
 router = APIRouter(prefix="/v1/recommendations", tags=["recommendations"])
 
-RECS_TTL = 600  # 10 minutes
+RECS_TTL = 600  # 10 minutes editorial cache; ML recs have their own 24h TTL
 
 
 def _min_price_sq():
@@ -43,8 +43,30 @@ async def get_recommendations(
     product_id: Optional[uuid.UUID] = Query(None),
     db: AsyncSession = Depends(get_db),
 ):
-    cache_key = f"recs:{product_id or 'global'}"
     redis = await get_redis()
+
+    # Try ML-computed co-occurrence recs first (written by nightly batch job)
+    if product_id:
+        ml_raw = await redis.get(f"ml_recs:{product_id}")
+        if ml_raw:
+            scored = json.loads(ml_raw)
+            pids = [uuid.UUID(s["id"]) for s in scored]
+            if pids:
+                mp = _min_price_sq()
+                img = _first_image_sq()
+                rows = await db.execute(
+                    select(Product, mp.c.min_price, img.c.image_url)
+                    .join(mp, mp.c.product_id == Product.id)
+                    .outerjoin(img, img.c.product_id == Product.id)
+                    .where(Product.status == "active", Product.id.in_(pids))
+                )
+                score_map = {s["id"]: s["score"] for s in scored}
+                items = _rows_to_items(rows.all())
+                items.sort(key=lambda x: score_map.get(x["id"], 0), reverse=True)
+                return {"items": items, "source": "ml", "cached": False}
+
+    # Editorial fallback: cache-backed category/global recs
+    cache_key = f"recs:{product_id or 'global'}"
     cached = await redis.get(cache_key)
     if cached:
         data = json.loads(cached)

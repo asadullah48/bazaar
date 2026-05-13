@@ -1,11 +1,13 @@
 import math
 import uuid
+from datetime import timedelta
 from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.core.arq import get_arq_pool
 from app.core.database import get_db
 from app.core.deps import get_current_active_user, require_seller
 from app.models.catalog import ProductVariant
@@ -197,6 +199,16 @@ async def advance_order(
     ))
     await db.commit()
     await db.refresh(order)
+
+    if next_status == "delivered" and order.buyer_id:
+        pool = await get_arq_pool()
+        await pool.enqueue_job(
+            "send_rating_request",
+            str(order.id),
+            str(order.buyer_id),
+            _defer_by=timedelta(hours=48),
+        )
+
     return await _order_to_response(order, db)
 
 

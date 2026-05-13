@@ -46,14 +46,16 @@ export function Header() {
         <div className="flex items-center h-16 gap-4">
           {/* Logo */}
           <Link href={`/${locale}`} className="flex-shrink-0">
-            <Image
-              src="/ShopUnity.png"
-              alt="ShopUnity"
-              width={140}
-              height={40}
-              className="h-9 w-auto object-contain"
-              priority
-            />
+            <div className="bg-gray-900 rounded-lg px-1.5 py-0.5">
+              <Image
+                src="/icons/shopunity-logo.png"
+                alt="ShopUnity"
+                width={160}
+                height={44}
+                className="h-9 w-auto object-contain"
+                priority
+              />
+            </div>
           </Link>
 
           {/* Search */}

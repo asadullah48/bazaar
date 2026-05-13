@@ -1,14 +1,16 @@
+import json
 import re
 import uuid
 from typing import List, Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Query
+from pydantic import BaseModel
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.database import get_db
 from app.core.deps import require_seller
-from app.models.catalog import Product, ProductB2BTier, ProductVariant
+from app.models.catalog import Category, Product, ProductB2BTier, ProductVariant
 from app.models.user import User
 from app.schemas.product import (
     B2BTierCreate,
@@ -287,3 +289,118 @@ async def delete_tier(
         raise HTTPException(status_code=404, detail="Tier not found")
     await db.delete(tier)
     await db.commit()
+
+
+# ── SEO + QR ──────────────────────────────────────────────────────────────────
+
+@router.post("/products/{product_id}/seo")
+async def trigger_seo(
+    product_id: uuid.UUID,
+    seller: User = Depends(require_seller),
+    db: AsyncSession = Depends(get_db),
+):
+    from app.services.seo_generator import generate_product_seo
+    product = await _own_product(product_id, seller, db)
+    try:
+        seo_data = await generate_product_seo(product)
+    except ValueError as exc:
+        raise HTTPException(status_code=503, detail=str(exc))
+    product.seo_data = seo_data
+    await db.commit()
+    return seo_data
+
+
+@router.post("/products/{product_id}/qr")
+async def trigger_qr(
+    product_id: uuid.UUID,
+    seller: User = Depends(require_seller),
+    db: AsyncSession = Depends(get_db),
+):
+    from app.core.arq import get_arq_pool
+    await _own_product(product_id, seller, db)
+    pool = await get_arq_pool()
+    job = await pool.enqueue_job("generate_product_qr", str(product_id))
+    return {"status": "queued", "job_id": job.job_id}
+
+
+# ── AI listing tools (Phase 4C) ───────────────────────────────────────────────
+
+class AiDescribeRequest(BaseModel):
+    title: str
+    description: Optional[str] = None
+
+
+class AiCategorizeRequest(BaseModel):
+    title: str
+
+
+@router.post("/ai-describe")
+async def ai_describe(
+    payload: AiDescribeRequest,
+    seller: User = Depends(require_seller),
+):
+    from anthropic import AsyncAnthropic
+    from app.core.config import get_settings
+    settings = get_settings()
+    if not settings.anthropic_api_key:
+        raise HTTPException(503, "AI service not configured")
+
+    client = AsyncAnthropic(api_key=settings.anthropic_api_key)
+    prompt = (
+        f"Rewrite this product description to be SEO-optimized and compelling for Pakistani buyers. "
+        f"Return ONLY the improved description text — no commentary, no markdown, no intro sentence.\n\n"
+        f"Product: {payload.title}\n"
+        f"Current description: {payload.description or 'None provided'}"
+    )
+    message = await client.messages.create(
+        model="claude-haiku-4-5-20251001",
+        max_tokens=400,
+        messages=[{"role": "user", "content": prompt}],
+    )
+    return {"description": message.content[0].text.strip()}
+
+
+@router.post("/ai-categorize")
+async def ai_categorize(
+    payload: AiCategorizeRequest,
+    seller: User = Depends(require_seller),
+    db: AsyncSession = Depends(get_db),
+):
+    from anthropic import AsyncAnthropic
+    from app.core.config import get_settings
+    settings = get_settings()
+    if not settings.anthropic_api_key:
+        raise HTTPException(503, "AI service not configured")
+
+    result = await db.execute(select(Category.id, Category.name).where(Category.parent_id == None))  # noqa: E711
+    top_cats = result.all()
+    if not top_cats:
+        raise HTTPException(404, "No categories configured")
+
+    cats_text = ", ".join(r.name for r in top_cats)
+    client = AsyncAnthropic(api_key=settings.anthropic_api_key)
+    prompt = (
+        f"Product title: {payload.title}\n"
+        f"Available categories: {cats_text}\n\n"
+        f"Return JSON only: {{\"category_name\": \"best match\", \"confidence\": 0.95}}"
+    )
+    message = await client.messages.create(
+        model="claude-haiku-4-5-20251001",
+        max_tokens=100,
+        messages=[{"role": "user", "content": prompt}],
+    )
+    data = json.loads(message.content[0].text.strip())
+
+    # Find the matching category ID
+    cat_name = data.get("category_name", "")
+    matched_id = None
+    for r in top_cats:
+        if r.name.lower() == cat_name.lower():
+            matched_id = str(r.id)
+            break
+
+    return {
+        "category_name": cat_name,
+        "category_id": matched_id,
+        "confidence": data.get("confidence", 0.0),
+    }
