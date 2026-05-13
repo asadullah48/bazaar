@@ -7,6 +7,7 @@ import clsx from "clsx";
 const locales = [
   { code: "en", label: "EN", nativeLabel: "English" },
   { code: "ar", label: "عربي", nativeLabel: "العربية" },
+  { code: "ur", label: "اردو", nativeLabel: "اردو" },
 ] as const;
 
 export function LanguageSwitcher() {
