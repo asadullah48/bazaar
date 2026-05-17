@@ -1,0 +1,88 @@
+<svg width="100%" viewBox="0 0 690 350" role="img" xmlns="http://www.w3.org/2000/svg" style="">
+  <title style="fill:rgb(0, 0, 0);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">ShopUnity — Pakistan's Unified Marketplace</title>
+  <desc style="fill:rgb(0, 0, 0);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">Pitch-ready logo lockup for ShopUnity featuring the unified shopping bag icon and wordmark on a deep navy background</desc>
+
+  <defs>
+    <linearGradient id="navyBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0D1525"/>
+      <stop offset="100%" stop-color="#111C31"/>
+    </linearGradient>
+    <linearGradient id="cyanGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#22C5F0"/>
+      <stop offset="100%" stop-color="#1A8DD4"/>
+    </linearGradient>
+    <linearGradient id="orangeGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#F5801A"/>
+      <stop offset="100%" stop-color="#E05E00"/>
+    </linearGradient>
+    <linearGradient id="purpleHandle" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#B48EF5"/>
+      <stop offset="100%" stop-color="#7C5CBF"/>
+    </linearGradient>
+    <linearGradient id="shopGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#4A6FA8"/>
+      <stop offset="100%" stop-color="#3A5990"/>
+    </linearGradient>
+    <linearGradient id="unityGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#22C5F0"/>
+      <stop offset="100%" stop-color="#1A8DD4"/>
+    </linearGradient>
+    <filter id="iconGlow">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+    <radialGradient id="glowBg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#1A3A6A" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#0D1525" stop-opacity="0"/>
+    </radialGradient>
+    <clipPath id="bagClip">
+      <rect x="0" y="0" width="160" height="160" rx="8"/>
+    </clipPath>
+  <mask id="imagine-text-gaps-juc16b" maskUnits="userSpaceOnUse"><rect x="0" y="0" width="690" height="350" fill="white"/><rect x="281" y="117" width="192.796875" height="86" fill="black" rx="2"/><rect x="459" y="117" width="210.7578125" height="86" fill="black" rx="2"/><rect x="281" y="205" width="377.046875" height="19" fill="black" rx="2"/></mask></defs>
+
+  <!-- Background -->
+  <rect width="680" height="340" fill="url(#navyBg)" rx="16" style="stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+  <!-- Subtle glow behind icon -->
+  <ellipse cx="175" cy="170" rx="120" ry="100" fill="url(#glowBg)" style="stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+  <!-- === ICON GROUP === -->
+  <g transform="translate(75, 70)" style="fill:rgb(0, 0, 0);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
+
+    <!-- Orange bag (left, slightly behind) -->
+    <g transform="translate(0, 18)" style="fill:rgb(0, 0, 0);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
+      <!-- orange handle arc -->
+      <path d="M 28 40 Q 28 8 52 8 Q 76 8 76 40" fill="none" stroke="url(#orangeGrad)" stroke-width="11" stroke-linecap="round" style="fill:none;color:rgb(255, 255, 255);stroke-width:11px;stroke-linecap:round;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+      <!-- orange bag body -->
+      <rect x="10" y="38" width="82" height="72" rx="7" fill="url(#orangeGrad)" style="stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+    </g>
+
+    <!-- Cyan bag (right, in front) -->
+    <g transform="translate(30, 10)" style="fill:rgb(0, 0, 0);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
+      <!-- purple handle arc -->
+      <path d="M 22 44 Q 22 6 50 6 Q 78 6 78 44" fill="none" stroke="url(#purpleHandle)" stroke-width="10" stroke-linecap="round" style="fill:none;color:rgb(255, 255, 255);stroke-width:10px;stroke-linecap:round;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+      <!-- cyan bag body -->
+      <rect x="6" y="42" width="88" height="78" rx="8" fill="url(#cyanGrad)" style="stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+      <!-- subtle shine on cyan bag -->
+      <rect x="14" y="50" width="24" height="34" rx="4" fill="#FFFFFF" fill-opacity="0.12" style="fill:rgb(255, 255, 255);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+    </g>
+
+  </g>
+
+  <!-- === WORDMARK === -->
+  <!-- "Shop" in muted blue-gray -->
+  <text x="285" y="185" font-family="Georgia, 'Times New Roman', serif" font-size="72" font-weight="700" letter-spacing="-1" fill="url(#shopGrad)" style="stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:Georgia, &quot;Times New Roman&quot;, serif;font-size:72px;font-weight:700;text-anchor:start;dominant-baseline:auto">Shop</text>
+
+  <!-- "Unity" in cyan gradient — achieved via rect + clip trick for SVG -->
+  <text x="463" y="185" font-family="Georgia, 'Times New Roman', serif" font-size="72" font-weight="700" letter-spacing="-1" fill="url(#unityGrad)" style="stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:Georgia, &quot;Times New Roman&quot;, serif;font-size:72px;font-weight:700;text-anchor:start;dominant-baseline:auto">Unity</text>
+
+  <!-- Tagline -->
+  <text x="285" y="218" font-family="'Courier New', monospace" font-size="13" font-weight="400" letter-spacing="4.5" fill="#6A8AB8" text-anchor="start" style="fill:rgb(106, 138, 184);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Courier New&quot;, monospace;font-size:13px;font-weight:400;text-anchor:start;dominant-baseline:auto">PAKISTAN'S UNIFIED MARKETPLACE</text>
+
+  <!-- Divider line -->
+  <line x1="285" y1="200" x2="652" y2="200" stroke="#1E3358" stroke-width="1" mask="url(#imagine-text-gaps-juc16b)" style="fill:rgb(0, 0, 0);stroke:rgb(30, 51, 88);color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+  <!-- Dot accent -->
+  <circle cx="275" cy="185" r="4" fill="#22C5F0" opacity="0.6" style="fill:rgb(34, 197, 240);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.6;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+</svg>

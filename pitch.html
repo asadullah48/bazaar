@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ShopUnity — Investor Pitch Deck</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy:   #0D1525; --navy2:  #111C31;
+    --orange: #F5801A; --orange2:#E05E00;
+    --cyan:   #22C5F0; --cyan2:  #1A8DD4;
+    --blue:   #3A5990; --gray:   #6B7280;
+  }
+  body { font-family:'Inter',-apple-system,sans-serif; background:#F0F2F5; color:#111827; }
+
+  .slide {
+    width:960px; min-height:540px; margin:24px auto; border-radius:16px;
+    overflow:hidden; position:relative; box-shadow:0 8px 40px rgba(0,0,0,.12);
+    display:flex; flex-direction:column;
+  }
+  .dark-slide  { background:linear-gradient(135deg,var(--navy),var(--navy2)); color:white; }
+  .light-slide { background:white; color:#111827; }
+
+  .slide-header { padding:32px 48px 0; }
+  .slide-body   { padding:24px 48px 40px; flex:1; display:flex; flex-direction:column; justify-content:center; }
+  .slide-number { position:absolute; bottom:18px; right:28px; font-size:11px; font-weight:600; letter-spacing:.08em; opacity:.35; }
+
+  .logo-bar { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+  .logo-mark {
+    width:28px; height:28px; border-radius:6px;
+    background:linear-gradient(135deg,var(--orange),var(--cyan));
+    display:flex; align-items:center; justify-content:center;
+    font-size:14px; font-weight:900; color:white;
+  }
+  .logo-name { font-size:12px; font-weight:700; color:var(--gray); letter-spacing:.05em; }
+
+  .tag {
+    display:inline-block; font-size:10px; font-weight:700; letter-spacing:.12em;
+    text-transform:uppercase; padding:4px 12px; border-radius:100px; margin-bottom:14px;
+  }
+  .tag-o { background:rgba(245,128,26,.15); color:var(--orange); }
+  .tag-c { background:rgba(34,197,240,.15);  color:var(--cyan2); }
+  .tag-w { background:rgba(255,255,255,.12); color:rgba(255,255,255,.8); }
+
+  h2 { font-size:34px; font-weight:800; line-height:1.15; letter-spacing:-.5px; }
+  .sub { font-size:16px; line-height:1.65; opacity:.72; }
+
+  .cols-2 { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  .cols-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:18px; }
+  .cols-4 { display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:14px; }
+
+  .stat-box { padding:18px; border-radius:12px; text-align:center; }
+  .stat-val { font-size:30px; font-weight:900; letter-spacing:-.5px; }
+  .stat-lbl { font-size:11px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; margin-top:4px; opacity:.6; }
+  .bg-o { background:rgba(245,128,26,.08); }
+  .bg-c { background:rgba(34,197,240,.08); }
+  .bg-n { background:rgba(13,21,37,.05); }
+
+  .card {
+    padding:18px; border-radius:12px; border:1.5px solid #E5E7EB; background:white;
+  }
+  .card-d {
+    padding:18px; border-radius:12px;
+    background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1);
+  }
+  .card h4, .card-d h4 { font-size:13px; font-weight:700; margin-bottom:6px; }
+  .card p   { font-size:12px; line-height:1.55; color:var(--gray); }
+  .card-d h4{ color:white; }
+  .card-d p { font-size:12px; line-height:1.55; color:rgba(255,255,255,.6); }
+
+  .tl { display:flex; flex-direction:column; gap:10px; }
+  .tl-row { display:flex; align-items:flex-start; gap:12px; }
+  .tl-dot { width:9px; height:9px; border-radius:50%; background:var(--orange); flex-shrink:0; margin-top:5px; }
+  .tl-dot.c { background:var(--cyan); }
+  .tl-text { font-size:13px; line-height:1.5; color:rgba(255,255,255,.75); }
+  .tl-text strong { font-weight:700; color:white; display:block; }
+
+  .check-list { list-style:none; }
+  .check-list li { display:flex; align-items:flex-start; gap:9px; font-size:13px; line-height:1.6; padding:5px 0; border-bottom:1px solid rgba(0,0,0,.05); }
+  .check-list li:last-child { border:none; }
+  .check-icon {
+    width:17px; height:17px; border-radius:50%;
+    background:linear-gradient(135deg,var(--orange),var(--orange2));
+    color:white; font-size:9px; font-weight:900;
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0; margin-top:2px;
+  }
+  .check-icon.c { background:linear-gradient(135deg,var(--cyan),var(--cyan2)); }
+
+  .pill {
+    display:inline-block; font-size:10px; font-weight:700; padding:4px 12px;
+    border-radius:100px; margin:3px;
+  }
+  .pill-o { background:rgba(245,128,26,.15); color:var(--orange); border:1px solid rgba(245,128,26,.25); }
+  .pill-c { background:rgba(34,197,240,.10); color:var(--cyan);   border:1px solid rgba(34,197,240,.2); }
+
+  @media print {
+    body { background:white; }
+    .slide { width:100%; min-height:100vh; margin:0; border-radius:0; box-shadow:none; page-break-before:always; }
+    .slide:first-child { page-break-before:avoid; }
+    .no-print { display:none; }
+    @page { size:A4 landscape; margin:0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── SLIDE 1: COVER ──────────────────────────────────────────── -->
+<div class="slide dark-slide">
+  <div style="position:absolute;top:-60px;right:-60px;width:320px;height:320px;background:radial-gradient(circle,rgba(34,197,240,.14),transparent 70%);border-radius:50%;"></div>
+  <div style="position:absolute;bottom:-80px;left:60px;width:240px;height:240px;background:radial-gradient(circle,rgba(245,128,26,.11),transparent 70%);border-radius:50%;"></div>
+  <div class="slide-body" style="justify-content:center;align-items:center;text-align:center;">
+    <!-- Inline SVG logo -->
+    <div style="width:360px;margin-bottom:28px;">
+      <svg viewBox="0 0 690 350" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
+        <defs>
+          <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#22C5F0"/><stop offset="100%" stop-color="#1A8DD4"/></linearGradient>
+          <linearGradient id="g2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#F5801A"/><stop offset="100%" stop-color="#E05E00"/></linearGradient>
+          <linearGradient id="g3" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#B48EF5"/><stop offset="100%" stop-color="#7C5CBF"/></linearGradient>
+          <linearGradient id="g4" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#4A6FA8"/><stop offset="100%" stop-color="#3A5990"/></linearGradient>
+          <linearGradient id="g5" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#22C5F0"/><stop offset="100%" stop-color="#1A8DD4"/></linearGradient>
+        </defs>
+        <g transform="translate(75,88)"><path d="M28 40 Q28 8 52 8 Q76 8 76 40" fill="none" stroke="url(#g2)" stroke-width="11" stroke-linecap="round"/><rect x="10" y="38" width="82" height="72" rx="7" fill="url(#g2)"/></g>
+        <g transform="translate(105,80)"><path d="M22 44 Q22 6 50 6 Q78 6 78 44" fill="none" stroke="url(#g3)" stroke-width="10" stroke-linecap="round"/><rect x="6" y="42" width="88" height="78" rx="8" fill="url(#g1)"/><rect x="14" y="50" width="24" height="34" rx="4" fill="#FFF" fill-opacity=".12"/></g>
+        <text x="285" y="185" font-family="Georgia,serif" font-size="72" font-weight="700" letter-spacing="-1" fill="url(#g4)">Shop</text>
+        <text x="463" y="185" font-family="Georgia,serif" font-size="72" font-weight="700" letter-spacing="-1" fill="url(#g5)">Unity</text>
+        <text x="285" y="218" font-family="'Courier New',monospace" font-size="13" letter-spacing="4.5" fill="#6A8AB8">PAKISTAN'S UNIFIED MARKETPLACE</text>
+      </svg>
+    </div>
+    <p style="font-size:17px;color:rgba(255,255,255,.62);max-width:500px;line-height:1.65;">
+      A full-stack B2C + B2B marketplace connecting Pakistani buyers, sellers, and businesses —
+      AI-powered, bilingual, PKR-native.
+    </p>
+    <div style="display:flex;gap:14px;margin-top:28px;flex-wrap:wrap;justify-content:center;">
+      <div style="background:rgba(245,128,26,.15);border:1px solid rgba(245,128,26,.3);border-radius:8px;padding:9px 18px;font-size:13px;color:rgba(255,255,255,.8);">
+        <strong style="color:var(--orange);">Seed Round</strong> · May 2026
+      </div>
+      <div style="background:rgba(34,197,240,.10);border:1px solid rgba(34,197,240,.2);border-radius:8px;padding:9px 18px;font-size:13px;color:rgba(255,255,255,.8);">
+        <strong style="color:var(--cyan);">CONFIDENTIAL</strong>
+      </div>
+    </div>
+  </div>
+  <div class="slide-number" style="color:rgba(255,255,255,.3);">1 / 10</div>
+</div>
+
+
+<!-- ── SLIDE 2: PROBLEM ────────────────────────────────────────── -->
+<div class="slide light-slide" style="border-top:5px solid var(--orange);">
+  <div class="slide-header">
+    <div class="logo-bar"><div class="logo-mark">S</div><span class="logo-name">ShopUnity</span></div>
+    <span class="tag tag-o">The Problem</span>
+    <h2>Pakistan's $30B Retail Market is Fragmented</h2>
+    <p class="sub" style="margin-top:8px;">Sellers, buyers, and businesses struggle with disconnected tools, manual processes, and no unified digital home.</p>
+  </div>
+  <div class="slide-body" style="padding-top:18px;">
+    <div class="cols-3">
+      <div class="card" style="border-color:rgba(245,128,26,.3);">
+        <div style="font-size:26px;margin-bottom:7px;">🏪</div>
+        <h4>Fragmented Sellers</h4>
+        <p>Pakistani sellers use Instagram DMs, WhatsApp groups, and informal networks — no unified storefront, no analytics, no automation tools.</p>
+      </div>
+      <div class="card" style="border-color:rgba(34,197,240,.3);">
+        <div style="font-size:26px;margin-bottom:7px;">🤝</div>
+        <h4>B2B Done on WhatsApp</h4>
+        <p>Bulk procurement still happens via phone calls and WhatsApp. No RFQ system, no competitive quoting, no paper trail or dispute resolution.</p>
+      </div>
+      <div class="card" style="border-color:rgba(245,128,26,.3);">
+        <div style="font-size:26px;margin-bottom:7px;">💸</div>
+        <h4>No PKR-Native Platform</h4>
+        <p>Existing platforms are USD-first. Local payment gateways (JazzCash, Easypaisa) are afterthoughts, creating friction for Pakistan's 180M mobile users.</p>
+      </div>
+    </div>
+    <div style="display:flex;gap:16px;margin-top:18px;">
+      <div class="stat-box bg-o" style="flex:1;"><div class="stat-val" style="color:var(--orange);">$30B</div><div class="stat-lbl">Total retail market</div></div>
+      <div class="stat-box bg-c" style="flex:1;"><div class="stat-val" style="color:var(--cyan2);">8%</div><div class="stat-lbl">E-commerce penetration</div></div>
+      <div class="stat-box bg-n" style="flex:1;"><div class="stat-val" style="color:var(--blue);">200M+</div><div class="stat-lbl">Population</div></div>
+      <div class="stat-box bg-o" style="flex:1;"><div class="stat-val" style="color:var(--orange);">30%</div><div class="stat-lbl">YoY e-com growth</div></div>
+    </div>
+  </div>
+  <div class="slide-number">2 / 10</div>
+</div>
+
+
+<!-- ── SLIDE 3: SOLUTION ───────────────────────────────────────── -->
+<div class="slide dark-slide">
+  <div style="position:absolute;top:0;right:0;width:260px;height:260px;background:radial-gradient(circle,rgba(34,197,240,.11),transparent 70%);border-radius:50%;"></div>
+  <div class="slide-header">
+    <span class="tag tag-w">The Solution</span>
+    <h2>ShopUnity: <span style="color:var(--cyan);">One Platform</span> for All of Pakistan's Commerce</h2>
+    <p class="sub" style="margin-top:8px;color:rgba(255,255,255,.6);">Dual B2C + B2B marketplace — AI-powered listings, verified sellers, PKR-native payments, full RFQ engine.</p>
+  </div>
+  <div class="slide-body" style="padding-top:14px;">
+    <div class="cols-2" style="gap:14px;">
+      <div>
+        <div class="card-d" style="margin-bottom:10px;">
+          <h4>🛍️ B2C Retail Marketplace</h4>
+          <p>Browse products from verified Pakistani sellers. Secure checkout via JazzCash, Easypaisa, or card. Real-time order tracking and reviews.</p>
+        </div>
+        <div class="card-d">
+          <h4>🤝 B2B RFQ Marketplace</h4>
+          <p>Post bulk purchase requests — verified suppliers respond with competitive quotes. Full lifecycle: post → bid → award → order → delivery.</p>
+        </div>
+      </div>
+      <div>
+        <div class="card-d" style="margin-bottom:10px;">
+          <h4>🤖 AI-Powered Seller Tools</h4>
+          <p>Auto-generate SEO titles, descriptions, keywords via Claude AI. Category confidence scoring, live SEO widget, ML-driven recommendations.</p>
+        </div>
+        <div class="card-d">
+          <h4>📊 Seller Intelligence Suite</h4>
+          <p>Revenue dashboards, inventory alerts, automated payouts, daily digest emails, WhatsApp marketing automation — one seller portal.</p>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;">
+      <span class="pill pill-o">English + اردو</span>
+      <span class="pill pill-c">PKR Primary</span>
+      <span class="pill pill-o">JazzCash + Easypaisa</span>
+      <span class="pill pill-c">RTL Support</span>
+      <span class="pill pill-o">WhatsApp Notifications</span>
+      <span class="pill pill-c">Cloudflare R2 CDN</span>
+      <span class="pill pill-o">Twilio + Resend</span>
+      <span class="pill pill-c">89 Tests Passing</span>
+    </div>
+  </div>
+  <div class="slide-number" style="color:rgba(255,255,255,.3);">3 / 10</div>
+</div>
+
+
+<!-- ── SLIDE 4: MARKET ─────────────────────────────────────────── -->
+<div class="slide light-slide" style="border-top:5px solid var(--cyan2);">
+  <div class="slide-header">
+    <div class="logo-bar"><div class="logo-mark" style="background:var(--cyan2);">S</div><span class="logo-name">ShopUnity</span></div>
+    <span class="tag tag-c">Market Opportunity</span>
+    <h2 style="color:#111;">A Massive, Underpenetrated Market</h2>
+    <p class="sub" style="margin-top:8px;">Pakistan's digital commerce is still in early innings — the window for a platform leader is now.</p>
+  </div>
+  <div class="slide-body" style="padding-top:14px;">
+    <div class="cols-2" style="align-items:center;gap:32px;">
+      <div style="display:flex;align-items:flex-end;">
+        <div style="width:210px;height:210px;border-radius:50%;background:rgba(58,89,144,.08);border:2px solid rgba(58,89,144,.2);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;flex-shrink:0;">
+          <strong style="font-size:24px;color:var(--blue);">$30B</strong>
+          <span style="font-size:10px;color:var(--blue);opacity:.7;letter-spacing:.06em;text-transform:uppercase;margin-top:4px;">TAM Total Retail</span>
+        </div>
+        <div style="width:158px;height:158px;border-radius:50%;background:rgba(34,197,240,.08);border:2px solid rgba(34,197,240,.3);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;flex-shrink:0;margin-left:-36px;">
+          <strong style="font-size:20px;color:var(--cyan2);">$8B</strong>
+          <span style="font-size:10px;color:var(--cyan2);opacity:.7;letter-spacing:.06em;text-transform:uppercase;margin-top:4px;">SAM Digital</span>
+        </div>
+        <div style="width:104px;height:104px;border-radius:50%;background:rgba(245,128,26,.10);border:2px solid rgba(245,128,26,.4);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;flex-shrink:0;margin-left:-28px;">
+          <strong style="font-size:15px;color:var(--orange);">$80M</strong>
+          <span style="font-size:9px;color:var(--orange);opacity:.7;letter-spacing:.05em;text-transform:uppercase;margin-top:3px;">SOM 3yr</span>
+        </div>
+      </div>
+      <div class="tl" style="--tl-color:#111;">
+        <div class="tl-row">
+          <div class="tl-dot" style="background:var(--blue);"></div>
+          <div class="tl-text" style="color:#374151;"><strong style="color:#111;">TAM — $30B Total Retail</strong>Pakistan's entire addressable retail market including all categories we serve.</div>
+        </div>
+        <div class="tl-row">
+          <div class="tl-dot" style="background:var(--cyan2);"></div>
+          <div class="tl-text" style="color:#374151;"><strong style="color:#111;">SAM — $8B Digital Commerce</strong>Growing 30% YoY as mobile internet penetration crosses 60%.</div>
+        </div>
+        <div class="tl-row">
+          <div class="tl-dot"></div>
+          <div class="tl-text" style="color:#374151;"><strong style="color:#111;">SOM — $80M GMV in 3 Years</strong>1% share — achievable at our growth trajectory with seed capital.</div>
+        </div>
+        <div class="tl-row">
+          <div class="tl-dot" style="background:var(--cyan2);"></div>
+          <div class="tl-text" style="color:#374151;"><strong style="color:#111;">B2B Multiplier ($100B+)</strong>Pakistan's wholesale procurement is almost entirely offline — our RFQ engine is greenfield.</div>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;gap:14px;margin-top:18px;">
+      <div class="stat-box bg-o" style="flex:1;"><div class="stat-val" style="color:var(--orange);">180M</div><div class="stat-lbl">Mobile internet users</div></div>
+      <div class="stat-box bg-c" style="flex:1;"><div class="stat-val" style="color:var(--cyan2);">65%</div><div class="stat-lbl">Population under 30</div></div>
+      <div class="stat-box bg-n" style="flex:1;"><div class="stat-val" style="color:var(--blue);">$1.2B</div><div class="stat-lbl">2025 e-com revenue</div></div>
+    </div>
+  </div>
+  <div class="slide-number">4 / 10</div>
+</div>
+
+
+<!-- ── SLIDE 5: PRODUCT ────────────────────────────────────────── -->
+<div class="slide light-slide" style="border-top:5px solid var(--orange);">
+  <div class="slide-header">
+    <div class="logo-bar"><div class="logo-mark">S</div><span class="logo-name">ShopUnity</span></div>
+    <span class="tag tag-o">Product</span>
+    <h2 style="color:#111;">Complete, Production-Ready Platform</h2>
+    <p class="sub" style="margin-top:6px;">89 automated tests passing. Deployed on Vercel + Koyeb. Live at shopunity.pk</p>
+  </div>
+  <div class="slide-body" style="padding-top:12px;">
+    <div class="cols-4">
+      <div class="card"><div style="font-size:22px;margin-bottom:5px;">🔐</div><h4>Auth & Roles</h4><p>JWT + refresh tokens, 4 roles: consumer, business buyer, seller, admin. Rotation on every use.</p></div>
+      <div class="card"><div style="font-size:22px;margin-bottom:5px;">📦</div><h4>Catalog & Search</h4><p>Full-text search, category tree, variants, B2B tier pricing, wishlist, reviews, QR codes.</p></div>
+      <div class="card"><div style="font-size:22px;margin-bottom:5px;">🛒</div><h4>Cart & Checkout</h4><p>Persistent cart, multi-address checkout, Paymob + Stripe integration, order lifecycle.</p></div>
+      <div class="card"><div style="font-size:22px;margin-bottom:5px;">📋</div><h4>RFQ Engine</h4><p>B2B request-for-quote: post → bid → award → order → delivery with WhatsApp updates.</p></div>
+      <div class="card"><div style="font-size:22px;margin-bottom:5px;">🤖</div><h4>AI Features</h4><p>Claude AI: auto-SEO, product descriptions, category suggestions, ML co-occurrence recommendations.</p></div>
+      <div class="card"><div style="font-size:22px;margin-bottom:5px;">📊</div><h4>Seller Portal</h4><p>Analytics, inventory alerts, payout scheduling, CSV bulk import, daily digest email reports.</p></div>
+      <div class="card"><div style="font-size:22px;margin-bottom:5px;">🌍</div><h4>i18n + RTL</h4><p>English + اردو. RTL support. PKR primary, USD/AED conversion. JSON-LD structured SEO.</p></div>
+      <div class="card"><div style="font-size:22px;margin-bottom:5px;">🔔</div><h4>Automation</h4><p>WhatsApp + email: order notifications, flash sale alerts, cart abandonment, rating requests.</p></div>
+    </div>
+  </div>
+  <div class="slide-number">5 / 10</div>
+</div>
+
+
+<!-- ── SLIDE 6: BUSINESS MODEL ────────────────────────────────── -->
+<div class="slide dark-slide">
+  <div style="position:absolute;bottom:0;right:0;width:280px;height:280px;background:radial-gradient(circle,rgba(245,128,26,.09),transparent 70%);border-radius:50%;"></div>
+  <div class="slide-header">
+    <span class="tag tag-w">Business Model</span>
+    <h2>Multiple Revenue Streams from Day One</h2>
+    <p class="sub" style="color:rgba(255,255,255,.6);margin-top:8px;">Platform monetizes from both sides of every transaction — zero inventory risk.</p>
+  </div>
+  <div class="slide-body" style="padding-top:14px;">
+    <div class="cols-2" style="gap:16px;">
+      <div>
+        <div class="card-d" style="margin-bottom:10px;">
+          <h4>💳 Transaction Commission (Primary)</h4>
+          <p>3–5% platform fee on every B2C order. 2–3% on B2B orders (volume incentive). Deducted before payout — zero collection risk.</p>
+        </div>
+        <div class="card-d" style="margin-bottom:10px;">
+          <h4>📦 Seller Subscriptions</h4>
+          <p><strong style="color:white;">Basic:</strong> Free (limited listings)<br/><strong style="color:white;">Pro:</strong> PKR 2,000/month — AI tools, analytics<br/><strong style="color:white;">Enterprise:</strong> PKR 8,000/month — dedicated manager</p>
+        </div>
+        <div class="card-d">
+          <h4>📣 Featured Placement</h4>
+          <p>Promoted slots on homepage, category pages, search. CPM + CPC model for brand advertisers.</p>
+        </div>
+      </div>
+      <div>
+        <div class="card-d" style="margin-bottom:10px;">
+          <h4>🤝 B2B Lead Generation</h4>
+          <p>Fee per successful RFQ match. Bulk verification premium for enterprise suppliers. Custom sourcing as managed service.</p>
+        </div>
+        <div class="card-d" style="margin-bottom:10px;">
+          <h4>💰 Unit Economics (Year 1 Target)</h4>
+          <p style="line-height:1.8;">
+            GMV: PKR 200M<br/>
+            Take Rate 4% → PKR 8M revenue<br/>
+            Sub MRR: PKR 500K<br/>
+            CAC Buyer PKR 300 | LTV PKR 4,500<br/>
+            CAC Seller PKR 800 | LTV PKR 18,000
+          </p>
+        </div>
+        <div class="card-d">
+          <h4>📈 Margin Path</h4>
+          <p>70%+ gross margin at scale. No inventory held. Contribution-margin-positive from Month 6 post-seed.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-number" style="color:rgba(255,255,255,.3);">6 / 10</div>
+</div>
+
+
+<!-- ── SLIDE 7: TECHNOLOGY ────────────────────────────────────── -->
+<div class="slide light-slide" style="border-top:5px solid var(--cyan2);">
+  <div class="slide-header">
+    <div class="logo-bar"><div class="logo-mark" style="background:var(--cyan2);">S</div><span class="logo-name">ShopUnity</span></div>
+    <span class="tag tag-c">Technology</span>
+    <h2 style="color:#111;">Production-Grade, AI-First Stack</h2>
+    <p class="sub" style="margin-top:6px;">Built for scale from day one. No shortcuts, no tech debt.</p>
+  </div>
+  <div class="slide-body" style="padding-top:14px;">
+    <div class="cols-2" style="gap:24px;">
+      <div>
+        <p style="font-size:13px;font-weight:700;margin-bottom:10px;color:#111;">Core Stack</p>
+        <ul class="check-list">
+          <li><div class="check-icon">✓</div><span><strong>FastAPI</strong> — Async Python, 89 tests, full OpenAPI docs</span></li>
+          <li><div class="check-icon">✓</div><span><strong>Next.js 14</strong> — App Router, SSR, RSC, Vercel deployment</span></li>
+          <li><div class="check-icon">✓</div><span><strong>PostgreSQL 16</strong> — Neon serverless, asyncpg, Alembic migrations</span></li>
+          <li><div class="check-icon">✓</div><span><strong>Redis 7</strong> — Session cache, job queues, recommendation cache</span></li>
+          <li><div class="check-icon">✓</div><span><strong>Cloudflare R2</strong> — CDN media storage, S3-compatible</span></li>
+          <li><div class="check-icon">✓</div><span><strong>arq</strong> — Async job queue for AI, marketing, and digest tasks</span></li>
+        </ul>
+      </div>
+      <div>
+        <p style="font-size:13px;font-weight:700;margin-bottom:10px;color:#111;">AI + ML Differentiators</p>
+        <ul class="check-list">
+          <li><div class="check-icon c">✓</div><span><strong>Claude AI (Haiku)</strong> — Auto-generates SEO titles, descriptions, keywords at ~$0.001/product</span></li>
+          <li><div class="check-icon c">✓</div><span><strong>ML Recommendations</strong> — Item co-occurrence matrix, nightly batch, Redis-cached, A/B observable</span></li>
+          <li><div class="check-icon c">✓</div><span><strong>AI Categorization</strong> — 91% confidence score, pre-fills category for new seller listings automatically</span></li>
+          <li><div class="check-icon c">✓</div><span><strong>Marketing Automation</strong> — Segment-based WhatsApp + email (category affinity, LTV tier, city)</span></li>
+          <li><div class="check-icon c">✓</div><span><strong>DeepL Translation</strong> — Dynamic content translation cached in Redis, 500K chars/month free</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="slide-number">7 / 10</div>
+</div>
+
+
+<!-- ── SLIDE 8: TRACTION ───────────────────────────────────────── -->
+<div class="slide dark-slide">
+  <div style="position:absolute;top:0;left:0;width:240px;height:240px;background:radial-gradient(circle,rgba(34,197,240,.09),transparent 70%);border-radius:50%;"></div>
+  <div class="slide-header">
+    <span class="tag tag-w">Traction</span>
+    <h2>What's Already Built &amp; Deployed</h2>
+    <p class="sub" style="color:rgba(255,255,255,.6);margin-top:8px;">Full-stack platform is live — not a prototype or MVP demo.</p>
+  </div>
+  <div class="slide-body" style="padding-top:14px;">
+    <div class="cols-2">
+      <div>
+        <div class="card-d" style="margin-bottom:10px;">
+          <h4>✅ Platform Live</h4>
+          <p>Frontend: Vercel (shopunity.pk) · Backend: Koyeb · DB: Neon PostgreSQL serverless · CDN: Cloudflare R2</p>
+        </div>
+        <div class="card-d" style="margin-bottom:10px;">
+          <h4>✅ Core Commerce</h4>
+          <p>Product catalog, search, cart, checkout, multi-gateway payments (JazzCash, Easypaisa, Stripe/Paymob), order management, reviews.</p>
+        </div>
+        <div class="card-d">
+          <h4>✅ Seller Portal</h4>
+          <p>Inventory management, payout scheduling, analytics dashboard, AI listing tools, CSV bulk import, daily digest emails.</p>
+        </div>
+      </div>
+      <div>
+        <div class="card-d" style="margin-bottom:10px;">
+          <h4>✅ B2B RFQ System</h4>
+          <p>Full RFQ lifecycle: post → bid → award → fulfill. WhatsApp notifications via Twilio on every stage transition.</p>
+        </div>
+        <div class="card-d" style="margin-bottom:10px;">
+          <h4>✅ AI &amp; ML Layer</h4>
+          <p>Claude AI SEO generation, auto-categorization, co-occurrence ML recommendations, segmented marketing automation with 4 trigger types.</p>
+        </div>
+        <div class="card-d">
+          <h4>✅ 89 Tests Passing</h4>
+          <p>Full integration tests hitting real PostgreSQL. Auth, catalog, orders, RFQ, payouts, inventory, SEO, recommendations — all covered.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-number" style="color:rgba(255,255,255,.3);">8 / 10</div>
+</div>
+
+
+<!-- ── SLIDE 9: ROADMAP ────────────────────────────────────────── -->
+<div class="slide light-slide" style="border-top:5px solid var(--orange);">
+  <div class="slide-header">
+    <div class="logo-bar"><div class="logo-mark">S</div><span class="logo-name">ShopUnity</span></div>
+    <span class="tag tag-o">Roadmap</span>
+    <h2 style="color:#111;">12-Month Growth Plan</h2>
+  </div>
+  <div class="slide-body" style="padding-top:14px;">
+    <div class="cols-4" style="gap:10px;">
+      <div class="card" style="border-color:rgba(245,128,26,.4);border-top:3px solid var(--orange);">
+        <div style="font-size:10px;font-weight:800;color:var(--orange);letter-spacing:.08em;margin-bottom:8px;">Q2 2026 — NOW</div>
+        <ul style="list-style:none;font-size:12px;line-height:1.9;color:var(--gray);">
+          <li>✓ Platform deployed</li>
+          <li>✓ Core commerce live</li>
+          <li>✓ B2B RFQ engine</li>
+          <li>✓ AI tools integrated</li>
+          <li style="color:var(--orange);font-weight:600;">→ Seller onboarding</li>
+        </ul>
+      </div>
+      <div class="card" style="border-color:rgba(34,197,240,.3);border-top:3px solid var(--cyan2);">
+        <div style="font-size:10px;font-weight:800;color:var(--cyan2);letter-spacing:.08em;margin-bottom:8px;">Q3 2026</div>
+        <ul style="list-style:none;font-size:12px;line-height:1.9;color:var(--gray);">
+          <li>100 active sellers</li>
+          <li>1,000+ products live</li>
+          <li>GMV: PKR 5M/month</li>
+          <li>WhatsApp marketing live</li>
+          <li>Seller PWA mobile</li>
+        </ul>
+      </div>
+      <div class="card" style="border-color:rgba(245,128,26,.3);border-top:3px solid var(--orange);">
+        <div style="font-size:10px;font-weight:800;color:var(--orange);letter-spacing:.08em;margin-bottom:8px;">Q4 2026</div>
+        <ul style="list-style:none;font-size:12px;line-height:1.9;color:var(--gray);">
+          <li>500 active sellers</li>
+          <li>Native mobile app</li>
+          <li>GMV: PKR 20M/month</li>
+          <li>Logistics integrations</li>
+          <li>Revenue: PKR 1M+/mo</li>
+        </ul>
+      </div>
+      <div class="card" style="border-color:rgba(34,197,240,.3);border-top:3px solid var(--cyan2);">
+        <div style="font-size:10px;font-weight:800;color:var(--cyan2);letter-spacing:.08em;margin-bottom:8px;">2027</div>
+        <ul style="list-style:none;font-size:12px;line-height:1.9;color:var(--gray);">
+          <li>2,000+ sellers</li>
+          <li>B2B market leader</li>
+          <li>GMV: PKR 100M/month</li>
+          <li>Series A ready</li>
+          <li>Regional expansion</li>
+        </ul>
+      </div>
+    </div>
+    <div style="margin-top:18px;padding:14px 18px;background:linear-gradient(90deg,rgba(245,128,26,.07),rgba(34,197,240,.07));border-radius:10px;border:1px solid rgba(245,128,26,.15);">
+      <p style="font-size:13px;color:#374151;"><strong>Break-even milestone:</strong> 300 active sellers on Pro plan (PKR 2K/month) + 4% commission on PKR 15M GMV/month = PKR 1.2M/month revenue. Achievable within 9 months of seed funding with focused seller acquisition.</p>
+    </div>
+  </div>
+  <div class="slide-number">9 / 10</div>
+</div>
+
+
+<!-- ── SLIDE 10: THE ASK ───────────────────────────────────────── -->
+<div class="slide dark-slide">
+  <div style="position:absolute;top:0;right:0;width:340px;height:340px;background:radial-gradient(circle,rgba(245,128,26,.11),transparent 70%);border-radius:50%;transform:translate(80px,-80px);"></div>
+  <div style="position:absolute;bottom:0;left:0;width:220px;height:220px;background:radial-gradient(circle,rgba(34,197,240,.07),transparent 70%);border-radius:50%;transform:translate(-60px,60px);"></div>
+  <div class="slide-header">
+    <span class="tag tag-w">The Ask</span>
+    <h2>Seed Round: <span style="color:var(--orange);">$250K – $500K</span></h2>
+    <p class="sub" style="color:rgba(255,255,255,.6);margin-top:8px;">12-month runway to 500 sellers and PKR 20M/month GMV.</p>
+  </div>
+  <div class="slide-body" style="padding-top:16px;">
+    <div class="cols-2" style="gap:22px;">
+      <div>
+        <p style="font-size:13px;font-weight:700;color:rgba(255,255,255,.8);margin-bottom:12px;">Use of Funds</p>
+        <div class="tl">
+          <div class="tl-row"><div class="tl-dot"></div><div class="tl-text"><strong>40% — Marketing &amp; Seller Acquisition</strong>Performance marketing on Instagram + Google. Seller workshops in Lahore, Karachi, Faisalabad.</div></div>
+          <div class="tl-row"><div class="tl-dot c"></div><div class="tl-text"><strong>30% — Team Expansion</strong>2 full-stack engineers, 1 growth marketer, 1 seller success manager.</div></div>
+          <div class="tl-row"><div class="tl-dot"></div><div class="tl-text"><strong>15% — Infrastructure &amp; AI</strong>Koyeb scale-up, Claude API credits, DeepL premium, Twilio WhatsApp.</div></div>
+          <div class="tl-row"><div class="tl-dot c"></div><div class="tl-text"><strong>15% — Operations &amp; Legal</strong>Company registration, payment gateway KYC compliance, accounting.</div></div>
+        </div>
+      </div>
+      <div>
+        <p style="font-size:13px;font-weight:700;color:rgba(255,255,255,.8);margin-bottom:12px;">Why Now, Why Us</p>
+        <div class="card-d" style="margin-bottom:8px;">
+          <h4>🚀 Platform is live — not a pitch</h4>
+          <p>Every feature described is deployed and passing 89 automated tests. Zero execution risk on the technology side.</p>
+        </div>
+        <div class="card-d" style="margin-bottom:8px;">
+          <h4>📱 Window is open</h4>
+          <p>Pakistan's e-commerce grows 30% YoY. First-mover advantage in unified B2C+B2B is still available — major players focus on B2C only.</p>
+        </div>
+        <div class="card-d">
+          <h4>🤖 AI moat from day one</h4>
+          <p>Auto-SEO, ML recommendations, and segmented marketing automation are live — not roadmap. Competitors don't have this.</p>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:20px;text-align:center;">
+      <p style="color:rgba(255,255,255,.4);font-size:11px;letter-spacing:.06em;">
+        CONFIDENTIAL — MAY 2026 — SHOPUNITY.PK — texcotembroiderysourcinghouse@gmail.com
+      </p>
+    </div>
+  </div>
+  <div class="slide-number" style="color:rgba(255,255,255,.3);">10 / 10</div>
+</div>
+
+<!-- Print button -->
+<div class="no-print" style="text-align:center;padding:32px;">
+  <button onclick="window.print()" style="background:linear-gradient(135deg,#F5801A,#22C5F0);color:white;border:none;padding:14px 36px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;letter-spacing:.02em;">
+    🖨️ Print / Save as PDF
+  </button>
+  <p style="margin-top:10px;color:#9CA3AF;font-size:12px;">File → Print → Destination: Save as PDF → Layout: Landscape</p>
+</div>
+
+</body>
+</html>
