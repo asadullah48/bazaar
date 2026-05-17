@@ -7,6 +7,7 @@ dist/
 .pytest_cache/
 .coverage
 htmlcov/
+.ruff_cache/
 
 # Node
 node_modules/
@@ -30,3 +31,24 @@ Thumbs.db
 .docker/
 pgdata/
 redisdata/
+
+# Editor
+.vscode/
+.idea/
+
+# AI & automation tool artifacts
+.claude/
+.playwright-mcp/
+CLAUDE.md
+
+# Development screenshots (root-level only)
+/*.png
+/*.jpg
+/*.jpeg
+
+# Orphaned / scratch files
+docker_check.txt
+backend/test_db.py
+
+# Nested git repos / stray dirs
+bazaar/

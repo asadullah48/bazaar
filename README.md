@@ -2,7 +2,7 @@
 
 > Textiles, electronics, furniture, toys and more — wholesale and retail in one platform.
 
-ShopUnity is a full-stack marketplace built for the Pakistani market. Buyers can shop retail or request wholesale quotes; sellers list products and manage orders; admins approve sellers and products before they go live. The platform operates in English and Arabic (RTL) with PKR pricing throughout.
+ShopUnity is a full-stack marketplace built for the Pakistani market. Buyers can shop retail or request wholesale quotes; sellers list products and manage orders; admins approve sellers and products before they go live. The platform operates in English, Arabic, and Urdu (both RTL) with PKR pricing throughout.
 
 ---
 
@@ -10,7 +10,7 @@ ShopUnity is a full-stack marketplace built for the Pakistani market. Buyers can
 
 | Layer | Technology |
 |-------|-----------|
-| **Frontend** | Next.js 14 (App Router), TypeScript, Tailwind CSS, Zustand, next-intl (EN/AR RTL) |
+| **Frontend** | Next.js 14 (App Router), TypeScript, Tailwind CSS, Zustand, next-intl (EN/AR/UR — RTL support) |
 | **Backend** | FastAPI, Python 3.12, Pydantic v2, async SQLAlchemy (asyncpg) |
 | **Database** | PostgreSQL 16 |
 | **Cache / Queue** | Redis 7, arq (async job queue) |
@@ -26,7 +26,7 @@ ShopUnity is a full-stack marketplace built for the Pakistani market. Buyers can
 
 | Buyer | Seller | Admin |
 |-------|--------|-------|
-| Browse products (EN/AR) | Product listing with images | Approve / suspend sellers |
+| Browse products (EN/AR/UR) | Product listing with images | Approve / suspend sellers |
 | Search & filter by category, price | 3-step new product form | Approve / reject products |
 | Product detail page with reviews | Publish / archive products | Manage payouts |
 | Add to cart, cart sidebar | Seller order management | Overview stats dashboard |
@@ -146,7 +146,7 @@ All endpoints are versioned under `/v1/`. Public endpoints (product listing, sea
 
 **Async SQLAlchemy:** All ORM operations use `AsyncSession` + `asyncpg`. Session injected via `Depends(get_db)`. All primary keys are UUIDs.
 
-**i18n:** `next-intl` handles locale routing (`/en/`, `/ar/`), RTL layout, and translation strings. Edge middleware applies locale detection before auth checks.
+**i18n:** `next-intl` handles locale routing (`/en/`, `/ar/`, `/ur/`), RTL layout for Arabic and Urdu, and translation strings. Edge middleware applies locale detection before auth checks.
 
 ---
 
