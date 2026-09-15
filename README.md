@@ -23,6 +23,7 @@ ShopUnity is a full-stack marketplace built for the Pakistani market. Buyers can
 | **Storage** | Cloudflare R2 (S3-compatible) |
 | **Payments** | Paymob (JazzCash/Easypaisa), Stripe (cards) |
 | **Notifications** | Twilio WhatsApp, Resend (email) |
+| **Translation** | DeepL API, Redis-cached 24h by text hash + target language |
 | **Infrastructure** | Docker Compose, multi-stage Dockerfile (standalone Next.js) |
 
 ---
@@ -42,6 +43,7 @@ ShopUnity is a full-stack marketplace built for the Pakistani market. Buyers can
 | B2B wholesale: RFQ flow | | |
 | Account & address management | | |
 | | AI-generated SEO metadata (title/meta description/keywords/JSON-LD via Claude) | |
+| On-demand text translation (DeepL, cached) | | |
 
 ---
 
@@ -128,7 +130,9 @@ pytest tests/test_auth.py     # single file
 pytest --cov=app              # with coverage report
 ```
 
-Expected: **78 passed** across 17 test files covering auth, catalog, cart, checkout, orders, reviews, search, wishlist, admin, RFQ, payouts, users, addresses, and categories.
+`pytest --collect-only` finds **91 tests across 18 files** — auth, catalog, cart, checkout,
+orders, reviews, search, wishlist, admin, RFQ, payouts, users, addresses, categories, and
+translation. (The exact pass count depends on a live Postgres + Redis, per above.)
 
 ---
 
@@ -182,6 +186,7 @@ Create `backend/.env` (copy from `backend/.env.example`):
 | `STRIPE_WEBHOOK_SECRET` | For payments | Stripe webhook signing secret |
 | `ARQ_REDIS_URL` | For workers | Default: `redis://localhost:6379/1` |
 | `FRONTEND_URL` | CORS | Default: `http://localhost:3000` |
+| `DEEPL_API_KEY` | For `/v1/translate` | Missing key returns 503, not a silent no-op |
 
 Frontend — create `frontend/.env.local`:
 
