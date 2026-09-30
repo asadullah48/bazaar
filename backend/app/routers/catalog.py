@@ -9,6 +9,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.database import get_db
 from app.models.catalog import Product, ProductB2BTier, ProductImage, ProductVariant
 from app.models.user import SellerProfile
+from app.models.review import Review
 from app.schemas.product import (
     B2BTierResponse,
     CatalogListItem,
@@ -22,6 +23,41 @@ from app.schemas.product import (
 )
 
 router = APIRouter(tags=["catalog"])
+
+
+async def _storefront_fields(rows, db: AsyncSession) -> dict:
+    """Load card data in batches, independent of the number of products."""
+    ids = [r.Product.id for r in rows]
+    if not ids:
+        return {}
+    seller_ids = {r.Product.seller_id for r in rows}
+    variants = (await db.execute(
+        select(ProductVariant.product_id, func.sum(ProductVariant.stock_qty).label("stock"))
+        .where(ProductVariant.product_id.in_(ids), ProductVariant.is_active == True)
+        .group_by(ProductVariant.product_id)
+    )).all()
+    stocks = {r.product_id: r.stock for r in variants}
+    images = (await db.execute(select(ProductImage).where(ProductImage.product_id.in_(ids))
+        .order_by(ProductImage.is_primary.desc(), ProductImage.sort_order))).scalars().all()
+    image_map = {pid: [] for pid in ids}
+    for img in images:
+        image_map[img.product_id].append({"id": str(img.id), "url": img.url, "alt": None, "is_primary": img.is_primary})
+    sellers = (await db.execute(select(SellerProfile).where(SellerProfile.user_id.in_(seller_ids)))).scalars().all()
+    seller_map = {s.user_id: s for s in sellers}
+    reviews = (await db.execute(select(Review.product_id, func.avg(Review.rating).label("average"), func.count(Review.id).label("count"))
+        .where(Review.product_id.in_(ids), Review.is_visible == True).group_by(Review.product_id))).all()
+    review_map = {r.product_id: r for r in reviews}
+    fields = {}
+    for row in rows:
+        product = row.Product
+        seller = seller_map.get(product.seller_id)
+        review = review_map.get(product.id)
+        fields[product.id] = {"name": product.title, "price": float(row.min_price or 0),
+            "compare_price": None, "stock_qty": stocks.get(product.id, 0),
+            "avg_rating": float(review.average) if review else None, "review_count": review.count if review else 0,
+            "images": image_map[product.id], "seller": {"id": str(product.seller_id),
+                "display_name": seller.store_name if seller else "Unknown", "slug": seller.store_slug if seller else ""}}
+    return fields
 
 
 def _min_price_sq():
@@ -65,11 +101,16 @@ async def list_products(
     sort: str = Query("newest"),
     page: int = Query(1, ge=1),
     limit: int = Query(20, ge=1, le=50),
+    size: Optional[int] = Query(None, ge=1, le=50),
+    q: Optional[str] = Query(None, max_length=200),
     db: AsyncSession = Depends(get_db),
 ):
     mp_sq = _min_price_sq()
+    limit = size if size is not None else limit
 
     base_conditions = [Product.status == "published"]
+    if q:
+        base_conditions.append(Product.title.ilike(f"%{q}%"))
     if category_id is not None:
         base_conditions.append(Product.category_id == category_id)
     if brand is not None:
@@ -116,8 +157,9 @@ async def list_products(
     data_q = data_q.offset((page - 1) * limit).limit(limit)
     rows = (await db.execute(data_q)).all()
 
+    fields = await _storefront_fields(rows, db)
     return {
-        "items": [_row_to_item(r) for r in rows],
+        "items": [{**_row_to_item(r), **fields[r.Product.id]} for r in rows],
         "total": total,
         "page": page,
         "pages": math.ceil(total / limit) if total else 0,

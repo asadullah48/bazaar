@@ -151,6 +151,16 @@ class CatalogListItem(BaseModel):
     is_b2b_eligible: bool
     created_at: datetime
 
+    # Additive storefront fields; existing catalog consumers keep their fields.
+    name: Optional[str] = None
+    price: float = 0
+    compare_price: Optional[float] = None
+    stock_qty: int = 0
+    avg_rating: Optional[float] = None
+    review_count: int = 0
+    images: List[Dict] = []
+    seller: Optional[Dict] = None
+
     model_config = {"from_attributes": True}
 
 

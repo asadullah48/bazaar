@@ -1,8 +1,8 @@
 "use client";
+import { publicFetch } from "@/lib/api";
 
 import { useEffect, useState } from "react";
 
-const BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
 
 interface QrData {
   qr_code_url: string;
@@ -12,7 +12,7 @@ export function ProductQr({ productId }: { productId: string }) {
   const [qrData, setQrData] = useState<QrData | null>(null);
 
   useEffect(() => {
-    fetch(`${BASE}/v1/products/${productId}/qr`)
+    publicFetch(`/v1/products/${productId}/qr`)
       .then((r) => (r.ok ? r.json() : null))
       .then((d) => d?.qr_code_url ? setQrData(d) : null)
       .catch(() => null);

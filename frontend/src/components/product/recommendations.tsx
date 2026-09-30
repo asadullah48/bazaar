@@ -1,4 +1,5 @@
 "use client";
+import { publicFetch } from "@/lib/api";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -22,8 +23,7 @@ export function Recommendations({ productId, locale }: RecommendationsProps) {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    const base = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
-    fetch(`${base}/v1/recommendations?product_id=${productId}`)
+    publicFetch(`/v1/recommendations?product_id=${productId}`)
       .then((r) => r.json())
       .then((data) => { setItems(data.items ?? []); setLoaded(true); })
       .catch(() => setLoaded(true));

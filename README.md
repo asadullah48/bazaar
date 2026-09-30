@@ -1,248 +1,88 @@
-# ShopUnity (Bazaar) — Pakistan's Dual-Mode B2B/B2C Marketplace
+# Bazaar / ShopUnity
 
-> Textiles, electronics, furniture, toys and more — wholesale and retail in one platform.
+**Retail discovery and wholesale sourcing for Pakistani commerce.**
 
-ShopUnity is a full-stack marketplace built for the Pakistani market. Buyers can shop retail or request wholesale quotes; sellers list products and manage orders; admins approve sellers and products before they go live. The platform operates in English, Arabic, and Urdu (both RTL) with PKR pricing throughout.
+A buyer-reviewable portfolio demo, backed by a separate FastAPI commerce codebase. Demo mode works without PostgreSQL, Redis, AI keys, payment credentials or paid backend hosting.
 
-> **Note:** this repo (`bazaar`) and [`shopunityvoice`](https://github.com/asadullah48/shopunityvoice)
-> share identical history and code — the project was pushed under two
-> repo names. `shopunityvoice` is the actively-described one going
-> forward; treat this repo as a mirror until one is archived.
+[Author portfolio](https://asadullahshafique-devunity.vercel.app/) · [Readiness and buyer handoff](docs/BUYER-HANDOFF.md)
 
----
-
-## Tech Stack
-
-| Layer | Technology |
-|-------|-----------|
-| **Frontend** | Next.js 14 (App Router), TypeScript, Tailwind CSS, Zustand, next-intl (EN/AR/UR — RTL support) |
-| **Backend** | FastAPI, Python 3.12, Pydantic v2, async SQLAlchemy (asyncpg) |
-| **Database** | PostgreSQL 16 |
-| **Cache / Queue** | Redis 7, arq (async job queue) |
-| **Auth** | JWT (15 min access + 7 day refresh, rotation on use) |
-| **Storage** | Cloudflare R2 (S3-compatible) |
-| **Payments** | Paymob (JazzCash/Easypaisa), Stripe (cards) |
-| **Notifications** | Twilio WhatsApp, Resend (email) |
-| **Translation** | DeepL API, Redis-cached 24h by text hash + target language |
-| **Infrastructure** | Docker Compose, multi-stage Dockerfile (standalone Next.js) |
-
----
-
-## Features
-
-| Buyer | Seller | Admin |
-|-------|--------|-------|
-| Browse products (EN/AR/UR) | Product listing with images | Approve / suspend sellers |
-| Search & filter by category, price | 3-step new product form | Approve / reject products |
-| Product detail page with reviews | Publish / archive products | Manage payouts |
-| Add to cart, cart sidebar | Seller order management | Overview stats dashboard |
-| Checkout with address | Seller dashboard | Role-based access guard |
-| Order history & status tracking | Earnings overview | |
-| Write product reviews (star rating) | | |
-| Wishlist | | |
-| B2B wholesale: RFQ flow | | |
-| Account & address management | | |
-| | AI-generated SEO metadata (title/meta description/keywords/JSON-LD via Claude) | |
-| On-demand text translation (DeepL, cached) | | |
-
----
-
-## Quick Start
-
-**Prerequisites:** Docker Desktop, Git
-
-```bash
-git clone https://github.com/asadullah48/bazaar.git
-cd bazaar
-# or: git clone https://github.com/asadullah48/shopunityvoice.git && cd shopunityvoice
-
-# Copy env template and fill in secrets
-cp backend/.env.example backend/.env
-
-# Start everything: postgres, redis, backend, frontend, pgadmin
-docker compose up -d
-
-# Run migrations (first time only)
-docker compose exec backend alembic upgrade head
-```
-
-Open in browser:
-
-| Service | URL |
-|---------|-----|
-| Storefront | http://localhost:3000/en |
-| API docs | http://localhost:8000/docs |
-| pgAdmin | http://localhost:5050 |
-
----
-
-## Development Setup
-
-### Backend
-
-```bash
-cd backend
-
-# Create and activate venv (Windows)
-python -m venv .venv
-source .venv/Scripts/activate   # PowerShell: .venv\Scripts\Activate.ps1
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Start PostgreSQL + Redis
-docker compose up -d postgres redis
-
-# Run migrations
-alembic upgrade head
-
-# Start dev server (hot reload)
-uvicorn app.main:app --reload --port 8000
-```
-
-### Frontend
+## Try the demo in two minutes
 
 ```bash
 cd frontend
-
-npm install
-
-# Set backend URL
-echo "NEXT_PUBLIC_API_URL=http://localhost:8000" > .env.local
-
-npm run dev   # http://localhost:3000
+npm ci
+npm run dev
 ```
 
----
+Open http://localhost:3000/en. With no API URL configured, the app deliberately selects demo mode. To make that choice explicit, copy `frontend/.env.example` to `frontend/.env.local` and keep `NEXT_PUBLIC_DEMO_MODE=true`.
 
-## Running Tests
+| Journey | What you can evaluate |
+| --- | --- |
+| Retail | 12 illustrated sample products, search, category and price filters, product details, supplier profiles and a persisted cart |
+| Wholesale | Delivered-cost comparison, minimum order quantity, budget and delivery constraints, explained shortlist, human approval and brief export |
+| Seller | Simulated order fulfilment stages and illustrative low-stock signals |
+| Checkout | No-signup simulated receipt; no personal information or payment collected |
 
-Tests hit the real local PostgreSQL — no mocks.
-
-```bash
-cd backend
-source .venv/Scripts/activate
-docker compose up -d postgres
-
-alembic upgrade head
-pytest                        # all tests
-pytest tests/test_auth.py     # single file
-pytest --cov=app              # with coverage report
-```
-
-`pytest --collect-only` finds **91 tests across 18 files** — auth, catalog, cart, checkout,
-orders, reviews, search, wishlist, admin, RFQ, payouts, users, addresses, categories, and
-translation. (The exact pass count depends on a live Postgres + Redis, per above.)
-
----
-
-## API Documentation
-
-FastAPI generates interactive docs automatically:
-
-- **Swagger UI:** http://localhost:8000/docs
-- **ReDoc:** http://localhost:8000/redoc
-
-All endpoints are versioned under `/v1/`. Public endpoints (product listing, search, reviews) require no authentication. Buyer, seller, and admin endpoints require a JWT Bearer token obtained from `POST /v1/auth/login`.
-
----
+All suppliers, artwork, prices, stock and offers in demo mode are illustrative. No real orders, seller verification, customer counts or payment settlement are claimed. The sourcing comparator is deterministic logic, not an AI agent. Demo mutations cannot reach the commerce API, and live API failures never silently fall back to demo data.
 
 ## Architecture
 
-**Headless:** The Next.js frontend consumes the FastAPI backend via REST. No server-side sessions — auth state lives in Zustand (localStorage) with a cookie bridge for Edge middleware route protection.
+```mermaid
+flowchart TD
+  UI[Next.js storefront] --> Mode{Explicit build mode}
+  Mode --> Demo[Local sample catalog and workflow simulations]
+  Mode --> API[FastAPI commerce API]
+  API --> DB[PostgreSQL]
+  API --> Cache[Redis and arq workers]
+```
 
-**Auth:** Short-lived JWT access tokens (15 min) + long-lived refresh tokens (7 days, SHA-256 hashed before storage). Tokens rotate on each refresh. Role hierarchy: `consumer` → `business_buyer` → `seller` → `admin`.
+| Layer | Actual implementation |
+| --- | --- |
+| Frontend | Next.js 14, React 18, TypeScript, Tailwind, Zustand |
+| Locale infrastructure | next-intl: English, Arabic and Urdu routes with RTL layout; newer showcase copy is English |
+| Backend | FastAPI, async SQLAlchemy, PostgreSQL, JWT authentication |
+| Cache / jobs | Redis, arq |
+| Provider adapters | Payment, email, WhatsApp, R2 storage, translation and Claude listing tools; require credentials and validation |
 
-**Dual B2C/B2B:** Products carry `is_b2b_eligible` and `b2b_moq`. Wholesale pricing uses a quantity-range tier table (`product_b2b_tiers`). Cart items and orders record `is_b2b` to select the correct pricing path. B2B buyers can submit RFQs for custom quotes.
+This repository is the home for these demo improvements. `shopunityvoice` shares earlier history but does not automatically receive changes here.
 
-**Async SQLAlchemy:** All ORM operations use `AsyncSession` + `asyncpg`. Session injected via `Depends(get_db)`. All primary keys are UUIDs.
+## Verification
 
-**i18n:** `next-intl` handles locale routing (`/en/`, `/ar/`, `/ur/`), RTL layout for Arabic and Urdu, and translation strings. Edge middleware applies locale detection before auth checks.
+```bash
+cd frontend
+npm test
+npm run lint
+npx tsc --noEmit
+npm run build
+# Browser checks, when Chromium is installed:
+npx playwright install chromium
+npm run test:e2e
+```
 
----
+Backend tests require a disposable local PostgreSQL database. See [buyer handoff](docs/BUYER-HANDOFF.md) for launch gaps and acceptance criteria. Passing frontend checks does not certify live payments or backend commerce.
 
-## Environment Variables
+## Hosting the portfolio demo
 
-Create `backend/.env` (copy from `backend/.env.example`):
+Import this repository into Vercel with **Root Directory = frontend** and set `NEXT_PUBLIC_DEMO_MODE=true`. No backend provider or AI subscription is required. A pre-existing API URL may remain, but explicit demo mode prevents all demo API calls from reaching it. Set `NEXT_PUBLIC_BASE_URL` to your actual deployment origin. Rebuild after changing public environment variables.
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `DATABASE_URL` | Yes | `postgresql+asyncpg://user:pass@host/db` |
-| `REDIS_URL` | Yes | `redis://localhost:6379/0` |
-| `JWT_SECRET_KEY` | Yes | Long random string (32+ chars) |
-| `JWT_ALGORITHM` | No | Default: `HS256` |
-| `ACCESS_TOKEN_EXPIRE_MINUTES` | No | Default: `15` |
-| `REFRESH_TOKEN_EXPIRE_DAYS` | No | Default: `7` |
-| `R2_ENDPOINT_URL` | For uploads | Cloudflare R2 endpoint |
-| `R2_ACCESS_KEY` | For uploads | R2 access key ID |
-| `R2_SECRET_KEY` | For uploads | R2 secret access key |
-| `R2_BUCKET_NAME` | For uploads | Default: `bazaar-assets` |
-| `R2_PUBLIC_URL` | For uploads | Public CDN URL |
-| `TWILIO_ACCOUNT_SID` | For WhatsApp | Twilio account SID |
-| `TWILIO_AUTH_TOKEN` | For WhatsApp | Twilio auth token |
-| `RESEND_API_KEY` | For email | Resend API key |
-| `PAYMOB_API_KEY` | For payments | Paymob API key |
-| `STRIPE_SECRET_KEY` | For payments | Stripe secret key |
-| `STRIPE_WEBHOOK_SECRET` | For payments | Stripe webhook signing secret |
-| `ARQ_REDIS_URL` | For workers | Default: `redis://localhost:6379/1` |
-| `FRONTEND_URL` | CORS | Default: `http://localhost:3000` |
-| `DEEPL_API_KEY` | For `/v1/translate` | Missing key returns 503, not a silent no-op |
+## Local backend development
 
-Frontend — create `frontend/.env.local`:
+```bash
+cp backend/.env.example backend/.env
+# Development credentials only; replace before any real deployment.
+docker compose up -d postgres redis
+cd backend
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt -r requirements-dev.txt
+alembic upgrade head
+uvicorn app.main:app --reload --port 8000
+```
 
-| Variable | Description |
-|----------|-------------|
-| `NEXT_PUBLIC_API_URL` | Backend base URL (default: `http://localhost:8000`) |
-
----
+Run the frontend separately with `NEXT_PUBLIC_DEMO_MODE=false` and `NEXT_PUBLIC_API_URL=http://localhost:8000`. Demo checkout is isolated from this live path. The legacy Docker frontend build needs public environment variables at build time; the separate local frontend command avoids that ambiguity.
 
 ## Contributing
 
-1. Fork and create a branch from `main`
-2. Branch naming conventions:
-   - `feat/short-description` — new features
-   - `fix/short-description` — bug fixes
-   - `docs/short-description` — documentation only
-3. Ensure `pytest` passes and `npx tsc --noEmit` returns 0 errors before opening a PR
-4. Keep PRs focused — one concern per PR
-5. Open the PR targeting `main`
+Use focused branches and pull requests. Run the frontend checks above, and run backend tests against a disposable Postgres/Redis instance for backend changes. Do not commit credentials, claim unverified traction or present sample data as real commerce. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
----
-
-## Agentic AI Alignment
-
-- **Autonomy** — `app/services/seo_generator.py` calls Claude
-  (`claude-haiku-4-5-20251001`) to generate a product's SEO title, meta
-  description, keywords, and JSON-LD on its own from just the product's
-  title/description — no human writes SEO copy per listing. This is an
-  AI-generation feature today, not a multi-step agent: one prompt, one
-  structured response.
-- **Resilience** — the SEO call is content-hashed and cached in Redis for
-  24h (`SEO_TTL`), so a re-run against an unchanged product costs nothing
-  and a missing `ANTHROPIC_API_KEY` fails fast with a clear error instead
-  of silently degrading the listing.
-- **Adaptivity** — the cache key is derived from `title|description|updated_at`,
-  so editing a product invalidates its stale SEO data automatically
-  rather than requiring a manual regenerate step.
-
-## Roadmap
-
-- [ ] Extend AI generation beyond SEO metadata to full product description
-      drafting from seller-supplied bullet points
-- [ ] A recommendation/search-ranking pass over the catalog (currently
-      plain filter/search, no ranking model)
-- [ ] CI running the test suite against a real Postgres/Redis service
-      container on push
-- [ ] Retire this repo or `shopunityvoice` — pick one canonical home for
-      the project (see note above)
-
-## Author
-
-Built by **Asadullah Shafique**
-
-Explore my portfolio showcasing Agentic AI projects and real-world applications:
-[asadullahshafique-devunity.vercel.app](https://asadullahshafique-devunity.vercel.app)
-
-## License
-
-MIT
+Built by **Asadullah Shafique — Agentic AI Engineer**.

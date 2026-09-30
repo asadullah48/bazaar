@@ -1,4 +1,5 @@
 "use client";
+import { DEMO_MODE } from "@/lib/runtime-mode";
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -29,6 +30,7 @@ export function ProductCard({ product, locale }: ProductCardProps) {
 
   async function toggleWishlist(e: React.MouseEvent) {
     e.preventDefault();
+    if (DEMO_MODE) { setWishlisted(v => !v); return; }
     if (!accessToken) return;
     try {
       if (wishlisted) {
@@ -57,19 +59,18 @@ export function ProductCard({ product, locale }: ProductCardProps) {
   }
 
   return (
-    <Link
-      href={`/${locale}/products/${product.slug}`}
+    <article
       className="group relative flex flex-col rounded-2xl border border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 overflow-hidden shadow-brand hover:shadow-brand-hover hover:border-cyan-200 dark:hover:border-cyan-800 transition-all duration-200"
     >
       {/* Image */}
       <div className="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-orange-50 to-cyan-50 dark:from-gray-800 dark:to-gray-800/60">
-        <Image
+        <Link href={`/${locale}/products/${product.slug}`} aria-label={`View ${product.name}`}><Image
           src={primaryImage?.url ?? "https://placehold.co/300x300"}
           alt={primaryImage?.alt ?? product.name}
           fill
           className="object-cover group-hover:scale-105 transition-transform duration-300"
           sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-        />
+        /></Link>
         {/* Out of stock overlay */}
         {isOutOfStock && (
           <div className="absolute inset-0 bg-white/60 dark:bg-gray-900/60 flex items-center justify-center">
@@ -81,8 +82,10 @@ export function ProductCard({ product, locale }: ProductCardProps) {
         {/* Wishlist button */}
         <button
           onClick={toggleWishlist}
-          className="absolute top-2 end-2 p-1.5 rounded-full bg-white dark:bg-gray-800 shadow opacity-0 group-hover:opacity-100 transition-opacity"
-          aria-label={t("add_to_wishlist")}
+          className="absolute top-2 end-2 p-1.5 rounded-full bg-white dark:bg-gray-800 shadow opacity-100 transition-opacity"
+          aria-label={DEMO_MODE ? (wishlisted ? "Remove from session shortlist" : "Save to session shortlist") : t("add_to_wishlist")}
+          aria-pressed={wishlisted}
+          disabled={!DEMO_MODE && !accessToken}
         >
           <Heart size={16} className={wishlisted ? "text-red-500 fill-red-500" : "text-gray-500 dark:text-gray-400"} />
         </button>
@@ -98,7 +101,7 @@ export function ProductCard({ product, locale }: ProductCardProps) {
           {product.seller.display_name}
         </Link>
         <h3 className="text-sm font-semibold text-gray-900 dark:text-white line-clamp-2 leading-snug">
-          {product.name}
+          <Link href={`/${locale}/products/${product.slug}`}>{product.name}</Link>
         </h3>
         <Rating value={product.avg_rating} count={product.review_count} />
         <div className="mt-auto flex items-center justify-between gap-2">
@@ -116,6 +119,6 @@ export function ProductCard({ product, locale }: ProductCardProps) {
           </button>
         </div>
       </div>
-    </Link>
+    </article>
   );
 }

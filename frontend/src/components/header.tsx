@@ -1,5 +1,6 @@
 "use client";
-import { useState } from "react";
+import { DEMO_MODE } from "@/lib/runtime-mode";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ShoppingCart, Search, User, Package, LogOut, FileText } from "lucide-react";
@@ -18,7 +19,9 @@ export function Header() {
   const locale = useLocale();
   const router = useRouter();
   const { openCart, totalItems } = useCartStore();
-  const count = totalItems();
+  const [hydrated, setHydrated] = useState(false);
+  useEffect(() => setHydrated(true), []);
+  const count = hydrated ? totalItems() : 0;
   const [query, setQuery] = useState("");
 
   const isAuthenticated = useAuthStore((s) => !!s.accessToken);
@@ -41,9 +44,9 @@ export function Header() {
   }
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-gray-100 dark:border-gray-800 bg-white/90 dark:bg-gray-950/90 backdrop-blur-sm relative">
+    <header className="sticky top-0 z-50 w-full border-b border-gray-100 dark:border-gray-800 bg-white/90 dark:bg-gray-950/90 backdrop-blur-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center h-16 gap-4">
+        <div className="flex items-center min-h-16 py-3 gap-3 flex-wrap sm:flex-nowrap">
           {/* Logo */}
           <Link href={`/${locale}`} className="flex-shrink-0">
             <div className="bg-gray-900 rounded-lg px-1.5 py-0.5">
@@ -59,13 +62,14 @@ export function Header() {
           </Link>
 
           {/* Search */}
-          <form onSubmit={handleSearch} className="flex-1 max-w-xl mx-auto">
+          <form onSubmit={handleSearch} className="order-last sm:order-none w-full sm:flex-1 sm:w-auto max-w-xl mx-auto">
             <div className="relative">
               <Search
                 size={16}
                 className="absolute start-3 top-1/2 -translate-y-1/2 text-gray-400"
               />
               <input
+                aria-label={t("common.search")}
                 type="search"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
@@ -76,7 +80,7 @@ export function Header() {
           </form>
 
           {/* Right controls */}
-          <nav className="flex items-center gap-2 flex-shrink-0">
+          <nav className="flex items-center gap-2 flex-shrink-0 ms-auto">
             <LanguageSwitcher />
             <ThemeToggle />
             {isAuthenticated ? (
@@ -93,8 +97,8 @@ export function Header() {
               </div>
             ) : (
               <Link
-                href={`/${locale}/auth/login`}
-                aria-label={tAuth("sign_in")}
+                href={DEMO_MODE ? `/${locale}/demo?view=seller` : `/${locale}/auth/login`}
+                aria-label={DEMO_MODE ? "Explore seller demo" : tAuth("sign_in")}
                 className="p-2 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
               >
                 <User size={20} />

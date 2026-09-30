@@ -1,4 +1,5 @@
 "use client";
+import { DEMO_MODE } from "@/lib/runtime-mode";
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -11,6 +12,24 @@ export function CartSidebar({ locale }: { locale: string }) {
   const { items, isOpen, closeCart, removeItem, updateQty, totalPrice } =
     useCartStore();
   const overlayRef = useRef<HTMLDivElement>(null);
+  const dialogRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const previous = document.activeElement as HTMLElement | null;
+    const dialog = dialogRef.current;
+    const focusable = () => Array.from(dialog?.querySelectorAll<HTMLElement>("button:not([disabled]), a[href], input") ?? []);
+    focusable()[0]?.focus();
+    function trap(event: KeyboardEvent) {
+      if (event.key !== "Tab") return;
+      const elements = focusable();
+      const first = elements[0], last = elements[elements.length - 1];
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+    }
+    document.addEventListener("keydown", trap);
+    return () => { document.removeEventListener("keydown", trap); previous?.focus(); };
+  }, [isOpen]);
 
   // Close on Escape
   useEffect(() => {
@@ -35,6 +54,8 @@ export function CartSidebar({ locale }: { locale: string }) {
       maximumFractionDigits: 0,
     }).format(n);
 
+  if (!isOpen) return null;
+
   return (
     <>
       {/* Overlay */}
@@ -49,6 +70,7 @@ export function CartSidebar({ locale }: { locale: string }) {
 
       {/* Drawer — slides in from the end (right in LTR, left in RTL) */}
       <aside
+        ref={dialogRef}
         role="dialog"
         aria-modal="true"
         aria-label={t("title")}
@@ -157,7 +179,7 @@ export function CartSidebar({ locale }: { locale: string }) {
               <span className="text-orange-500">{fmt(totalPrice())}</span>
             </div>
             <Link
-              href={`/${locale}/checkout`}
+              href={DEMO_MODE ? `/${locale}/demo?view=checkout` : `/${locale}/checkout`}
               onClick={closeCart}
               className="block w-full text-center bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-6 rounded-xl transition-colors"
             >

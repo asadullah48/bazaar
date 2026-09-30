@@ -100,6 +100,30 @@ async def test_catalog_price_filter(client, seller_with_profile):
     assert not any(p["id"] == pid for p in r_out.json()["items"])
 
 
+async def test_storefront_card_contract_and_search(client, seller_with_profile):
+    """Card fields must agree with real variants, rather than blank UI defaults."""
+    hdrs = {"Authorization": f"Bearer {seller_with_profile['token']}"}
+    title = f"Storefront {uuid.uuid4().hex}"
+    prod = (await client.post(SELLER_PROD, json={"title": title}, headers=hdrs)).json()
+    pid = prod["id"]
+    await client.post(f"{SELLER_PROD}/{pid}/variants", json={"price": 500, "stock_qty": 5}, headers=hdrs)
+    await client.post(f"{SELLER_PROD}/{pid}/variants", json={"price": 700, "stock_qty": 2}, headers=hdrs)
+    await _publish(pid)
+    response = await client.get(CATALOG, params={"q": title, "size": 1})
+    assert response.status_code == 200
+    data = response.json()
+    assert data["total"] == 1
+    card = data["items"][0]
+    assert card["id"] == pid
+    assert card["name"] == title
+    assert card["price"] == 500
+    assert card["stock_qty"] == 7
+    assert card["seller"]["slug"] == seller_with_profile["slug"]
+    assert card["images"] == []
+    assert card["review_count"] == 0
+    assert card["avg_rating"] is None
+
+
 async def test_product_detail(client, seller_with_profile):
     hdrs = {"Authorization": f"Bearer {seller_with_profile['token']}"}
     prod = (await client.post(SELLER_PROD, json={"title": "Detail Test", "condition": "used"}, headers=hdrs)).json()
