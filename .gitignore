@@ -52,3 +52,7 @@ backend/test_db.py
 
 # Nested git repos / stray dirs
 bazaar/
+
+# Browser verification artifacts
+frontend/test-results/
+frontend/playwright-report/

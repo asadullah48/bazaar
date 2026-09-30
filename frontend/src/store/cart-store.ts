@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { CartItem } from "@/types";
+import { DEMO_MODE } from "@/lib/runtime-mode";
 
 interface CartState {
   items: CartItem[];
@@ -42,7 +43,8 @@ export const useCartStore = create<CartState>()(
               isOpen: true,
             };
           }
-          return { items: [...state.items, incoming], isOpen: true };
+          if (!Number.isFinite(incoming.quantity) || incoming.quantity <= 0 || incoming.stock_qty <= 0) return state;
+          return { items: [...state.items, { ...incoming, quantity: Math.min(Math.floor(incoming.quantity), incoming.stock_qty) }], isOpen: true };
         }),
 
       removeItem: (product_id) =>
@@ -54,7 +56,7 @@ export const useCartStore = create<CartState>()(
         set((state) => ({
           items: state.items
             .map((i) =>
-              i.product_id === product_id ? { ...i, quantity: qty } : i
+              i.product_id === product_id ? { ...i, quantity: Math.min(Math.max(0, Math.floor(Number.isFinite(qty) ? qty : 0)), i.stock_qty) } : i
             )
             .filter((i) => i.quantity > 0),
         })),
@@ -68,7 +70,7 @@ export const useCartStore = create<CartState>()(
         get().items.reduce((sum, i) => sum + i.price * i.quantity, 0),
     }),
     {
-      name: "bazaar-cart",
+      name: DEMO_MODE ? "bazaar-demo-cart" : "bazaar-cart",
       partialize: (state) => ({ items: state.items }),
     }
   )

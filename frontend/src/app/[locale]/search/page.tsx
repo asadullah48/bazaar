@@ -1,3 +1,6 @@
+import { DEMO_MODE } from "@/lib/runtime-mode";
+import { DEMO_PRODUCTS } from "@/lib/demo-catalog";
+import { ProductCard } from "@/components/product/product-card";
 import { getTranslations } from "next-intl/server";
 import { SearchResultCard } from "@/components/product/search-result-card";
 import { searchApi, SearchItem } from "@/lib/api";
@@ -70,7 +73,7 @@ export default async function SearchPage({ params, searchParams }: SearchPagePro
           </p>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
             {result.items.map((item) => (
-              <SearchResultCard key={item.id} item={item} locale={locale} />
+              DEMO_MODE ? <ProductCard key={item.id} product={DEMO_PRODUCTS.find(p => p.id === item.id)!} locale={locale} /> : <SearchResultCard key={item.id} item={item} locale={locale} />
             ))}
           </div>
         </div>

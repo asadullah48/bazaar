@@ -1,4 +1,5 @@
 "use client";
+import { DEMO_MODE } from "@/lib/runtime-mode";
 
 function getSessionId(): string {
   if (typeof window === "undefined") return "ssr";
@@ -16,6 +17,7 @@ export function useTrackEvent() {
     product_id?: string,
     campaign_id?: string,
   ) {
+    if (DEMO_MODE) return;
     const base = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
     const session_id = getSessionId();
     fetch(`${base}/v1/events`, {

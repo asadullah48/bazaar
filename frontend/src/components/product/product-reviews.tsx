@@ -1,4 +1,5 @@
 "use client";
+import { DEMO_MODE } from "@/lib/runtime-mode";
 import { useState, useEffect } from "react";
 import { Star } from "lucide-react";
 import { reviewsApi, PaginatedReviews, ReviewResponse } from "@/lib/api";
@@ -220,7 +221,7 @@ export function ProductReviews({ productId }: Props) {
       {loading ? (
         <p className="text-gray-400 text-sm">Loading reviews…</p>
       ) : !data || data.items.length === 0 ? (
-        <p className="text-gray-400 text-sm">No reviews yet. Be the first!</p>
+        <p className="text-gray-400 text-sm">{DEMO_MODE ? "No sample ratings are presented as real customer reviews." : "No reviews yet. Be the first!"}</p>
       ) : (
         <div className="space-y-4">
           {data.items.map((r) => (

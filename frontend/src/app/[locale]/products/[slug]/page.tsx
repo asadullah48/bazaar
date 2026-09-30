@@ -1,9 +1,11 @@
+import { DEMO_MODE } from "@/lib/runtime-mode";
+import { DEMO_PRODUCTS } from "@/lib/demo-catalog";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Script from "next/script";
 import { getTranslations } from "next-intl/server";
-import { Heart, Store, ChevronRight } from "lucide-react";
+import { Store, ChevronRight } from "lucide-react";
 import { productsApi, ApiError } from "@/lib/api";
 import { toProduct } from "@/lib/to-product";
 import { ProductGallery } from "@/components/product/product-gallery";
@@ -92,7 +94,7 @@ export default async function ProductDetailPage({ params }: Props) {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <Script id="product-jsonld" type="application/ld+json">{JSON.stringify(jsonLd)}</Script>
+      {!DEMO_MODE && <Script id="product-jsonld" type="application/ld+json">{JSON.stringify(jsonLd).replace(/</g, "\\u003c")}</Script>}
       {/* Breadcrumb */}
       <nav className="flex items-center gap-1 text-xs text-gray-400 mb-6">
         <Link href={`/${locale}`} className="hover:text-orange-500 transition-colors">
@@ -165,11 +167,10 @@ export default async function ProductDetailPage({ params }: Props) {
           {/* Add to cart */}
           <AddToCartButton product={product} />
 
+          {DEMO_MODE && <p className="text-sm text-gray-500 leading-relaxed">{DEMO_PRODUCTS.find(p => p.slug === slug)?.description}</p>}
+
           {/* Wishlist */}
-          <button className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-red-500 transition-colors w-fit">
-            <Heart size={16} />
-            {t("add_to_wishlist")}
-          </button>
+          <Link href={DEMO_MODE ? `/${locale}/demo` : `/${locale}/rfq/new`} className="text-sm text-cyan-700 dark:text-cyan-400 underline underline-offset-4">Compare wholesale offers →</Link>
 
           {/* SKU */}
           <p className="text-xs text-gray-400 dark:text-gray-600">

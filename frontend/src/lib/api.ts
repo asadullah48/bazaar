@@ -1,4 +1,13 @@
+import { DEMO_MODE } from "./runtime-mode";
 const BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+
+export async function publicFetch(path: string, init: RequestInit = {}): Promise<Response> {
+  if (DEMO_MODE) {
+    const { demoResponse } = await import("./demo-catalog");
+    return demoResponse(path, init.method ?? "GET");
+  }
+  return fetch(`${BASE}${path}`, { ...init, signal: init.signal ?? AbortSignal.timeout(10000) });
+}
 
 export class ApiError extends Error {
   constructor(public status: number, message: string) {
@@ -19,7 +28,7 @@ export function apiFetch(path: string, init: RequestInit = {}): Promise<Response
     ...(init.headers as Record<string, string>),
   };
   if (token) headers["Authorization"] = `Bearer ${token}`;
-  return fetch(`${BASE}${path}`, { ...init, headers });
+  return publicFetch(path, { ...init, headers });
 }
 
 async function request<T>(
@@ -33,7 +42,7 @@ async function request<T>(
   };
   if (token) headers["Authorization"] = `Bearer ${token}`;
 
-  const res = await fetch(`${BASE}${path}`, { ...init, headers });
+  const res = await publicFetch(path, { ...init, headers });
 
   if (!res.ok) {
     let detail = res.statusText;

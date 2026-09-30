@@ -1,4 +1,5 @@
 "use client";
+import { publicFetch } from "@/lib/api";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Zap } from "lucide-react";
@@ -41,8 +42,7 @@ export function FlashDeals({ locale }: { locale: string }) {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    const base = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
-    fetch(`${base}/v1/slots/flash`)
+    publicFetch(`/v1/slots/flash`)
       .then((r) => r.json())
       .then((data) => { setItems(data.items ?? []); setLoaded(true); })
       .catch(() => setLoaded(true));

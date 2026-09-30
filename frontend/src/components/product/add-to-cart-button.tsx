@@ -36,6 +36,7 @@ export function AddToCartButton({ product }: { product: Product }) {
         </span>
         <div className="flex items-center border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden">
           <button
+            aria-label="Decrease quantity"
             onClick={() => setQty((q) => Math.max(1, q - 1))}
             disabled={qty <= 1}
             className="px-3 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 disabled:opacity-40 transition-colors"
@@ -46,6 +47,7 @@ export function AddToCartButton({ product }: { product: Product }) {
             {qty}
           </span>
           <button
+            aria-label="Increase quantity"
             onClick={() => setQty((q) => Math.min(product.stock_qty, q + 1))}
             disabled={qty >= product.stock_qty}
             className="px-3 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 disabled:opacity-40 transition-colors"

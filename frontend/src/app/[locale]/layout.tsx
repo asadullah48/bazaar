@@ -1,3 +1,6 @@
+import { DemoBanner } from "@/components/demo-banner";
+import { SiteFooter } from "@/components/site-footer";
+import { DEMO_MODE } from "@/lib/runtime-mode";
 import type { Metadata } from "next";
 import { Inter, Noto_Kufi_Arabic, Noto_Nastaliq_Urdu } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
@@ -27,7 +30,8 @@ export async function generateMetadata({
 
   return {
     title: "ShopUnity — Pakistan's Marketplace",
-    description: "Shop textiles, electronics, furniture, toys and more",
+    description: "Explore retail shopping and wholesale sourcing for Pakistani commerce.",
+    robots: DEMO_MODE ? { index: false, follow: false } : undefined,
     manifest: "/manifest.webmanifest",
     icons: {
       icon: [
@@ -71,9 +75,12 @@ export default async function LocaleLayout({
       >
         <NextIntlClientProvider messages={messages}>
           <Providers>
+            <a href="#main-content" className="skip-link">Skip to content</a>
+            <DemoBanner locale={locale} />
             <Header />
             <CartSidebar locale={locale} />
-            <main>{children}</main>
+            <main id="main-content">{children}</main>
+            <SiteFooter locale={locale} />
           </Providers>
         </NextIntlClientProvider>
       </body>
