@@ -17,7 +17,9 @@ This draft is UI/UX and bug fixes on **Next.js 14.2.35**. The framework upgrade 
 
 ## Exact build and test results
 
-### Authoritative fresh-clone validation
+### Original storefront fresh-clone validation
+
+This records the original storefront run. The later dependency-security follow-up and its separate validation attempts are recorded under **Known vulnerabilities** below.
 
 Validated the **pushed** commit `316131d825ed7af9e87db8ff4e4130ddcbc21dcb` from a new clone outside the apostrophe path, with no source edits or reused `node_modules`/build cache. Platform: Windows, Node v24.19.0, npm 12.2.0. This is not a Linux validation claim.
 
@@ -74,11 +76,23 @@ The initial workspace build was blocked by external font DNS and an apostrophe-p
 | `postcss-selector-parser` | Moderate | Transitive | Fixed range starts at 7.1.6, a major change from installed 6.1.4. Latest published 6.x returned was 6.1.4; unchanged. |
 | `tailwindcss` | High | Direct | Inherits braces and selector-parser chains; npm proposes 4.3.3 (major). Latest published 3.x returned was 3.4.19; unchanged. |
 
-The two overrides are restricted to their affected parents and retain each dependency's major version. No `npm audit fix --force` or major upgrade was used. The [glob advisory](https://github.com/advisories/GHSA-5j98-mcp5-4vw2) identifies 10.5.0 as patched. Audit JSON includes every advisory URL and range, including [PostCSS source-map disclosure](https://github.com/advisories/GHSA-fxqj-rqcc-2cmp), [braces exhaustion](https://github.com/advisories/GHSA-vfj7-8cjw-p6xm), and [selector parsing exhaustion](https://github.com/advisories/GHSA-rj75-hqrm-r3gf).
+The two overrides are restricted to their affected parents and retain each overridden package's major version. No direct dependency or vulnerable package received a major upgrade, and no `npm audit fix --force` was run. The glob minor release changes its own internal dependency requirement: the lockfile now resolves jackspeak 3.4.3 instead of 2.3.6 and adds package-json-from-dist 1.0.1. These are glob's declared internal dependencies, not overrides across their major versions. The [glob advisory](https://github.com/advisories/GHSA-5j98-mcp5-4vw2) identifies 10.5.0 as patched. Audit JSON includes every advisory URL and range, including [PostCSS source-map disclosure](https://github.com/advisories/GHSA-fxqj-rqcc-2cmp), [braces exhaustion](https://github.com/advisories/GHSA-vfj7-8cjw-p6xm), and [selector parsing exhaustion](https://github.com/advisories/GHSA-rj75-hqrm-r3gf).
 
 Next's own critical/high advisories remain unresolved under the requested 14.2.x constraint. This work does not establish exploitability or safety of a deployment. Major upgrades and security exploit testing were not performed. See the after audit and fresh-clone validation evidence below for measured results.
 
 After the compatible fixes, `npm audit --json` reports **8 entries: 1 critical, 5 high and 2 moderate**, and exits **1** because findings remain. [Raw after audit](storefront/npm-audit-after.json). The removed entries are `glob`, `@next/eslint-plugin-next`, `eslint-config-next` and `postcss`. The remaining entries are `next`, `braces`, `chokidar`, `fast-glob`, `micromatch`, `postcss-nested`, `postcss-selector-parser` and `tailwindcss`. Lockfile inspection confirms glob 10.5.0 and a deduplicated PostCSS 8.5.30, with Next and eslint-config-next both still 14.2.35.
+
+### Security follow-up validation attempts
+
+The first new clone of pushed security commit `0c4ba4823a22e4eb41aa2aca01699302638dad88` completed install/build, but Playwright reported **8 failed / 2 passed (4.4m)** and the sequence exited **1**. No configured API URL was supplied, so the app used localhost:8000. A direct diagnostic during the run returned HTTP 200 and the DEMO catalog from `127.0.0.1:8000/v1/products`, but HTTP 404 from `localhost:8000/v1/products`. [Exact failed output](storefront/security-default-api-failed.txt) · [Failed Playwright JSON](storefront/security-default-api-failed.json).
+
+The failed run also exposed an API-error-state `color-contrast` finding on `.bg-orange-500`; that state is not covered by the successful DEMO catalog journeys. It is recorded here and was not changed in this dependency-only follow-up.
+
+The second new clone, configured with an explicit IPv4 API URL, also completed install/build but timed out waiting for the port-8000 fixture readiness URL; the sequence exited **1** before browser assertions ran. [Exact startup-failure output](storefront/security-ipv4-startup-failed.txt). Subsequent inspection found existing IPv6 listeners on that shared port. Those services were not stopped.
+
+Playwright now honors the fixture's existing `DEMO_API_PORT` setting in its readiness URL. Port 19180 was checked with a loopback bind. For the isolated fixture run, set `DEMO_API_PORT=19180` and `NEXT_PUBLIC_API_URL=http://127.0.0.1:19180` **before** building. The command sequence itself remains `npm ci && npm run build && npx playwright test`. This changes test startup configuration only; no product code or assertions were changed.
+
+[Installed dependency tree](storefront/security-installed-dependencies.json) (exit 0) confirms the overridden versions; [installed audit](storefront/npm-audit-installed.json) (exit 1) independently confirms the same 8 remaining entries.
 
 ## Mobile Lighthouse — Next.js 14 before and after
 

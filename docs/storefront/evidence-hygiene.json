@@ -1,8 +1,8 @@
 {
-  "filesChecked": 74,
+  "filesChecked": 79,
   "screenshotsChecked": 40,
   "metadataChunksRemoved": 0,
-  "redactedFiles": 0,
+  "redactedFiles": 3,
   "remainingMatches": 0,
   "files": [
     "docs/STOREFRONT-PHASE-1.md",
@@ -73,10 +73,15 @@
     "docs/storefront/mobile-metrics.json",
     "docs/storefront/npm-audit-after.json",
     "docs/storefront/npm-audit-before.json",
+    "docs/storefront/npm-audit-installed.json",
     "docs/storefront/playwright-after.json",
     "docs/storefront/playwright-after.txt",
     "docs/storefront/screenshot-inventory.txt",
     "docs/storefront/screenshots.json",
+    "docs/storefront/security-default-api-failed.json",
+    "docs/storefront/security-default-api-failed.txt",
+    "docs/storefront/security-installed-dependencies.json",
+    "docs/storefront/security-ipv4-startup-failed.txt",
     "docs/storefront/typecheck-after.txt"
   ],
   "remaining": []

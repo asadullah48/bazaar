@@ -1,0 +1,674 @@
+{
+  "config": {
+    "argv": [
+      "[node-runtime]\\node.exe",
+      "[build]\\bazaar-audit-verify\\frontend\\node_modules\\@playwright\\test\\cli.js",
+      "test"
+    ],
+    "configFile": "[build]\\bazaar-audit-verify\\frontend\\playwright.config.ts",
+    "rootDir": "[build]/bazaar-audit-verify/frontend/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "[build]/bazaar-audit-verify/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "[build]/bazaar-audit-verify/frontend/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "[build]\\bazaar-audit-verify\\frontend\\test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "",
+        "testDir": "[build]\\bazaar-audit-verify\\frontend\\tests",
+        "snapshotDir": "[build]\\bazaar-audit-verify\\frontend\\tests",
+        "testIgnore": [],
+        "testMatch": "**/*.@(spec|test).?(c|m)[jt]s?(x)",
+        "timeout": 30000,
+        "use": {
+          "baseURL": "http://localhost:3000",
+          "headless": true
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": ""
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../docs/storefront/playwright-after.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "storefront.spec.ts",
+      "file": "storefront.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "en 1440: storefront journey, semantics and screenshots",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 10254,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('article')\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" getByRole('article') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('article')\u001b[22m\n\u001b[2m    13 × locator resolved to 0 elements\u001b[22m\n\u001b[2m       - unexpected value \"0\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('article')\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" getByRole('article') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('article')\u001b[22m\n\u001b[2m    13 × locator resolved to 0 elements\u001b[22m\n\u001b[2m       - unexpected value \"0\"\u001b[22m\n\n    at [build]\\bazaar-audit-verify\\frontend\\tests\\storefront.spec.ts:12:137",
+                    "location": {
+                      "file": "[build]\\bazaar-audit-verify\\frontend\\tests\\storefront.spec.ts",
+                      "column": 137,
+                      "line": 12
+                    },
+                    "snippet": "  10 |   await page.addInitScript(()=>{localStorage.setItem('bazaar-auth',JSON.stringify({state:{accessToken:'DEMO-NOT-A-CREDENTIAL',role:'consumer',refreshToken:null},version:0}));});\n  11 |   const screenshot=async(name:string)=>{await expect(page.locator('html')).toHaveAttribute('dir',locale==='ar'?'rtl':'ltr'); expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBeTruthy();await page.screenshot({path:path.join('..','docs','storefront','after',`${locale}-${width}-${name}.png`),fullPage:true});};\n> 12 |   await page.goto(`/${locale}`);await expect(page.getByRole('heading',{level:1})).toBeVisible();await expect(page.getByRole('article')).toHaveCount(1);await screenshot('home');\n     |                                                                                                                                         ^\n  13 |   expect(await page.locator('a a, a button').count()).toBe(0);\n  14 |   await page.goto(`/${locale}/search?q=cotton&sort=price_asc`);await expect(page.getByRole('article')).toHaveCount(1);await screenshot('search');\n  15 |   await page.goto(`/${locale}/products/demo-cotton`);await expect(page.getByRole('heading',{level:1})).toHaveText('DEMO — Cotton fabric');await expect(page.locator('table')).toBeVisible();await screenshot('product');"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "[build]\\bazaar-audit-verify\\frontend\\tests\\storefront.spec.ts",
+                        "column": 137,
+                        "line": 12
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('article')\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" getByRole('article') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('article')\u001b[22m\n\u001b[2m    13 × locator resolved to 0 elements\u001b[22m\n\u001b[2m       - unexpected value \"0\"\u001b[22m\n\n\n  10 |   await page.addInitScript(()=>{localStorage.setItem('bazaar-auth',JSON.stringify({state:{accessToken:'DEMO-NOT-A-CREDENTIAL',role:'consumer',refreshToken:null},version:0}));});\n  11 |   const screenshot=async(name:string)=>{await expect(page.locator('html')).toHaveAttribute('dir',locale==='ar'?'rtl':'ltr'); expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBeTruthy();await page.screenshot({path:path.join('..','docs','storefront','after',`${locale}-${width}-${name}.png`),fullPage:true});};\n> 12 |   await page.goto(`/${locale}`);await expect(page.getByRole('heading',{level:1})).toBeVisible();await expect(page.getByRole('article')).toHaveCount(1);await screenshot('home');\n     |                                                                                                                                         ^\n  13 |   expect(await page.locator('a a, a button').count()).toBe(0);\n  14 |   await page.goto(`/${locale}/search?q=cotton&sort=price_asc`);await expect(page.getByRole('article')).toHaveCount(1);await screenshot('search');\n  15 |   await page.goto(`/${locale}/products/demo-cotton`);await expect(page.getByRole('heading',{level:1})).toHaveText('DEMO — Cotton fabric');await expect(page.locator('table')).toBeVisible();await screenshot('product');\n    at [build]\\bazaar-audit-verify\\frontend\\tests\\storefront.spec.ts:12:137"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T15:46:45.647Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "[build]\\bazaar-audit-verify\\frontend\\test-results\\storefront-en-1440-storefr-153ea-y-semantics-and-screenshots\\error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "[build]\\bazaar-audit-verify\\frontend\\tests\\storefront.spec.ts",
+                    "column": 137,
+                    "line": 12
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "972707a4d1c1162f8b74-1f1fce8fbedfacdca294",
+          "file": "storefront.spec.ts",
+          "line": 6,
+          "column": 6
+        },
+        {
+          "title": "en 390: storefront journey, semantics and screenshots",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 9469,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('article')\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" getByRole('article') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('article')\u001b[22m\n\u001b[2m    13 × locator resolved to 0 elements\u001b[22m\n\u001b[2m       - unexpected value \"0\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('article')\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" getByRole('article') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('article')\u001b[22m\n\u001b[2m    13 × locator resolved to 0 elements\u001b[22m\n\u001b[2m       - unexpected value \"0\"\u001b[22m\n\n    at [build]\\bazaar-audit-verify\\frontend\\tests\\storefront.spec.ts:12:137",
+                    "location": {
+                      "file": "[build]\\bazaar-audit-verify\\frontend\\tests\\storefront.spec.ts",
+                      "column": 137,
+                      "line": 12
+                    },
+                    "snippet": "  10 |   await page.addInitScript(()=>{localStorage.setItem('bazaar-auth',JSON.stringify({state:{accessToken:'DEMO-NOT-A-CREDENTIAL',role:'consumer',refreshToken:null},version:0}));});\n  11 |   const screenshot=async(name:string)=>{await expect(page.locator('html')).toHaveAttribute('dir',locale==='ar'?'rtl':'ltr'); expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBeTruthy();await page.screenshot({path:path.join('..','docs','storefront','after',`${locale}-${width}-${name}.png`),fullPage:true});};\n> 12 |   await page.goto(`/${locale}`);await expect(page.getByRole('heading',{level:1})).toBeVisible();await expect(page.getByRole('article')).toHaveCount(1);await screenshot('home');\n     |                                                                                                                                         ^\n  13 |   expect(await page.locator('a a, a button').count()).toBe(0);\n  14 |   await page.goto(`/${locale}/search?q=cotton&sort=price_asc`);await expect(page.getByRole('article')).toHaveCount(1);await screenshot('search');\n  15 |   await page.goto(`/${locale}/products/demo-cotton`);await expect(page.getByRole('heading',{level:1})).toHaveText('DEMO — Cotton fabric');await expect(page.locator('table')).toBeVisible();await screenshot('product');"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "[build]\\bazaar-audit-verify\\frontend\\tests\\storefront.spec.ts",
+                        "column": 137,
+                        "line": 12
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('article')\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" getByRole('article') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('article')\u001b[22m\n\u001b[2m    13 × locator resolved to 0 elements\u001b[22m\n\u001b[2m       - unexpected value \"0\"\u001b[22m\n\n\n  10 |   await page.addInitScript(()=>{localStorage.setItem('bazaar-auth',JSON.stringify({state:{accessToken:'DEMO-NOT-A-CREDENTIAL',role:'consumer',refreshToken:null},version:0}));});\n  11 |   const screenshot=async(name:string)=>{await expect(page.locator('html')).toHaveAttribute('dir',locale==='ar'?'rtl':'ltr'); expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBeTruthy();await page.screenshot({path:path.join('..','docs','storefront','after',`${locale}-${width}-${name}.png`),fullPage:true});};\n> 12 |   await page.goto(`/${locale}`);await expect(page.getByRole('heading',{level:1})).toBeVisible();await expect(page.getByRole('article')).toHaveCount(1);await screenshot('home');\n     |                                                                                                                                         ^\n  13 |   expect(await page.locator('a a, a button').count()).toBe(0);\n  14 |   await page.goto(`/${locale}/search?q=cotton&sort=price_asc`);await expect(page.getByRole('article')).toHaveCount(1);await screenshot('search');\n  15 |   await page.goto(`/${locale}/products/demo-cotton`);await expect(page.getByRole('heading',{level:1})).toHaveText('DEMO — Cotton fabric');await expect(page.locator('table')).toBeVisible();await screenshot('product');\n    at [build]\\bazaar-audit-verify\\frontend\\tests\\storefront.spec.ts:12:137"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T15:47:11.112Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "[build]\\bazaar-audit-verify\\frontend\\test-results\\storefront-en-390-storefro-60acd-y-semantics-and-screenshots\\error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "[build]\\bazaar-audit-verify\\frontend\\tests\\storefront.spec.ts",
+                    "column": 137,
+                    "line": 12
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "972707a4d1c1162f8b74-7bd7878f74a752144c8e",
+          "file": "storefront.spec.ts",
+          "line": 6,
+          "column": 6
+        },
+        {
+          "title": "ar 1440: storefront journey, semantics and screenshots",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 9662,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('article')\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" getByRole('article') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('article')\u001b[22m\n\u001b[2m    11 × locator resolved to 0 elements\u001b[22m\n\u001b[2m       - unexpected value \"0\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('article')\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" getByRole('article') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('article')\u001b[22m\n\u001b[2m    11 × locator resolved to 0 elements\u001b[22m\n\u001b[2m       - unexpected value \"0\"\u001b[22m\n\n    at [build]\\bazaar-audit-verify\\frontend\\tests\\storefront.spec.ts:12:137",
+                    "location": {
+                      "file": "[build]\\bazaar-audit-verify\\frontend\\tests\\storefront.spec.ts",
+                      "column": 137,
+                      "line": 12
+                    },
+                    "snippet": "  10 |   await page.addInitScript(()=>{localStorage.setItem('bazaar-auth',JSON.stringify({state:{accessToken:'DEMO-NOT-A-CREDENTIAL',role:'consumer',refreshToken:null},version:0}));});\n  11 |   const screenshot=async(name:string)=>{await expect(page.locator('html')).toHaveAttribute('dir',locale==='ar'?'rtl':'ltr'); expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBeTruthy();await page.screenshot({path:path.join('..','docs','storefront','after',`${locale}-${width}-${name}.png`),fullPage:true});};\n> 12 |   await page.goto(`/${locale}`);await expect(page.getByRole('heading',{level:1})).toBeVisible();await expect(page.getByRole('article')).toHaveCount(1);await screenshot('home');\n     |                                                                                                                                         ^\n  13 |   expect(await page.locator('a a, a button').count()).toBe(0);\n  14 |   await page.goto(`/${locale}/search?q=cotton&sort=price_asc`);await expect(page.getByRole('article')).toHaveCount(1);await screenshot('search');\n  15 |   await page.goto(`/${locale}/products/demo-cotton`);await expect(page.getByRole('heading',{level:1})).toHaveText('DEMO — Cotton fabric');await expect(page.locator('table')).toBeVisible();await screenshot('product');"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "[build]\\bazaar-audit-verify\\frontend\\tests\\storefront.spec.ts",
+                        "column": 137,
+                        "line": 12
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('article')\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" getByRole('article') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('article')\u001b[22m\n\u001b[2m    11 × locator resolved to 0 elements\u001b[22m\n\u001b[2m       - unexpected value \"0\"\u001b[22m\n\n\n  10 |   await page.addInitScript(()=>{localStorage.setItem('bazaar-auth',JSON.stringify({state:{accessToken:'DEMO-NOT-A-CREDENTIAL',role:'consumer',refreshToken:null},version:0}));});\n  11 |   const screenshot=async(name:string)=>{await expect(page.locator('html')).toHaveAttribute('dir',locale==='ar'?'rtl':'ltr'); expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBeTruthy();await page.screenshot({path:path.join('..','docs','storefront','after',`${locale}-${width}-${name}.png`),fullPage:true});};\n> 12 |   await page.goto(`/${locale}`);await expect(page.getByRole('heading',{level:1})).toBeVisible();await expect(page.getByRole('article')).toHaveCount(1);await screenshot('home');\n     |                                                                                                                                         ^\n  13 |   expect(await page.locator('a a, a button').count()).toBe(0);\n  14 |   await page.goto(`/${locale}/search?q=cotton&sort=price_asc`);await expect(page.getByRole('article')).toHaveCount(1);await screenshot('search');\n  15 |   await page.goto(`/${locale}/products/demo-cotton`);await expect(page.getByRole('heading',{level:1})).toHaveText('DEMO — Cotton fabric');await expect(page.locator('table')).toBeVisible();await screenshot('product');\n    at [build]\\bazaar-audit-verify\\frontend\\tests\\storefront.spec.ts:12:137"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T15:47:36.173Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "[build]\\bazaar-audit-verify\\frontend\\test-results\\storefront-ar-1440-storefr-a047e-y-semantics-and-screenshots\\error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "[build]\\bazaar-audit-verify\\frontend\\tests\\storefront.spec.ts",
+                    "column": 137,
+                    "line": 12
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "972707a4d1c1162f8b74-31a46cc5c725a0ed6ce1",
+          "file": "storefront.spec.ts",
+          "line": 6,
+          "column": 6
+        },
+        {
+          "title": "ar 390: storefront journey, semantics and screenshots",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 8747,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('article')\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" getByRole('article') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('article')\u001b[22m\n\u001b[2m    13 × locator resolved to 0 elements\u001b[22m\n\u001b[2m       - unexpected value \"0\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('article')\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" getByRole('article') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('article')\u001b[22m\n\u001b[2m    13 × locator resolved to 0 elements\u001b[22m\n\u001b[2m       - unexpected value \"0\"\u001b[22m\n\n    at [build]\\bazaar-audit-verify\\frontend\\tests\\storefront.spec.ts:12:137",
+                    "location": {
+                      "file": "[build]\\bazaar-audit-verify\\frontend\\tests\\storefront.spec.ts",
+                      "column": 137,
+                      "line": 12
+                    },
+                    "snippet": "  10 |   await page.addInitScript(()=>{localStorage.setItem('bazaar-auth',JSON.stringify({state:{accessToken:'DEMO-NOT-A-CREDENTIAL',role:'consumer',refreshToken:null},version:0}));});\n  11 |   const screenshot=async(name:string)=>{await expect(page.locator('html')).toHaveAttribute('dir',locale==='ar'?'rtl':'ltr'); expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBeTruthy();await page.screenshot({path:path.join('..','docs','storefront','after',`${locale}-${width}-${name}.png`),fullPage:true});};\n> 12 |   await page.goto(`/${locale}`);await expect(page.getByRole('heading',{level:1})).toBeVisible();await expect(page.getByRole('article')).toHaveCount(1);await screenshot('home');\n     |                                                                                                                                         ^\n  13 |   expect(await page.locator('a a, a button').count()).toBe(0);\n  14 |   await page.goto(`/${locale}/search?q=cotton&sort=price_asc`);await expect(page.getByRole('article')).toHaveCount(1);await screenshot('search');\n  15 |   await page.goto(`/${locale}/products/demo-cotton`);await expect(page.getByRole('heading',{level:1})).toHaveText('DEMO — Cotton fabric');await expect(page.locator('table')).toBeVisible();await screenshot('product');"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "[build]\\bazaar-audit-verify\\frontend\\tests\\storefront.spec.ts",
+                        "column": 137,
+                        "line": 12
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByRole('article')\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" getByRole('article') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('article')\u001b[22m\n\u001b[2m    13 × locator resolved to 0 elements\u001b[22m\n\u001b[2m       - unexpected value \"0\"\u001b[22m\n\n\n  10 |   await page.addInitScript(()=>{localStorage.setItem('bazaar-auth',JSON.stringify({state:{accessToken:'DEMO-NOT-A-CREDENTIAL',role:'consumer',refreshToken:null},version:0}));});\n  11 |   const screenshot=async(name:string)=>{await expect(page.locator('html')).toHaveAttribute('dir',locale==='ar'?'rtl':'ltr'); expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBeTruthy();await page.screenshot({path:path.join('..','docs','storefront','after',`${locale}-${width}-${name}.png`),fullPage:true});};\n> 12 |   await page.goto(`/${locale}`);await expect(page.getByRole('heading',{level:1})).toBeVisible();await expect(page.getByRole('article')).toHaveCount(1);await screenshot('home');\n     |                                                                                                                                         ^\n  13 |   expect(await page.locator('a a, a button').count()).toBe(0);\n  14 |   await page.goto(`/${locale}/search?q=cotton&sort=price_asc`);await expect(page.getByRole('article')).toHaveCount(1);await screenshot('search');\n  15 |   await page.goto(`/${locale}/products/demo-cotton`);await expect(page.getByRole('heading',{level:1})).toHaveText('DEMO — Cotton fabric');await expect(page.locator('table')).toBeVisible();await screenshot('product');\n    at [build]\\bazaar-audit-verify\\frontend\\tests\\storefront.spec.ts:12:137"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T15:47:58.191Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "[build]\\bazaar-audit-verify\\frontend\\test-results\\storefront-ar-390-storefro-99b4b-y-semantics-and-screenshots\\error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "[build]\\bazaar-audit-verify\\frontend\\tests\\storefront.spec.ts",
+                    "column": 137,
+                    "line": 12
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "972707a4d1c1162f8b74-fa34a3c58eed78861616",
+          "file": "storefront.spec.ts",
+          "line": 6,
+          "column": 6
+        },
+        {
+          "title": "filters preserve query and show empty state",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 7563,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('heading', { name: 'No matching products' })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByRole('heading', { name: 'No matching products' }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('heading', { name: 'No matching products' })\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('heading', { name: 'No matching products' })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByRole('heading', { name: 'No matching products' }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('heading', { name: 'No matching products' })\u001b[22m\n\n    at [build]\\bazaar-audit-verify\\frontend\\tests\\storefront.spec.ts:26:208",
+                    "location": {
+                      "file": "[build]\\bazaar-audit-verify\\frontend\\tests\\storefront.spec.ts",
+                      "column": 208,
+                      "line": 26
+                    },
+                    "snippet": "  24 |  });\n  25 | }\n> 26 | test('filters preserve query and show empty state',async({page})=>{await page.goto('/en/products?q=nothing&min_price=1&sort=price_desc');await expect(page.getByRole('heading',{name:'No matching products'})).toBeVisible();await expect(page.locator('input[name=\"q\"]')).toHaveValue('nothing');await expect(page.locator('select[name=\"sort\"]')).toHaveValue('price_desc');});\n     |                                                                                                                                                                                                                ^\n  27 | test('price range rejects reversed boundaries',async({page})=>{await page.goto('/en/products?min_price=20&max_price=10');await expect(page.getByRole('alert').filter({hasText:'valid price range'})).toContainText('valid price range');});\n  28 |\n  29 | test('Urdu is RTL and language switching preserves filters',async({page})=>{await page.setViewportSize({width:390,height:900});await page.goto('/ur/products?q=cotton&sort=price_asc');await expect(page.locator('html')).toHaveAttribute('dir','rtl');expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBeTruthy();await page.getByRole('button',{name:'EN',exact:true}).click();await expect(page).toHaveURL(/\\/en\\/products\\?q=cotton&sort=price_asc/);});"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "[build]\\bazaar-audit-verify\\frontend\\tests\\storefront.spec.ts",
+                        "column": 208,
+                        "line": 26
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('heading', { name: 'No matching products' })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByRole('heading', { name: 'No matching products' }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('heading', { name: 'No matching products' })\u001b[22m\n\n\n  24 |  });\n  25 | }\n> 26 | test('filters preserve query and show empty state',async({page})=>{await page.goto('/en/products?q=nothing&min_price=1&sort=price_desc');await expect(page.getByRole('heading',{name:'No matching products'})).toBeVisible();await expect(page.locator('input[name=\"q\"]')).toHaveValue('nothing');await expect(page.locator('select[name=\"sort\"]')).toHaveValue('price_desc');});\n     |                                                                                                                                                                                                                ^\n  27 | test('price range rejects reversed boundaries',async({page})=>{await page.goto('/en/products?min_price=20&max_price=10');await expect(page.getByRole('alert').filter({hasText:'valid price range'})).toContainText('valid price range');});\n  28 |\n  29 | test('Urdu is RTL and language switching preserves filters',async({page})=>{await page.setViewportSize({width:390,height:900});await page.goto('/ur/products?q=cotton&sort=price_asc');await expect(page.locator('html')).toHaveAttribute('dir','rtl');expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBeTruthy();await page.getByRole('button',{name:'EN',exact:true}).click();await expect(page).toHaveURL(/\\/en\\/products\\?q=cotton&sort=price_asc/);});\n    at [build]\\bazaar-audit-verify\\frontend\\tests\\storefront.spec.ts:26:208"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T15:48:18.343Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "[build]\\bazaar-audit-verify\\frontend\\test-results\\storefront-filters-preserve-query-and-show-empty-state\\error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "[build]\\bazaar-audit-verify\\frontend\\tests\\storefront.spec.ts",
+                    "column": 208,
+                    "line": 26
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "972707a4d1c1162f8b74-e84c1177eeff10a4f504",
+          "file": "storefront.spec.ts",
+          "line": 26,
+          "column": 5
+        },
+        {
+          "title": "price range rejects reversed boundaries",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3244,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T15:48:43.589Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "972707a4d1c1162f8b74-4d6bd37bc3a24a921c25",
+          "file": "storefront.spec.ts",
+          "line": 27,
+          "column": 5
+        },
+        {
+          "title": "Urdu is RTL and language switching preserves filters",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2938,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T15:48:48.034Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "972707a4d1c1162f8b74-9d204f164fe7dcf984f0",
+          "file": "storefront.spec.ts",
+          "line": 29,
+          "column": 5
+        },
+        {
+          "title": "sandbox failure preserves cart and retry does not create another order",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "timedOut",
+                  "duration": 30368,
+                  "error": {
+                    "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                    "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                    },
+                    {
+                      "location": {
+                        "file": "[build]\\bazaar-audit-verify\\frontend\\tests\\storefront.spec.ts",
+                        "column": 50,
+                        "line": 39
+                      },
+                      "message": "Error: locator.check: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('radio', { name: /jazzcash/ })\u001b[22m\n\n\n  37 |  });\n  38 |  await page.goto('/en/checkout');\n> 39 |  await page.getByRole('radio',{name:/jazzcash/}).check();\n     |                                                  ^\n  40 |  for(const [name,value] of Object.entries({full_name:'DEMO buyer',phone:'03000000000',address_line1:'DEMO address',city:'DEMO city'}))await page.locator(`input[name=\"${name}\"]`).fill(value);\n  41 |  await page.getByRole('button',{name:'Place order',exact:true}).click();\n  42 |  await expect(page.getByRole('alert').filter({hasText:'Payment could not start'})).toBeVisible();\n    at [build]\\bazaar-audit-verify\\frontend\\tests\\storefront.spec.ts:39:50"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T15:48:51.316Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "[build]\\bazaar-audit-verify\\frontend\\test-results\\storefront-sandbox-failure-5e033-es-not-create-another-order\\error-context.md"
+                    }
+                  ]
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "972707a4d1c1162f8b74-cef16a3dda1a4f379402",
+          "file": "storefront.spec.ts",
+          "line": 31,
+          "column": 5
+        },
+        {
+          "title": "mobile buying surfaces pass automated WCAG AA rules",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 10027,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 10\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"id\": \"color-contrast\",\u001b[39m\n\u001b[31m+     \"targets\": Array [\u001b[39m\n\u001b[31m+       Array [\u001b[39m\n\u001b[31m+         \".bg-orange-500\",\u001b[39m\n\u001b[31m+       ],\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 10\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"id\": \"color-contrast\",\u001b[39m\n\u001b[31m+     \"targets\": Array [\u001b[39m\n\u001b[31m+       Array [\u001b[39m\n\u001b[31m+         \".bg-orange-500\",\u001b[39m\n\u001b[31m+       ],\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at check ([build]\\bazaar-audit-verify\\frontend\\tests\\storefront.spec.ts:57:351)\n    at [build]\\bazaar-audit-verify\\frontend\\tests\\storefront.spec.ts:59:128",
+                    "location": {
+                      "file": "[build]\\bazaar-audit-verify\\frontend\\tests\\storefront.spec.ts",
+                      "column": 351,
+                      "line": 57
+                    },
+                    "snippet": "  55 |  });\n  56 |  const source=readFileSync(path.join('node_modules','axe-core','axe.min.js'),'utf8');\n> 57 |  const check=async()=>{await page.evaluate(source);const result=await page.evaluate<{violations:{id:string;nodes:{target:string[]}[]}[]}>('axe.run(document,{runOnly:{type:\"tag\",values:[\"wcag2a\",\"wcag2aa\",\"wcag21a\",\"wcag21aa\"]}})');expect(result.violations.map((v:{id:string;nodes:{target:string[]}[]})=>({id:v.id,targets:v.nodes.map(n=>n.target)}))).toEqual([]);};\n     |                                                                                                                                                                                                                                                                                                                                                               ^\n  58 |  for(const locale of ['en','ar','ur']){\n  59 |   for(const suffix of ['', '/products?q=cotton', '/products/demo-cotton', '/checkout']){await page.goto(`/${locale}${suffix}`);await check();}\n  60 |   await page.locator('header nav button').last().click();await expect(page.getByRole('dialog')).toBeVisible();await check();await page.keyboard.press('Escape');"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "[build]\\bazaar-audit-verify\\frontend\\tests\\storefront.spec.ts",
+                        "column": 351,
+                        "line": 57
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 10\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"id\": \"color-contrast\",\u001b[39m\n\u001b[31m+     \"targets\": Array [\u001b[39m\n\u001b[31m+       Array [\u001b[39m\n\u001b[31m+         \".bg-orange-500\",\u001b[39m\n\u001b[31m+       ],\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n  55 |  });\n  56 |  const source=readFileSync(path.join('node_modules','axe-core','axe.min.js'),'utf8');\n> 57 |  const check=async()=>{await page.evaluate(source);const result=await page.evaluate<{violations:{id:string;nodes:{target:string[]}[]}[]}>('axe.run(document,{runOnly:{type:\"tag\",values:[\"wcag2a\",\"wcag2aa\",\"wcag21a\",\"wcag21aa\"]}})');expect(result.violations.map((v:{id:string;nodes:{target:string[]}[]})=>({id:v.id,targets:v.nodes.map(n=>n.target)}))).toEqual([]);};\n     |                                                                                                                                                                                                                                                                                                                                                               ^\n  58 |  for(const locale of ['en','ar','ur']){\n  59 |   for(const suffix of ['', '/products?q=cotton', '/products/demo-cotton', '/checkout']){await page.goto(`/${locale}${suffix}`);await check();}\n  60 |   await page.locator('header nav button').last().click();await expect(page.getByRole('dialog')).toBeVisible();await check();await page.keyboard.press('Escape');\n    at check ([build]\\bazaar-audit-verify\\frontend\\tests\\storefront.spec.ts:57:351)\n    at [build]\\bazaar-audit-verify\\frontend\\tests\\storefront.spec.ts:59:128"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T15:49:38.021Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "[build]\\bazaar-audit-verify\\frontend\\test-results\\storefront-mobile-buying-s-05cec-ass-automated-WCAG-AA-rules\\error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "[build]\\bazaar-audit-verify\\frontend\\tests\\storefront.spec.ts",
+                    "column": 351,
+                    "line": 57
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "972707a4d1c1162f8b74-8934f9c22389f19c046b",
+          "file": "storefront.spec.ts",
+          "line": 49,
+          "column": 5
+        },
+        {
+          "title": "hosted payment submits provider fields rather than the wrapper",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "timedOut",
+                  "duration": 30168,
+                  "error": {
+                    "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                    "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                    },
+                    {
+                      "location": {
+                        "file": "[build]\\bazaar-audit-verify\\frontend\\tests\\storefront.spec.ts",
+                        "column": 82,
+                        "line": 72
+                      },
+                      "message": "Error: locator.check: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('radio', { name: /jazzcash/ })\u001b[22m\n\n\n  70 |   localStorage.setItem('bazaar-cart',JSON.stringify({state:{items:[{product_id:'10000000-0000-4000-8000-000000000001',variant_id:'30000000-0000-4000-8000-000000000001',name:'DEMO — Cotton fabric',slug:'demo-cotton',image_url:'/demo-product.svg',price:1250.5,quantity:1,stock_qty:12,seller_name:'DEMO seller'}]},version:0}));\n  71 |  });\n> 72 |  await page.goto('/en/checkout');await page.getByRole('radio',{name:/jazzcash/}).check();\n     |                                                                                  ^\n  73 |  for(const [name,value] of Object.entries({full_name:'DEMO buyer',phone:'03000000000',address_line1:'DEMO address',city:'DEMO city'}))await page.locator(`input[name=\"${name}\"]`).fill(value);\n  74 |  await page.getByRole('button',{name:'Place order',exact:true}).click();\n  75 |  await expect(page).toHaveURL('https://demo-gateway.invalid/checkout');\n    at [build]\\bazaar-audit-verify\\frontend\\tests\\storefront.spec.ts:72:82"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T15:50:04.545Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "[build]\\bazaar-audit-verify\\frontend\\test-results\\storefront-hosted-payment--a46a3-lds-rather-than-the-wrapper\\error-context.md"
+                    }
+                  ]
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "972707a4d1c1162f8b74-a6049e40510a6653dab4",
+          "file": "storefront.spec.ts",
+          "line": 64,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-16T15:46:19.098Z",
+    "duration": 261336.616,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 8,
+    "flaky": 0
+  }
+}
