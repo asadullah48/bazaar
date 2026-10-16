@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { useLocale } from "next-intl";
 import { useCartStore } from "@/store/cart-store";
@@ -9,14 +9,14 @@ import { formatPrice } from "@/lib/format-price";
 
 export default function CheckoutPage() {
   const locale = useLocale();
-  const text = (en:string, ar:string, ur:string) => locale === "ar" ? ar : locale === "ur" ? ur : en;
+  const text = useCallback((en:string, ar:string, ur:string) => locale === "ar" ? ar : locale === "ur" ? ur : en, [locale]);
   const {items, updateQty, removeItem, totalPrice, clearCart} = useCartStore();
   const token = useAuthStore(s => s.accessToken);
   const [ready,setReady] = useState(false); const [gateways,setGateways] = useState<GatewayConfig[]>([]);
   const [selected,setSelected] = useState("cod"); const [error,setError] = useState(""); const [busy,setBusy] = useState(false);
   const [order,setOrder] = useState<{checkout_session_id:string; orders:{id:string; total_amount:number}[]} | null>(null);
   const [address,setAddress] = useState({full_name:"",phone:"",address_line1:"",city:""});
-  useEffect(() => {setReady(true); paymentsApi.gateways().then(setGateways).catch(() => setError(text("Payment options could not be loaded. Please try again.","تعذر تحميل خيارات الدفع. حاول مرة أخرى.","ادائیگی کے طریقے لوڈ نہیں ہوئے۔ دوبارہ کوشش کریں۔")));}, []);
+  useEffect(() => {setReady(true); paymentsApi.gateways().then(setGateways).catch(() => setError(text("Payment options could not be loaded. Please try again.","تعذر تحميل خيارات الدفع. حاول مرة أخرى.","ادائیگی کے طریقے لوڈ نہیں ہوئے۔ دوبارہ کوشش کریں۔")));}, [text]);
   const fmt = (n:number) => formatPrice(n, locale as "en"|"ar"|"ur");
   async function json(path:string, init:RequestInit = {}) {
     const response = await apiFetch(path,init); const body = await response.json();

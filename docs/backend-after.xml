@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="4" skipped="0" tests="91" time="679.336" timestamp="2026-10-16T10:35:44.966412+05:00" hostname="DESKTOP-AVHA5C2"><testcase classname="tests.test_addresses" name="test_second_address_is_default" time="3.302" /><testcase classname="tests.test_addresses" name="test_update_address_to_default" time="3.261" /><testcase classname="tests.test_addresses" name="test_delete_address" time="1.886" /><testcase classname="tests.test_admin" name="test_non_admin_forbidden" time="1.612" /><testcase classname="tests.test_admin" name="test_admin_approves_product" time="4.105" /><testcase classname="tests.test_admin" name="test_admin_rejects_product" time="4.829" /><testcase classname="tests.test_admin" name="test_admin_approves_seller" time="8.807" /><testcase classname="tests.test_auth" name="test_register_new_user" time="1.845" /><testcase classname="tests.test_auth" name="test_register_duplicate_email" time="1.419" /><testcase classname="tests.test_auth" name="test_login_valid_credentials" time="1.640" /><testcase classname="tests.test_auth" name="test_login_wrong_password" time="4.917" /><testcase classname="tests.test_auth" name="test_refresh_returns_new_tokens" time="3.066" /><testcase classname="tests.test_auth" name="test_logout_deletes_token" time="3.369" /><testcase classname="tests.test_cart" name="test_add_item_and_get_cart" time="11.824" /><testcase classname="tests.test_cart" name="test_add_same_item_increments_quantity" time="11.763" /><testcase classname="tests.test_cart" name="test_update_quantity" time="7.061" /><testcase classname="tests.test_cart" name="test_remove_item" time="11.646" /><testcase classname="tests.test_cart" name="test_add_qty_exceeds_stock" time="7.509" /><testcase classname="tests.test_catalog" name="test_empty_catalog" time="0.671" /><testcase classname="tests.test_catalog" name="test_catalog_shows_published" time="4.713" /><testcase classname="tests.test_catalog" name="test_catalog_price_filter" time="5.656" /><testcase classname="tests.test_catalog" name="test_product_detail" time="3.534"><failure message="assert 404 == 200&#10; +  where 404 = &lt;Response [404 Not Found]&gt;.status_code">tests\test_catalog.py:112: in test_product_detail
+    assert resp.status_code == 200
+E   assert 404 == 200
+E    +  where 404 = &lt;Response [404 Not Found]&gt;.status_code</failure></testcase><testcase classname="tests.test_catalog" name="test_product_detail_404_unpublished" time="5.224" /><testcase classname="tests.test_catalog" name="test_seller_storefront" time="2.947" /><testcase classname="tests.test_categories" name="test_categories_tree" time="0.411" /><testcase classname="tests.test_categories" name="test_category_detail" time="0.535" /><testcase classname="tests.test_categories" name="test_create_category_no_admin" time="1.304" /><testcase classname="tests.test_categories" name="test_create_category_with_admin" time="1.559" /><testcase classname="tests.test_categories" name="test_categories_includes_new_category" time="1.864" /><testcase classname="tests.test_checkout" name="test_empty_cart_checkout" time="1.404" /><testcase classname="tests.test_checkout" name="test_single_seller_checkout_cod" time="5.057" /><testcase classname="tests.test_checkout" name="test_multi_seller_checkout" time="8.299" /><testcase classname="tests.test_checkout" name="test_get_buyer_orders" time="12.654" /><testcase classname="tests.test_checkout" name="test_get_seller_orders" time="14.278" /><testcase classname="tests.test_inventory" name="test_list_inventory_returns_variants[asyncio]" time="3.161" /><testcase classname="tests.test_inventory" name="test_upsert_alert_creates_then_updates[asyncio]" time="2.507" /><testcase classname="tests.test_inventory" name="test_adjust_stock_records_movement[asyncio]" time="1.635" /><testcase classname="tests.test_inventory" name="test_adjust_stock_cannot_go_negative[asyncio]" time="5.175" /><testcase classname="tests.test_inventory" name="test_auto_pause_on_zero_stock[asyncio]" time="9.853" /><testcase classname="tests.test_inventory" name="test_export_returns_csv[asyncio]" time="4.201" /><testcase classname="tests.test_order_fsm" name="test_seller_advances_order" time="31.373"><failure message="RuntimeError: Event loop is closed">.venv\Lib\site-packages\redis\asyncio\connection.py:473: in send_packed_command
+    self._writer.writelines(command)
+[user]\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\asyncio\streams.py:349: in writelines
+    self._transport.writelines(data)
+[user]\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\asyncio\transports.py:123: in writelines
+    self.write(data)
+[user]\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\asyncio\proactor_events.py:366: in write
+    self._loop_writing(data=bytes(data))
+[user]\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\asyncio\proactor_events.py:402: in _loop_writing
+    self._write_fut = self._loop._proactor.send(self._sock, data)
+E   AttributeError: 'NoneType' object has no attribute 'send'
+
+During handling of the above exception, another exception occurred:
+tests\test_order_fsm.py:159: in test_seller_advances_order
+    r = await client.put(f"{SELLER_ORDERS}/{order_id}/advance", json={}, headers=shdrs)
+.venv\Lib\site-packages\httpx\_client.py:1942: in put
+    return await self.request(
+.venv\Lib\site-packages\httpx\_client.py:1585: in request
+    return await self.send(request, auth=auth, follow_redirects=follow_redirects)
+.venv\Lib\site-packages\httpx\_client.py:1674: in send
+    response = await self._send_handling_auth(
+.venv\Lib\site-packages\httpx\_client.py:1702: in _send_handling_auth
+    response = await self._send_handling_redirects(
+.venv\Lib\site-packages\httpx\_client.py:1739: in _send_handling_redirects
+    response = await self._send_single_request(request)
+.venv\Lib\site-packages\httpx\_client.py:1776: in _send_single_request
+    response = await transport.handle_async_request(request)
+.venv\Lib\site-packages\httpx\_transports\asgi.py:157: in handle_async_request
+    await self.app(scope, receive, send)
+.venv\Lib\site-packages\fastapi\applications.py:1054: in __call__
+    await super().__call__(scope, receive, send)
+.venv\Lib\site-packages\starlette\applications.py:113: in __call__
+    await self.middleware_stack(scope, receive, send)
+.venv\Lib\site-packages\starlette\middleware\errors.py:187: in __call__
+    raise exc
+.venv\Lib\site-packages\starlette\middleware\errors.py:165: in __call__
+    await self.app(scope, receive, _send)
+.venv\Lib\site-packages\starlette\middleware\cors.py:85: in __call__
+    await self.app(scope, receive, send)
+.venv\Lib\site-packages\starlette\middleware\exceptions.py:62: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+.venv\Lib\site-packages\starlette\_exception_handler.py:62: in wrapped_app
+    raise exc
+.venv\Lib\site-packages\starlette\_exception_handler.py:51: in wrapped_app
+    await app(scope, receive, sender)
+.venv\Lib\site-packages\starlette\routing.py:715: in __call__
+    await self.middleware_stack(scope, receive, send)
+.venv\Lib\site-packages\starlette\routing.py:735: in app
+    await route.handle(scope, receive, send)
+.venv\Lib\site-packages\starlette\routing.py:288: in handle
+    await self.app(scope, receive, send)
+.venv\Lib\site-packages\starlette\routing.py:76: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+.venv\Lib\site-packages\starlette\_exception_handler.py:62: in wrapped_app
+    raise exc
+.venv\Lib\site-packages\starlette\_exception_handler.py:51: in wrapped_app
+    await app(scope, receive, sender)
+.venv\Lib\site-packages\starlette\routing.py:73: in app
+    response = await f(request)
+.venv\Lib\site-packages\fastapi\routing.py:301: in app
+    raw_response = await run_endpoint_function(
+.venv\Lib\site-packages\fastapi\routing.py:212: in run_endpoint_function
+    return await dependant.call(**values)
+app\routers\orders.py:205: in advance_order
+    await pool.enqueue_job(
+.venv\Lib\site-packages\arq\connections.py:157: in enqueue_job
+    await pipe.watch(job_key)
+.venv\Lib\site-packages\redis\asyncio\client.py:1548: in watch
+    return await self.execute_command("WATCH", *names)
+.venv\Lib\site-packages\redis\asyncio\client.py:1335: in immediate_execute_command
+    return await conn.retry.call_with_retry(
+.venv\Lib\site-packages\redis\asyncio\retry.py:59: in call_with_retry
+    return await do()
+.venv\Lib\site-packages\redis\asyncio\client.py:588: in _send_command_parse_response
+    await conn.send_command(*args)
+.venv\Lib\site-packages\redis\asyncio\connection.py:498: in send_command
+    await self.send_packed_command(
+.venv\Lib\site-packages\redis\asyncio\connection.py:493: in send_packed_command
+    await self.disconnect(nowait=True)
+.venv\Lib\site-packages\redis\asyncio\connection.py:418: in disconnect
+    self._writer.close()  # type: ignore[union-attr]
+[user]\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\asyncio\streams.py:358: in close
+    return self._transport.close()
+[user]\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\asyncio\proactor_events.py:109: in close
+    self._loop.call_soon(self._call_connection_lost, None)
+[user]\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\asyncio\base_events.py:799: in call_soon
+    self._check_closed()
+[user]\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\asyncio\base_events.py:545: in _check_closed
+    raise RuntimeError('Event loop is closed')
+E   RuntimeError: Event loop is closed</failure></testcase><testcase classname="tests.test_order_fsm" name="test_advance_to_shipped_without_tracking" time="15.702" /><testcase classname="tests.test_order_fsm" name="test_buyer_cancel_order" time="15.241" /><testcase classname="tests.test_order_fsm" name="test_seller_accept_cancel_restores_stock" time="14.268" /><testcase classname="tests.test_payouts" name="test_calculate_payout_creates_record" time="10.103" /><testcase classname="tests.test_payouts" name="test_commission_math_correct" time="14.010" /><testcase classname="tests.test_payouts" name="test_mark_payout_paid" time="30.000" /><testcase classname="tests.test_payouts" name="test_seller_views_own_payout_history" time="16.458" /><testcase classname="tests.test_product_seo_qr" name="test_generate_qr_data_uri_returns_png_data_uri" time="1.858" /><testcase classname="tests.test_product_seo_qr" name="test_get_qr_returns_cached_when_redis_hit" time="0.272" /><testcase classname="tests.test_product_seo_qr" name="test_get_qr_404_when_not_generated" time="1.779" /><testcase classname="tests.test_products" name="test_seller_creates_product" time="9.435" /><testcase classname="tests.test_products" name="test_seller_lists_products" time="9.059" /><testcase classname="tests.test_products" name="test_non_owner_cannot_update" time="19.756" /><testcase classname="tests.test_products" name="test_seller_publishes" time="13.372" /><testcase classname="tests.test_products" name="test_seller_deletes" time="12.306" /><testcase classname="tests.test_products" name="test_add_variants" time="8.802" /><testcase classname="tests.test_products" name="test_update_variant_price" time="5.556" /><testcase classname="tests.test_products" name="test_delete_variant" time="5.383" /><testcase classname="tests.test_products" name="test_add_b2b_tiers" time="4.383" /><testcase classname="tests.test_products" name="test_delete_tier" time="4.730" /><testcase classname="tests.test_reviews" name="test_cannot_review_non_completed_order" time="8.914" /><testcase classname="tests.test_reviews" name="test_create_review_on_completed_order" time="17.690" /><testcase classname="tests.test_reviews" name="test_duplicate_review_returns_409" time="10.166"><failure message="RuntimeError: Event loop is closed">.venv\Lib\site-packages\redis\asyncio\connection.py:473: in send_packed_command
+    self._writer.writelines(command)
+[user]\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\asyncio\streams.py:349: in writelines
+    self._transport.writelines(data)
+[user]\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\asyncio\transports.py:123: in writelines
+    self.write(data)
+[user]\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\asyncio\proactor_events.py:366: in write
+    self._loop_writing(data=bytes(data))
+[user]\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\asyncio\proactor_events.py:402: in _loop_writing
+    self._write_fut = self._loop._proactor.send(self._sock, data)
+E   AttributeError: 'NoneType' object has no attribute 'send'
+
+During handling of the above exception, another exception occurred:
+tests\test_reviews.py:213: in test_duplicate_review_returns_409
+    order_id = await _place_and_complete_order(client, buyer, seller_with_product)
+tests\test_reviews.py:160: in _place_and_complete_order
+    await client.put(f"{SELLER_ORDERS}/{order_id}/advance", json={}, headers=shdrs)
+.venv\Lib\site-packages\httpx\_client.py:1942: in put
+    return await self.request(
+.venv\Lib\site-packages\httpx\_client.py:1585: in request
+    return await self.send(request, auth=auth, follow_redirects=follow_redirects)
+.venv\Lib\site-packages\httpx\_client.py:1674: in send
+    response = await self._send_handling_auth(
+.venv\Lib\site-packages\httpx\_client.py:1702: in _send_handling_auth
+    response = await self._send_handling_redirects(
+.venv\Lib\site-packages\httpx\_client.py:1739: in _send_handling_redirects
+    response = await self._send_single_request(request)
+.venv\Lib\site-packages\httpx\_client.py:1776: in _send_single_request
+    response = await transport.handle_async_request(request)
+.venv\Lib\site-packages\httpx\_transports\asgi.py:157: in handle_async_request
+    await self.app(scope, receive, send)
+.venv\Lib\site-packages\fastapi\applications.py:1054: in __call__
+    await super().__call__(scope, receive, send)
+.venv\Lib\site-packages\starlette\applications.py:113: in __call__
+    await self.middleware_stack(scope, receive, send)
+.venv\Lib\site-packages\starlette\middleware\errors.py:187: in __call__
+    raise exc
+.venv\Lib\site-packages\starlette\middleware\errors.py:165: in __call__
+    await self.app(scope, receive, _send)
+.venv\Lib\site-packages\starlette\middleware\cors.py:85: in __call__
+    await self.app(scope, receive, send)
+.venv\Lib\site-packages\starlette\middleware\exceptions.py:62: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+.venv\Lib\site-packages\starlette\_exception_handler.py:62: in wrapped_app
+    raise exc
+.venv\Lib\site-packages\starlette\_exception_handler.py:51: in wrapped_app
+    await app(scope, receive, sender)
+.venv\Lib\site-packages\starlette\routing.py:715: in __call__
+    await self.middleware_stack(scope, receive, send)
+.venv\Lib\site-packages\starlette\routing.py:735: in app
+    await route.handle(scope, receive, send)
+.venv\Lib\site-packages\starlette\routing.py:288: in handle
+    await self.app(scope, receive, send)
+.venv\Lib\site-packages\starlette\routing.py:76: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+.venv\Lib\site-packages\starlette\_exception_handler.py:62: in wrapped_app
+    raise exc
+.venv\Lib\site-packages\starlette\_exception_handler.py:51: in wrapped_app
+    await app(scope, receive, sender)
+.venv\Lib\site-packages\starlette\routing.py:73: in app
+    response = await f(request)
+.venv\Lib\site-packages\fastapi\routing.py:301: in app
+    raw_response = await run_endpoint_function(
+.venv\Lib\site-packages\fastapi\routing.py:212: in run_endpoint_function
+    return await dependant.call(**values)
+app\routers\orders.py:205: in advance_order
+    await pool.enqueue_job(
+.venv\Lib\site-packages\arq\connections.py:157: in enqueue_job
+    await pipe.watch(job_key)
+.venv\Lib\site-packages\redis\asyncio\client.py:1548: in watch
+    return await self.execute_command("WATCH", *names)
+.venv\Lib\site-packages\redis\asyncio\client.py:1335: in immediate_execute_command
+    return await conn.retry.call_with_retry(
+.venv\Lib\site-packages\redis\asyncio\retry.py:59: in call_with_retry
+    return await do()
+.venv\Lib\site-packages\redis\asyncio\client.py:588: in _send_command_parse_response
+    await conn.send_command(*args)
+.venv\Lib\site-packages\redis\asyncio\connection.py:498: in send_command
+    await self.send_packed_command(
+.venv\Lib\site-packages\redis\asyncio\connection.py:493: in send_packed_command
+    await self.disconnect(nowait=True)
+.venv\Lib\site-packages\redis\asyncio\connection.py:418: in disconnect
+    self._writer.close()  # type: ignore[union-attr]
+[user]\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\asyncio\streams.py:358: in close
+    return self._transport.close()
+[user]\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\asyncio\proactor_events.py:109: in close
+    self._loop.call_soon(self._call_connection_lost, None)
+[user]\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\asyncio\base_events.py:799: in call_soon
+    self._check_closed()
+[user]\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\asyncio\base_events.py:545: in _check_closed
+    raise RuntimeError('Event loop is closed')
+E   RuntimeError: Event loop is closed</failure></testcase><testcase classname="tests.test_reviews" name="test_content_guard_blocks_email_in_body" time="13.600" /><testcase classname="tests.test_reviews" name="test_get_product_reviews" time="19.195"><failure message="RuntimeError: Event loop is closed">.venv\Lib\site-packages\redis\asyncio\connection.py:473: in send_packed_command
+    self._writer.writelines(command)
+[user]\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\asyncio\streams.py:349: in writelines
+    self._transport.writelines(data)
+[user]\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\asyncio\transports.py:123: in writelines
+    self.write(data)
+[user]\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\asyncio\proactor_events.py:366: in write
+    self._loop_writing(data=bytes(data))
+[user]\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\asyncio\proactor_events.py:402: in _loop_writing
+    self._write_fut = self._loop._proactor.send(self._sock, data)
+E   AttributeError: 'NoneType' object has no attribute 'send'
+
+During handling of the above exception, another exception occurred:
+tests\test_reviews.py:248: in test_get_product_reviews
+    order_id = await _place_and_complete_order(client, buyer, seller_with_product)
+tests\test_reviews.py:160: in _place_and_complete_order
+    await client.put(f"{SELLER_ORDERS}/{order_id}/advance", json={}, headers=shdrs)
+.venv\Lib\site-packages\httpx\_client.py:1942: in put
+    return await self.request(
+.venv\Lib\site-packages\httpx\_client.py:1585: in request
+    return await self.send(request, auth=auth, follow_redirects=follow_redirects)
+.venv\Lib\site-packages\httpx\_client.py:1674: in send
+    response = await self._send_handling_auth(
+.venv\Lib\site-packages\httpx\_client.py:1702: in _send_handling_auth
+    response = await self._send_handling_redirects(
+.venv\Lib\site-packages\httpx\_client.py:1739: in _send_handling_redirects
+    response = await self._send_single_request(request)
+.venv\Lib\site-packages\httpx\_client.py:1776: in _send_single_request
+    response = await transport.handle_async_request(request)
+.venv\Lib\site-packages\httpx\_transports\asgi.py:157: in handle_async_request
+    await self.app(scope, receive, send)
+.venv\Lib\site-packages\fastapi\applications.py:1054: in __call__
+    await super().__call__(scope, receive, send)
+.venv\Lib\site-packages\starlette\applications.py:113: in __call__
+    await self.middleware_stack(scope, receive, send)
+.venv\Lib\site-packages\starlette\middleware\errors.py:187: in __call__
+    raise exc
+.venv\Lib\site-packages\starlette\middleware\errors.py:165: in __call__
+    await self.app(scope, receive, _send)
+.venv\Lib\site-packages\starlette\middleware\cors.py:85: in __call__
+    await self.app(scope, receive, send)
+.venv\Lib\site-packages\starlette\middleware\exceptions.py:62: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+.venv\Lib\site-packages\starlette\_exception_handler.py:62: in wrapped_app
+    raise exc
+.venv\Lib\site-packages\starlette\_exception_handler.py:51: in wrapped_app
+    await app(scope, receive, sender)
+.venv\Lib\site-packages\starlette\routing.py:715: in __call__
+    await self.middleware_stack(scope, receive, send)
+.venv\Lib\site-packages\starlette\routing.py:735: in app
+    await route.handle(scope, receive, send)
+.venv\Lib\site-packages\starlette\routing.py:288: in handle
+    await self.app(scope, receive, send)
+.venv\Lib\site-packages\starlette\routing.py:76: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+.venv\Lib\site-packages\starlette\_exception_handler.py:62: in wrapped_app
+    raise exc
+.venv\Lib\site-packages\starlette\_exception_handler.py:51: in wrapped_app
+    await app(scope, receive, sender)
+.venv\Lib\site-packages\starlette\routing.py:73: in app
+    response = await f(request)
+.venv\Lib\site-packages\fastapi\routing.py:301: in app
+    raw_response = await run_endpoint_function(
+.venv\Lib\site-packages\fastapi\routing.py:212: in run_endpoint_function
+    return await dependant.call(**values)
+app\routers\orders.py:205: in advance_order
+    await pool.enqueue_job(
+.venv\Lib\site-packages\arq\connections.py:157: in enqueue_job
+    await pipe.watch(job_key)
+.venv\Lib\site-packages\redis\asyncio\client.py:1548: in watch
+    return await self.execute_command("WATCH", *names)
+.venv\Lib\site-packages\redis\asyncio\client.py:1335: in immediate_execute_command
+    return await conn.retry.call_with_retry(
+.venv\Lib\site-packages\redis\asyncio\retry.py:59: in call_with_retry
+    return await do()
+.venv\Lib\site-packages\redis\asyncio\client.py:588: in _send_command_parse_response
+    await conn.send_command(*args)
+.venv\Lib\site-packages\redis\asyncio\connection.py:498: in send_command
+    await self.send_packed_command(
+.venv\Lib\site-packages\redis\asyncio\connection.py:493: in send_packed_command
+    await self.disconnect(nowait=True)
+.venv\Lib\site-packages\redis\asyncio\connection.py:418: in disconnect
+    self._writer.close()  # type: ignore[union-attr]
+[user]\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\asyncio\streams.py:358: in close
+    return self._transport.close()
+[user]\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\asyncio\proactor_events.py:109: in close
+    self._loop.call_soon(self._call_connection_lost, None)
+[user]\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\asyncio\base_events.py:799: in call_soon
+    self._check_closed()
+[user]\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\asyncio\base_events.py:545: in _check_closed
+    raise RuntimeError('Event loop is closed')
+E   RuntimeError: Event loop is closed</failure></testcase><testcase classname="tests.test_reviews" name="test_seller_rating_updated_after_review" time="22.874" /><testcase classname="tests.test_rfq" name="test_buyer_creates_rfq" time="3.489" /><testcase classname="tests.test_rfq" name="test_buyer_lists_own_rfqs" time="4.017" /><testcase classname="tests.test_rfq" name="test_seller_sees_broadcast_rfq" time="7.717" /><testcase classname="tests.test_rfq" name="test_buyer_closes_rfq" time="5.674" /><testcase classname="tests.test_rfq" name="test_seller_submits_quote_visible_to_buyer" time="14.788" /><testcase classname="tests.test_rfq" name="test_buyer_counters_quote" time="9.500" /><testcase classname="tests.test_rfq" name="test_buyer_accepts_creates_order_and_rejects_others" time="13.161" /><testcase classname="tests.test_rfq" name="test_buyer_rejects_quote" time="15.712" /><testcase classname="tests.test_rfq" name="test_seller_cannot_quote_twice" time="12.648" /><testcase classname="tests.test_search" name="test_search_no_results" time="0.613" /><testcase classname="tests.test_search" name="test_search_finds_published_product" time="11.336" /><testcase classname="tests.test_search" name="test_search_price_filter_excludes_product" time="5.722" /><testcase classname="tests.test_search" name="test_search_suggestions" time="3.917" /><testcase classname="tests.test_search" name="test_search_empty_query_returns_400" time="0.015" /><testcase classname="tests.test_translate" name="test_translate_returns_503_when_key_missing" time="0.013" /><testcase classname="tests.test_translate" name="test_translate_returns_cached_result" time="0.014" /><testcase classname="tests.test_translate" name="test_translate_calls_deepl_on_cache_miss" time="0.018" /><testcase classname="tests.test_translate" name="test_translate_rejects_invalid_lang" time="0.012" /><testcase classname="tests.test_users" name="test_get_me_valid_token" time="1.944" /><testcase classname="tests.test_users" name="test_get_me_no_token" time="0.020" /><testcase classname="tests.test_users" name="test_get_me_expired_token" time="0.014" /><testcase classname="tests.test_wishlist" name="test_add_and_list_wishlist" time="6.154" /><testcase classname="tests.test_wishlist" name="test_duplicate_wishlist_409" time="10.166" /><testcase classname="tests.test_wishlist" name="test_remove_from_wishlist" time="11.507" /></testsuite></testsuites>

@@ -16,12 +16,10 @@ async function SellerProducts({
   slug,
   locale,
   page,
-  storeName,
 }: {
   slug: string;
   locale: string;
   page: number;
-  storeName: string;
 }) {
   let data;
   try {
@@ -127,7 +125,6 @@ export default async function SellerStorefrontPage({ params, searchParams }: Pro
           slug={slug}
           locale={locale}
           page={page}
-          storeName={data.store_name}
         />
       </Suspense>
     </div>

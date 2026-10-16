@@ -1,0 +1,82 @@
+[
+  {
+    "phase": "before",
+    "locale": "en",
+    "page": "home",
+    "performance": 63,
+    "accessibility": 92,
+    "cls": 0,
+    "lcpMs": 5447.198,
+    "runtimeError": null
+  },
+  {
+    "phase": "before",
+    "locale": "en",
+    "page": "search",
+    "performance": 87,
+    "accessibility": 94,
+    "cls": 0,
+    "lcpMs": 4069.5033000000003,
+    "runtimeError": null
+  },
+  {
+    "phase": "before",
+    "locale": "ar",
+    "page": "home",
+    "performance": 69,
+    "accessibility": 92,
+    "cls": 0,
+    "lcpMs": 7165.079275,
+    "runtimeError": null
+  },
+  {
+    "phase": "before",
+    "locale": "ar",
+    "page": "search",
+    "performance": 84,
+    "accessibility": 94,
+    "cls": 0,
+    "lcpMs": 4373.8945,
+    "runtimeError": null
+  },
+  {
+    "phase": "after",
+    "locale": "en",
+    "page": "home",
+    "performance": 98,
+    "accessibility": 100,
+    "cls": 0,
+    "lcpMs": 1741.185,
+    "runtimeError": null
+  },
+  {
+    "phase": "after",
+    "locale": "en",
+    "page": "search",
+    "performance": 99,
+    "accessibility": 100,
+    "cls": 0,
+    "lcpMs": 1746.9058,
+    "runtimeError": null
+  },
+  {
+    "phase": "after",
+    "locale": "ar",
+    "page": "home",
+    "performance": 97,
+    "accessibility": 100,
+    "cls": 0,
+    "lcpMs": 1747.2909,
+    "runtimeError": null
+  },
+  {
+    "phase": "after",
+    "locale": "ar",
+    "page": "search",
+    "performance": 99,
+    "accessibility": 100,
+    "cls": 0,
+    "lcpMs": 1872.1878,
+    "runtimeError": null
+  }
+]

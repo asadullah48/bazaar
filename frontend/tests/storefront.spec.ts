@@ -54,9 +54,24 @@ test('mobile buying surfaces pass automated WCAG AA rules',async({page})=>{
   localStorage.setItem('bazaar-cart',JSON.stringify({state:{items:[{product_id:'10000000-0000-4000-8000-000000000001',variant_id:'30000000-0000-4000-8000-000000000001',name:'DEMO — Cotton fabric',slug:'demo-cotton',image_url:'/demo-product.svg',price:1250.5,quantity:1,stock_qty:12,seller_name:'DEMO seller'}]},version:0}));
  });
  const source=readFileSync(path.join('node_modules','axe-core','axe.min.js'),'utf8');
- const check=async()=>{await page.evaluate(source);const result=await page.evaluate('axe.run(document,{runOnly:{type:"tag",values:["wcag2a","wcag2aa","wcag21a","wcag21aa"]}})');expect(result.violations.map((v:{id:string;nodes:{target:string[]}[]})=>({id:v.id,targets:v.nodes.map(n=>n.target)}))).toEqual([]);};
+ const check=async()=>{await page.evaluate(source);const result=await page.evaluate<{violations:{id:string;nodes:{target:string[]}[]}[]}>('axe.run(document,{runOnly:{type:"tag",values:["wcag2a","wcag2aa","wcag21a","wcag21aa"]}})');expect(result.violations.map((v:{id:string;nodes:{target:string[]}[]})=>({id:v.id,targets:v.nodes.map(n=>n.target)}))).toEqual([]);};
  for(const locale of ['en','ar','ur']){
   for(const suffix of ['', '/products?q=cotton', '/products/demo-cotton', '/checkout']){await page.goto(`/${locale}${suffix}`);await check();}
   await page.locator('header nav button').last().click();await expect(page.getByRole('dialog')).toBeVisible();await check();await page.keyboard.press('Escape');
  }
+});
+
+test('hosted payment submits provider fields rather than the wrapper',async({page})=>{
+ let submitted='';
+ await page.route('**/v1/payments/initiate',route=>route.fulfill({json:{success:true,redirect_url:'https://demo-gateway.invalid/checkout',payment_data:{method:'POST',action:'https://demo-gateway.invalid/checkout',fields:{pp_Amount:'125050',pp_TxnRefNo:'DEMO'}}}}));
+ await page.route('https://demo-gateway.invalid/checkout',async route=>{submitted=route.request().postData()??'';await route.fulfill({contentType:'text/html',body:'<!doctype html><html lang="en"><title>DEMO gateway</title><h1>DEMO hosted form received</h1></html>'});});
+ await page.addInitScript(()=>{
+  localStorage.setItem('bazaar-auth',JSON.stringify({state:{accessToken:'DEMO-NOT-A-CREDENTIAL',role:'consumer'},version:0}));
+  localStorage.setItem('bazaar-cart',JSON.stringify({state:{items:[{product_id:'10000000-0000-4000-8000-000000000001',variant_id:'30000000-0000-4000-8000-000000000001',name:'DEMO — Cotton fabric',slug:'demo-cotton',image_url:'/demo-product.svg',price:1250.5,quantity:1,stock_qty:12,seller_name:'DEMO seller'}]},version:0}));
+ });
+ await page.goto('/en/checkout');await page.getByRole('radio',{name:/jazzcash/}).check();
+ for(const [name,value] of Object.entries({full_name:'DEMO buyer',phone:'03000000000',address_line1:'DEMO address',city:'DEMO city'}))await page.locator(`input[name="${name}"]`).fill(value);
+ await page.getByRole('button',{name:'Place order',exact:true}).click();
+ await expect(page).toHaveURL('https://demo-gateway.invalid/checkout');
+ expect(Object.fromEntries(new URLSearchParams(submitted))).toEqual({pp_Amount:'125050',pp_TxnRefNo:'DEMO'});
 });

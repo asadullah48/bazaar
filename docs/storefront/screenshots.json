@@ -1,0 +1,375 @@
+{
+  "fixture": "Clearly labelled DEMO catalog; not live marketplace activity",
+  "framework": {
+    "before": "14.2.35",
+    "after": "14.2.35"
+  },
+  "before": 20,
+  "after": 20,
+  "widerThanViewport": {
+    "before": 10,
+    "after": 0
+  },
+  "screenshots": [
+    {
+      "file": "docs/storefront/before/ar-1440-cart.png",
+      "phase": "before",
+      "locale": "ar",
+      "viewportWidth": 1440,
+      "page": "cart",
+      "imageWidth": 1440,
+      "imageHeight": 1413
+    },
+    {
+      "file": "docs/storefront/before/ar-1440-checkout.png",
+      "phase": "before",
+      "locale": "ar",
+      "viewportWidth": 1440,
+      "page": "checkout",
+      "imageWidth": 1440,
+      "imageHeight": 900
+    },
+    {
+      "file": "docs/storefront/before/ar-1440-home.png",
+      "phase": "before",
+      "locale": "ar",
+      "viewportWidth": 1440,
+      "page": "home",
+      "imageWidth": 1440,
+      "imageHeight": 2909
+    },
+    {
+      "file": "docs/storefront/before/ar-1440-product.png",
+      "phase": "before",
+      "locale": "ar",
+      "viewportWidth": 1440,
+      "page": "product",
+      "imageWidth": 1440,
+      "imageHeight": 1413
+    },
+    {
+      "file": "docs/storefront/before/ar-1440-search.png",
+      "phase": "before",
+      "locale": "ar",
+      "viewportWidth": 1440,
+      "page": "search",
+      "imageWidth": 1440,
+      "imageHeight": 900
+    },
+    {
+      "file": "docs/storefront/before/ar-390-cart.png",
+      "phase": "before",
+      "locale": "ar",
+      "viewportWidth": 390,
+      "page": "cart",
+      "imageWidth": 660,
+      "imageHeight": 1615
+    },
+    {
+      "file": "docs/storefront/before/ar-390-checkout.png",
+      "phase": "before",
+      "locale": "ar",
+      "viewportWidth": 390,
+      "page": "checkout",
+      "imageWidth": 660,
+      "imageHeight": 900
+    },
+    {
+      "file": "docs/storefront/before/ar-390-home.png",
+      "phase": "before",
+      "locale": "ar",
+      "viewportWidth": 390,
+      "page": "home",
+      "imageWidth": 658,
+      "imageHeight": 3754
+    },
+    {
+      "file": "docs/storefront/before/ar-390-product.png",
+      "phase": "before",
+      "locale": "ar",
+      "viewportWidth": 390,
+      "page": "product",
+      "imageWidth": 658,
+      "imageHeight": 1615
+    },
+    {
+      "file": "docs/storefront/before/ar-390-search.png",
+      "phase": "before",
+      "locale": "ar",
+      "viewportWidth": 390,
+      "page": "search",
+      "imageWidth": 658,
+      "imageHeight": 900
+    },
+    {
+      "file": "docs/storefront/before/en-1440-cart.png",
+      "phase": "before",
+      "locale": "en",
+      "viewportWidth": 1440,
+      "page": "cart",
+      "imageWidth": 1440,
+      "imageHeight": 1413
+    },
+    {
+      "file": "docs/storefront/before/en-1440-checkout.png",
+      "phase": "before",
+      "locale": "en",
+      "viewportWidth": 1440,
+      "page": "checkout",
+      "imageWidth": 1440,
+      "imageHeight": 900
+    },
+    {
+      "file": "docs/storefront/before/en-1440-home.png",
+      "phase": "before",
+      "locale": "en",
+      "viewportWidth": 1440,
+      "page": "home",
+      "imageWidth": 1440,
+      "imageHeight": 2909
+    },
+    {
+      "file": "docs/storefront/before/en-1440-product.png",
+      "phase": "before",
+      "locale": "en",
+      "viewportWidth": 1440,
+      "page": "product",
+      "imageWidth": 1440,
+      "imageHeight": 1413
+    },
+    {
+      "file": "docs/storefront/before/en-1440-search.png",
+      "phase": "before",
+      "locale": "en",
+      "viewportWidth": 1440,
+      "page": "search",
+      "imageWidth": 1440,
+      "imageHeight": 900
+    },
+    {
+      "file": "docs/storefront/before/en-390-cart.png",
+      "phase": "before",
+      "locale": "en",
+      "viewportWidth": 390,
+      "page": "cart",
+      "imageWidth": 635,
+      "imageHeight": 1615
+    },
+    {
+      "file": "docs/storefront/before/en-390-checkout.png",
+      "phase": "before",
+      "locale": "en",
+      "viewportWidth": 390,
+      "page": "checkout",
+      "imageWidth": 635,
+      "imageHeight": 900
+    },
+    {
+      "file": "docs/storefront/before/en-390-home.png",
+      "phase": "before",
+      "locale": "en",
+      "viewportWidth": 390,
+      "page": "home",
+      "imageWidth": 633,
+      "imageHeight": 3754
+    },
+    {
+      "file": "docs/storefront/before/en-390-product.png",
+      "phase": "before",
+      "locale": "en",
+      "viewportWidth": 390,
+      "page": "product",
+      "imageWidth": 633,
+      "imageHeight": 1615
+    },
+    {
+      "file": "docs/storefront/before/en-390-search.png",
+      "phase": "before",
+      "locale": "en",
+      "viewportWidth": 390,
+      "page": "search",
+      "imageWidth": 633,
+      "imageHeight": 900
+    },
+    {
+      "file": "docs/storefront/after/ar-1440-cart.png",
+      "phase": "after",
+      "locale": "ar",
+      "viewportWidth": 1440,
+      "page": "cart",
+      "imageWidth": 1440,
+      "imageHeight": 1158
+    },
+    {
+      "file": "docs/storefront/after/ar-1440-checkout.png",
+      "phase": "after",
+      "locale": "ar",
+      "viewportWidth": 1440,
+      "page": "checkout",
+      "imageWidth": 1440,
+      "imageHeight": 910
+    },
+    {
+      "file": "docs/storefront/after/ar-1440-home.png",
+      "phase": "after",
+      "locale": "ar",
+      "viewportWidth": 1440,
+      "page": "home",
+      "imageWidth": 1440,
+      "imageHeight": 1130
+    },
+    {
+      "file": "docs/storefront/after/ar-1440-product.png",
+      "phase": "after",
+      "locale": "ar",
+      "viewportWidth": 1440,
+      "page": "product",
+      "imageWidth": 1440,
+      "imageHeight": 1158
+    },
+    {
+      "file": "docs/storefront/after/ar-1440-search.png",
+      "phase": "after",
+      "locale": "ar",
+      "viewportWidth": 1440,
+      "page": "search",
+      "imageWidth": 1440,
+      "imageHeight": 900
+    },
+    {
+      "file": "docs/storefront/after/ar-390-cart.png",
+      "phase": "after",
+      "locale": "ar",
+      "viewportWidth": 390,
+      "page": "cart",
+      "imageWidth": 390,
+      "imageHeight": 1681
+    },
+    {
+      "file": "docs/storefront/after/ar-390-checkout.png",
+      "phase": "after",
+      "locale": "ar",
+      "viewportWidth": 390,
+      "page": "checkout",
+      "imageWidth": 390,
+      "imageHeight": 1445
+    },
+    {
+      "file": "docs/storefront/after/ar-390-home.png",
+      "phase": "after",
+      "locale": "ar",
+      "viewportWidth": 390,
+      "page": "home",
+      "imageWidth": 390,
+      "imageHeight": 1117
+    },
+    {
+      "file": "docs/storefront/after/ar-390-product.png",
+      "phase": "after",
+      "locale": "ar",
+      "viewportWidth": 390,
+      "page": "product",
+      "imageWidth": 390,
+      "imageHeight": 1681
+    },
+    {
+      "file": "docs/storefront/after/ar-390-search.png",
+      "phase": "after",
+      "locale": "ar",
+      "viewportWidth": 390,
+      "page": "search",
+      "imageWidth": 390,
+      "imageHeight": 1265
+    },
+    {
+      "file": "docs/storefront/after/en-1440-cart.png",
+      "phase": "after",
+      "locale": "en",
+      "viewportWidth": 1440,
+      "page": "cart",
+      "imageWidth": 1440,
+      "imageHeight": 1158
+    },
+    {
+      "file": "docs/storefront/after/en-1440-checkout.png",
+      "phase": "after",
+      "locale": "en",
+      "viewportWidth": 1440,
+      "page": "checkout",
+      "imageWidth": 1440,
+      "imageHeight": 910
+    },
+    {
+      "file": "docs/storefront/after/en-1440-home.png",
+      "phase": "after",
+      "locale": "en",
+      "viewportWidth": 1440,
+      "page": "home",
+      "imageWidth": 1440,
+      "imageHeight": 1130
+    },
+    {
+      "file": "docs/storefront/after/en-1440-product.png",
+      "phase": "after",
+      "locale": "en",
+      "viewportWidth": 1440,
+      "page": "product",
+      "imageWidth": 1440,
+      "imageHeight": 1158
+    },
+    {
+      "file": "docs/storefront/after/en-1440-search.png",
+      "phase": "after",
+      "locale": "en",
+      "viewportWidth": 1440,
+      "page": "search",
+      "imageWidth": 1440,
+      "imageHeight": 900
+    },
+    {
+      "file": "docs/storefront/after/en-390-cart.png",
+      "phase": "after",
+      "locale": "en",
+      "viewportWidth": 390,
+      "page": "cart",
+      "imageWidth": 390,
+      "imageHeight": 1681
+    },
+    {
+      "file": "docs/storefront/after/en-390-checkout.png",
+      "phase": "after",
+      "locale": "en",
+      "viewportWidth": 390,
+      "page": "checkout",
+      "imageWidth": 390,
+      "imageHeight": 1505
+    },
+    {
+      "file": "docs/storefront/after/en-390-home.png",
+      "phase": "after",
+      "locale": "en",
+      "viewportWidth": 390,
+      "page": "home",
+      "imageWidth": 390,
+      "imageHeight": 1222
+    },
+    {
+      "file": "docs/storefront/after/en-390-product.png",
+      "phase": "after",
+      "locale": "en",
+      "viewportWidth": 390,
+      "page": "product",
+      "imageWidth": 390,
+      "imageHeight": 1681
+    },
+    {
+      "file": "docs/storefront/after/en-390-search.png",
+      "phase": "after",
+      "locale": "en",
+      "viewportWidth": 390,
+      "page": "search",
+      "imageWidth": 390,
+      "imageHeight": 1265
+    }
+  ]
+}

@@ -54,3 +54,6 @@ backend/test_db.py
 
 # Nested git repos / stray dirs
 bazaar/
+
+frontend/test-results/
+frontend/playwright-report/

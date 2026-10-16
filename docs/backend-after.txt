@@ -1,0 +1,418 @@
+============================= test session starts =============================
+platform win32 -- Python 3.12.13, pytest-8.3.3, pluggy-1.7.0 -- [repo]\backend\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: [repo]\backend
+configfile: pytest.ini
+testpaths: tests
+plugins: anyio-4.15.1, Faker-28.4.1, asyncio-0.24.0, cov-5.0.0
+asyncio: mode=Mode.AUTO, default_loop_scope=session
+collecting ... collected 91 items
+
+tests/test_addresses.py::test_second_address_is_default PASSED           [  1%]
+tests/test_addresses.py::test_update_address_to_default PASSED           [  2%]
+tests/test_addresses.py::test_delete_address PASSED                      [  3%]
+tests/test_admin.py::test_non_admin_forbidden PASSED                     [  4%]
+tests/test_admin.py::test_admin_approves_product PASSED                  [  5%]
+tests/test_admin.py::test_admin_rejects_product PASSED                   [  6%]
+tests/test_admin.py::test_admin_approves_seller PASSED                   [  7%]
+tests/test_auth.py::test_register_new_user PASSED                        [  8%]
+tests/test_auth.py::test_register_duplicate_email PASSED                 [  9%]
+tests/test_auth.py::test_login_valid_credentials PASSED                  [ 10%]
+tests/test_auth.py::test_login_wrong_password PASSED                     [ 12%]
+tests/test_auth.py::test_refresh_returns_new_tokens PASSED               [ 13%]
+tests/test_auth.py::test_logout_deletes_token PASSED                     [ 14%]
+tests/test_cart.py::test_add_item_and_get_cart PASSED                    [ 15%]
+tests/test_cart.py::test_add_same_item_increments_quantity PASSED        [ 16%]
+tests/test_cart.py::test_update_quantity PASSED                          [ 17%]
+tests/test_cart.py::test_remove_item PASSED                              [ 18%]
+tests/test_cart.py::test_add_qty_exceeds_stock PASSED                    [ 19%]
+tests/test_catalog.py::test_empty_catalog PASSED                         [ 20%]
+tests/test_catalog.py::test_catalog_shows_published PASSED               [ 21%]
+tests/test_catalog.py::test_catalog_price_filter PASSED                  [ 23%]
+tests/test_catalog.py::test_product_detail FAILED                        [ 24%]
+tests/test_catalog.py::test_product_detail_404_unpublished PASSED        [ 25%]
+tests/test_catalog.py::test_seller_storefront PASSED                     [ 26%]
+tests/test_categories.py::test_categories_tree PASSED                    [ 27%]
+tests/test_categories.py::test_category_detail PASSED                    [ 28%]
+tests/test_categories.py::test_create_category_no_admin PASSED           [ 29%]
+tests/test_categories.py::test_create_category_with_admin PASSED         [ 30%]
+tests/test_categories.py::test_categories_includes_new_category PASSED   [ 31%]
+tests/test_checkout.py::test_empty_cart_checkout PASSED                  [ 32%]
+tests/test_checkout.py::test_single_seller_checkout_cod PASSED           [ 34%]
+tests/test_checkout.py::test_multi_seller_checkout PASSED                [ 35%]
+tests/test_checkout.py::test_get_buyer_orders PASSED                     [ 36%]
+tests/test_checkout.py::test_get_seller_orders PASSED                    [ 37%]
+tests/test_inventory.py::test_list_inventory_returns_variants[asyncio] PASSED [ 38%]
+tests/test_inventory.py::test_upsert_alert_creates_then_updates[asyncio] PASSED [ 39%]
+tests/test_inventory.py::test_adjust_stock_records_movement[asyncio] PASSED [ 40%]
+tests/test_inventory.py::test_adjust_stock_cannot_go_negative[asyncio] PASSED [ 41%]
+tests/test_inventory.py::test_auto_pause_on_zero_stock[asyncio] PASSED   [ 42%]
+tests/test_inventory.py::test_export_returns_csv[asyncio] PASSED         [ 43%]
+tests/test_order_fsm.py::test_seller_advances_order FAILED               [ 45%]
+tests/test_order_fsm.py::test_advance_to_shipped_without_tracking PASSED [ 46%]
+tests/test_order_fsm.py::test_buyer_cancel_order PASSED                  [ 47%]
+tests/test_order_fsm.py::test_seller_accept_cancel_restores_stock PASSED [ 48%]
+tests/test_payouts.py::test_calculate_payout_creates_record PASSED       [ 49%]
+tests/test_payouts.py::test_commission_math_correct PASSED               [ 50%]
+tests/test_payouts.py::test_mark_payout_paid PASSED                      [ 51%]
+tests/test_payouts.py::test_seller_views_own_payout_history PASSED       [ 52%]
+tests/test_product_seo_qr.py::test_generate_qr_data_uri_returns_png_data_uri PASSED [ 53%]
+tests/test_product_seo_qr.py::test_get_qr_returns_cached_when_redis_hit PASSED [ 54%]
+tests/test_product_seo_qr.py::test_get_qr_404_when_not_generated PASSED  [ 56%]
+tests/test_products.py::test_seller_creates_product PASSED               [ 57%]
+tests/test_products.py::test_seller_lists_products PASSED                [ 58%]
+tests/test_products.py::test_non_owner_cannot_update PASSED              [ 59%]
+tests/test_products.py::test_seller_publishes PASSED                     [ 60%]
+tests/test_products.py::test_seller_deletes PASSED                       [ 61%]
+tests/test_products.py::test_add_variants PASSED                         [ 62%]
+tests/test_products.py::test_update_variant_price PASSED                 [ 63%]
+tests/test_products.py::test_delete_variant PASSED                       [ 64%]
+tests/test_products.py::test_add_b2b_tiers PASSED                        [ 65%]
+tests/test_products.py::test_delete_tier PASSED                          [ 67%]
+tests/test_reviews.py::test_cannot_review_non_completed_order PASSED     [ 68%]
+tests/test_reviews.py::test_create_review_on_completed_order PASSED      [ 69%]
+tests/test_reviews.py::test_duplicate_review_returns_409 FAILED          [ 70%]
+tests/test_reviews.py::test_content_guard_blocks_email_in_body PASSED    [ 71%]
+tests/test_reviews.py::test_get_product_reviews FAILED                   [ 72%]
+tests/test_reviews.py::test_seller_rating_updated_after_review PASSED    [ 73%]
+tests/test_rfq.py::test_buyer_creates_rfq PASSED                         [ 74%]
+tests/test_rfq.py::test_buyer_lists_own_rfqs PASSED                      [ 75%]
+tests/test_rfq.py::test_seller_sees_broadcast_rfq PASSED                 [ 76%]
+tests/test_rfq.py::test_buyer_closes_rfq PASSED                          [ 78%]
+tests/test_rfq.py::test_seller_submits_quote_visible_to_buyer PASSED     [ 79%]
+tests/test_rfq.py::test_buyer_counters_quote PASSED                      [ 80%]
+tests/test_rfq.py::test_buyer_accepts_creates_order_and_rejects_others PASSED [ 81%]
+tests/test_rfq.py::test_buyer_rejects_quote PASSED                       [ 82%]
+tests/test_rfq.py::test_seller_cannot_quote_twice PASSED                 [ 83%]
+tests/test_search.py::test_search_no_results PASSED                      [ 84%]
+tests/test_search.py::test_search_finds_published_product PASSED         [ 85%]
+tests/test_search.py::test_search_price_filter_excludes_product PASSED   [ 86%]
+tests/test_search.py::test_search_suggestions PASSED                     [ 87%]
+tests/test_search.py::test_search_empty_query_returns_400 PASSED         [ 89%]
+tests/test_translate.py::test_translate_returns_503_when_key_missing PASSED [ 90%]
+tests/test_translate.py::test_translate_returns_cached_result PASSED     [ 91%]
+tests/test_translate.py::test_translate_calls_deepl_on_cache_miss PASSED [ 92%]
+tests/test_translate.py::test_translate_rejects_invalid_lang PASSED      [ 93%]
+tests/test_users.py::test_get_me_valid_token PASSED                      [ 94%]
+tests/test_users.py::test_get_me_no_token PASSED                         [ 95%]
+tests/test_users.py::test_get_me_expired_token PASSED                    [ 96%]
+tests/test_wishlist.py::test_add_and_list_wishlist PASSED                [ 97%]
+tests/test_wishlist.py::test_duplicate_wishlist_409 PASSED               [ 98%]
+tests/test_wishlist.py::test_remove_from_wishlist PASSED                 [100%]
+
+================================== FAILURES ===================================
+_____________________________ test_product_detail _____________________________
+tests\test_catalog.py:112: in test_product_detail
+    assert resp.status_code == 200
+E   assert 404 == 200
+E    +  where 404 = <Response [404 Not Found]>.status_code
+_________________________ test_seller_advances_order __________________________
+.venv\Lib\site-packages\redis\asyncio\connection.py:473: in send_packed_command
+    self._writer.writelines(command)
+[user]\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\asyncio\streams.py:349: in writelines
+    self._transport.writelines(data)
+[user]\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\asyncio\transports.py:123: in writelines
+    self.write(data)
+[user]\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\asyncio\proactor_events.py:366: in write
+    self._loop_writing(data=bytes(data))
+[user]\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\asyncio\proactor_events.py:402: in _loop_writing
+    self._write_fut = self._loop._proactor.send(self._sock, data)
+E   AttributeError: 'NoneType' object has no attribute 'send'
+
+During handling of the above exception, another exception occurred:
+tests\test_order_fsm.py:159: in test_seller_advances_order
+    r = await client.put(f"{SELLER_ORDERS}/{order_id}/advance", json={}, headers=shdrs)
+.venv\Lib\site-packages\httpx\_client.py:1942: in put
+    return await self.request(
+.venv\Lib\site-packages\httpx\_client.py:1585: in request
+    return await self.send(request, auth=auth, follow_redirects=follow_redirects)
+.venv\Lib\site-packages\httpx\_client.py:1674: in send
+    response = await self._send_handling_auth(
+.venv\Lib\site-packages\httpx\_client.py:1702: in _send_handling_auth
+    response = await self._send_handling_redirects(
+.venv\Lib\site-packages\httpx\_client.py:1739: in _send_handling_redirects
+    response = await self._send_single_request(request)
+.venv\Lib\site-packages\httpx\_client.py:1776: in _send_single_request
+    response = await transport.handle_async_request(request)
+.venv\Lib\site-packages\httpx\_transports\asgi.py:157: in handle_async_request
+    await self.app(scope, receive, send)
+.venv\Lib\site-packages\fastapi\applications.py:1054: in __call__
+    await super().__call__(scope, receive, send)
+.venv\Lib\site-packages\starlette\applications.py:113: in __call__
+    await self.middleware_stack(scope, receive, send)
+.venv\Lib\site-packages\starlette\middleware\errors.py:187: in __call__
+    raise exc
+.venv\Lib\site-packages\starlette\middleware\errors.py:165: in __call__
+    await self.app(scope, receive, _send)
+.venv\Lib\site-packages\starlette\middleware\cors.py:85: in __call__
+    await self.app(scope, receive, send)
+.venv\Lib\site-packages\starlette\middleware\exceptions.py:62: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+.venv\Lib\site-packages\starlette\_exception_handler.py:62: in wrapped_app
+    raise exc
+.venv\Lib\site-packages\starlette\_exception_handler.py:51: in wrapped_app
+    await app(scope, receive, sender)
+.venv\Lib\site-packages\starlette\routing.py:715: in __call__
+    await self.middleware_stack(scope, receive, send)
+.venv\Lib\site-packages\starlette\routing.py:735: in app
+    await route.handle(scope, receive, send)
+.venv\Lib\site-packages\starlette\routing.py:288: in handle
+    await self.app(scope, receive, send)
+.venv\Lib\site-packages\starlette\routing.py:76: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+.venv\Lib\site-packages\starlette\_exception_handler.py:62: in wrapped_app
+    raise exc
+.venv\Lib\site-packages\starlette\_exception_handler.py:51: in wrapped_app
+    await app(scope, receive, sender)
+.venv\Lib\site-packages\starlette\routing.py:73: in app
+    response = await f(request)
+.venv\Lib\site-packages\fastapi\routing.py:301: in app
+    raw_response = await run_endpoint_function(
+.venv\Lib\site-packages\fastapi\routing.py:212: in run_endpoint_function
+    return await dependant.call(**values)
+app\routers\orders.py:205: in advance_order
+    await pool.enqueue_job(
+.venv\Lib\site-packages\arq\connections.py:157: in enqueue_job
+    await pipe.watch(job_key)
+.venv\Lib\site-packages\redis\asyncio\client.py:1548: in watch
+    return await self.execute_command("WATCH", *names)
+.venv\Lib\site-packages\redis\asyncio\client.py:1335: in immediate_execute_command
+    return await conn.retry.call_with_retry(
+.venv\Lib\site-packages\redis\asyncio\retry.py:59: in call_with_retry
+    return await do()
+.venv\Lib\site-packages\redis\asyncio\client.py:588: in _send_command_parse_response
+    await conn.send_command(*args)
+.venv\Lib\site-packages\redis\asyncio\connection.py:498: in send_command
+    await self.send_packed_command(
+.venv\Lib\site-packages\redis\asyncio\connection.py:493: in send_packed_command
+    await self.disconnect(nowait=True)
+.venv\Lib\site-packages\redis\asyncio\connection.py:418: in disconnect
+    self._writer.close()  # type: ignore[union-attr]
+[user]\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\asyncio\streams.py:358: in close
+    return self._transport.close()
+[user]\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\asyncio\proactor_events.py:109: in close
+    self._loop.call_soon(self._call_connection_lost, None)
+[user]\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\asyncio\base_events.py:799: in call_soon
+    self._check_closed()
+[user]\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\asyncio\base_events.py:545: in _check_closed
+    raise RuntimeError('Event loop is closed')
+E   RuntimeError: Event loop is closed
+______________________ test_duplicate_review_returns_409 ______________________
+.venv\Lib\site-packages\redis\asyncio\connection.py:473: in send_packed_command
+    self._writer.writelines(command)
+[user]\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\asyncio\streams.py:349: in writelines
+    self._transport.writelines(data)
+[user]\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\asyncio\transports.py:123: in writelines
+    self.write(data)
+[user]\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\asyncio\proactor_events.py:366: in write
+    self._loop_writing(data=bytes(data))
+[user]\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\asyncio\proactor_events.py:402: in _loop_writing
+    self._write_fut = self._loop._proactor.send(self._sock, data)
+E   AttributeError: 'NoneType' object has no attribute 'send'
+
+During handling of the above exception, another exception occurred:
+tests\test_reviews.py:213: in test_duplicate_review_returns_409
+    order_id = await _place_and_complete_order(client, buyer, seller_with_product)
+tests\test_reviews.py:160: in _place_and_complete_order
+    await client.put(f"{SELLER_ORDERS}/{order_id}/advance", json={}, headers=shdrs)
+.venv\Lib\site-packages\httpx\_client.py:1942: in put
+    return await self.request(
+.venv\Lib\site-packages\httpx\_client.py:1585: in request
+    return await self.send(request, auth=auth, follow_redirects=follow_redirects)
+.venv\Lib\site-packages\httpx\_client.py:1674: in send
+    response = await self._send_handling_auth(
+.venv\Lib\site-packages\httpx\_client.py:1702: in _send_handling_auth
+    response = await self._send_handling_redirects(
+.venv\Lib\site-packages\httpx\_client.py:1739: in _send_handling_redirects
+    response = await self._send_single_request(request)
+.venv\Lib\site-packages\httpx\_client.py:1776: in _send_single_request
+    response = await transport.handle_async_request(request)
+.venv\Lib\site-packages\httpx\_transports\asgi.py:157: in handle_async_request
+    await self.app(scope, receive, send)
+.venv\Lib\site-packages\fastapi\applications.py:1054: in __call__
+    await super().__call__(scope, receive, send)
+.venv\Lib\site-packages\starlette\applications.py:113: in __call__
+    await self.middleware_stack(scope, receive, send)
+.venv\Lib\site-packages\starlette\middleware\errors.py:187: in __call__
+    raise exc
+.venv\Lib\site-packages\starlette\middleware\errors.py:165: in __call__
+    await self.app(scope, receive, _send)
+.venv\Lib\site-packages\starlette\middleware\cors.py:85: in __call__
+    await self.app(scope, receive, send)
+.venv\Lib\site-packages\starlette\middleware\exceptions.py:62: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+.venv\Lib\site-packages\starlette\_exception_handler.py:62: in wrapped_app
+    raise exc
+.venv\Lib\site-packages\starlette\_exception_handler.py:51: in wrapped_app
+    await app(scope, receive, sender)
+.venv\Lib\site-packages\starlette\routing.py:715: in __call__
+    await self.middleware_stack(scope, receive, send)
+.venv\Lib\site-packages\starlette\routing.py:735: in app
+    await route.handle(scope, receive, send)
+.venv\Lib\site-packages\starlette\routing.py:288: in handle
+    await self.app(scope, receive, send)
+.venv\Lib\site-packages\starlette\routing.py:76: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+.venv\Lib\site-packages\starlette\_exception_handler.py:62: in wrapped_app
+    raise exc
+.venv\Lib\site-packages\starlette\_exception_handler.py:51: in wrapped_app
+    await app(scope, receive, sender)
+.venv\Lib\site-packages\starlette\routing.py:73: in app
+    response = await f(request)
+.venv\Lib\site-packages\fastapi\routing.py:301: in app
+    raw_response = await run_endpoint_function(
+.venv\Lib\site-packages\fastapi\routing.py:212: in run_endpoint_function
+    return await dependant.call(**values)
+app\routers\orders.py:205: in advance_order
+    await pool.enqueue_job(
+.venv\Lib\site-packages\arq\connections.py:157: in enqueue_job
+    await pipe.watch(job_key)
+.venv\Lib\site-packages\redis\asyncio\client.py:1548: in watch
+    return await self.execute_command("WATCH", *names)
+.venv\Lib\site-packages\redis\asyncio\client.py:1335: in immediate_execute_command
+    return await conn.retry.call_with_retry(
+.venv\Lib\site-packages\redis\asyncio\retry.py:59: in call_with_retry
+    return await do()
+.venv\Lib\site-packages\redis\asyncio\client.py:588: in _send_command_parse_response
+    await conn.send_command(*args)
+.venv\Lib\site-packages\redis\asyncio\connection.py:498: in send_command
+    await self.send_packed_command(
+.venv\Lib\site-packages\redis\asyncio\connection.py:493: in send_packed_command
+    await self.disconnect(nowait=True)
+.venv\Lib\site-packages\redis\asyncio\connection.py:418: in disconnect
+    self._writer.close()  # type: ignore[union-attr]
+[user]\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\asyncio\streams.py:358: in close
+    return self._transport.close()
+[user]\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\asyncio\proactor_events.py:109: in close
+    self._loop.call_soon(self._call_connection_lost, None)
+[user]\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\asyncio\base_events.py:799: in call_soon
+    self._check_closed()
+[user]\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\asyncio\base_events.py:545: in _check_closed
+    raise RuntimeError('Event loop is closed')
+E   RuntimeError: Event loop is closed
+__________________________ test_get_product_reviews ___________________________
+.venv\Lib\site-packages\redis\asyncio\connection.py:473: in send_packed_command
+    self._writer.writelines(command)
+[user]\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\asyncio\streams.py:349: in writelines
+    self._transport.writelines(data)
+[user]\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\asyncio\transports.py:123: in writelines
+    self.write(data)
+[user]\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\asyncio\proactor_events.py:366: in write
+    self._loop_writing(data=bytes(data))
+[user]\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\asyncio\proactor_events.py:402: in _loop_writing
+    self._write_fut = self._loop._proactor.send(self._sock, data)
+E   AttributeError: 'NoneType' object has no attribute 'send'
+
+During handling of the above exception, another exception occurred:
+tests\test_reviews.py:248: in test_get_product_reviews
+    order_id = await _place_and_complete_order(client, buyer, seller_with_product)
+tests\test_reviews.py:160: in _place_and_complete_order
+    await client.put(f"{SELLER_ORDERS}/{order_id}/advance", json={}, headers=shdrs)
+.venv\Lib\site-packages\httpx\_client.py:1942: in put
+    return await self.request(
+.venv\Lib\site-packages\httpx\_client.py:1585: in request
+    return await self.send(request, auth=auth, follow_redirects=follow_redirects)
+.venv\Lib\site-packages\httpx\_client.py:1674: in send
+    response = await self._send_handling_auth(
+.venv\Lib\site-packages\httpx\_client.py:1702: in _send_handling_auth
+    response = await self._send_handling_redirects(
+.venv\Lib\site-packages\httpx\_client.py:1739: in _send_handling_redirects
+    response = await self._send_single_request(request)
+.venv\Lib\site-packages\httpx\_client.py:1776: in _send_single_request
+    response = await transport.handle_async_request(request)
+.venv\Lib\site-packages\httpx\_transports\asgi.py:157: in handle_async_request
+    await self.app(scope, receive, send)
+.venv\Lib\site-packages\fastapi\applications.py:1054: in __call__
+    await super().__call__(scope, receive, send)
+.venv\Lib\site-packages\starlette\applications.py:113: in __call__
+    await self.middleware_stack(scope, receive, send)
+.venv\Lib\site-packages\starlette\middleware\errors.py:187: in __call__
+    raise exc
+.venv\Lib\site-packages\starlette\middleware\errors.py:165: in __call__
+    await self.app(scope, receive, _send)
+.venv\Lib\site-packages\starlette\middleware\cors.py:85: in __call__
+    await self.app(scope, receive, send)
+.venv\Lib\site-packages\starlette\middleware\exceptions.py:62: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+.venv\Lib\site-packages\starlette\_exception_handler.py:62: in wrapped_app
+    raise exc
+.venv\Lib\site-packages\starlette\_exception_handler.py:51: in wrapped_app
+    await app(scope, receive, sender)
+.venv\Lib\site-packages\starlette\routing.py:715: in __call__
+    await self.middleware_stack(scope, receive, send)
+.venv\Lib\site-packages\starlette\routing.py:735: in app
+    await route.handle(scope, receive, send)
+.venv\Lib\site-packages\starlette\routing.py:288: in handle
+    await self.app(scope, receive, send)
+.venv\Lib\site-packages\starlette\routing.py:76: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+.venv\Lib\site-packages\starlette\_exception_handler.py:62: in wrapped_app
+    raise exc
+.venv\Lib\site-packages\starlette\_exception_handler.py:51: in wrapped_app
+    await app(scope, receive, sender)
+.venv\Lib\site-packages\starlette\routing.py:73: in app
+    response = await f(request)
+.venv\Lib\site-packages\fastapi\routing.py:301: in app
+    raw_response = await run_endpoint_function(
+.venv\Lib\site-packages\fastapi\routing.py:212: in run_endpoint_function
+    return await dependant.call(**values)
+app\routers\orders.py:205: in advance_order
+    await pool.enqueue_job(
+.venv\Lib\site-packages\arq\connections.py:157: in enqueue_job
+    await pipe.watch(job_key)
+.venv\Lib\site-packages\redis\asyncio\client.py:1548: in watch
+    return await self.execute_command("WATCH", *names)
+.venv\Lib\site-packages\redis\asyncio\client.py:1335: in immediate_execute_command
+    return await conn.retry.call_with_retry(
+.venv\Lib\site-packages\redis\asyncio\retry.py:59: in call_with_retry
+    return await do()
+.venv\Lib\site-packages\redis\asyncio\client.py:588: in _send_command_parse_response
+    await conn.send_command(*args)
+.venv\Lib\site-packages\redis\asyncio\connection.py:498: in send_command
+    await self.send_packed_command(
+.venv\Lib\site-packages\redis\asyncio\connection.py:493: in send_packed_command
+    await self.disconnect(nowait=True)
+.venv\Lib\site-packages\redis\asyncio\connection.py:418: in disconnect
+    self._writer.close()  # type: ignore[union-attr]
+[user]\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\asyncio\streams.py:358: in close
+    return self._transport.close()
+[user]\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\asyncio\proactor_events.py:109: in close
+    self._loop.call_soon(self._call_connection_lost, None)
+[user]\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\asyncio\base_events.py:799: in call_soon
+    self._check_closed()
+[user]\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\asyncio\base_events.py:545: in _check_closed
+    raise RuntimeError('Event loop is closed')
+E   RuntimeError: Event loop is closed
+============================== warnings summary ===============================
+.venv\Lib\site-packages\_pytest\config\__init__.py:1441
+  [repo]\backend\.venv\Lib\site-packages\_pytest\config\__init__.py:1441: PytestConfigWarning: Unknown config option: asyncio_default_test_loop_scope
+  
+    self._warn_or_fail_if_strict(f"Unknown config option: {key}\n")
+
+tests/test_addresses.py: 10 warnings
+tests/test_admin.py: 13 warnings
+tests/test_auth.py: 2 warnings
+tests/test_cart.py: 20 warnings
+tests/test_catalog.py: 12 warnings
+tests/test_categories.py: 3 warnings
+tests/test_checkout.py: 34 warnings
+tests/test_inventory.py: 9 warnings
+tests/test_order_fsm.py: 37 warnings
+tests/test_payouts.py: 14 warnings
+tests/test_products.py: 42 warnings
+tests/test_reviews.py: 73 warnings
+tests/test_rfq.py: 43 warnings
+tests/test_search.py: 8 warnings
+tests/test_users.py: 2 warnings
+tests/test_wishlist.py: 13 warnings
+  [repo]\backend\.venv\Lib\site-packages\jose\jwt.py:311: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    now = timegm(datetime.utcnow().utctimetuple())
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+- generated xml file: [repo]\docs\backend-after.xml -
+=========================== short test summary info ===========================
+FAILED tests/test_catalog.py::test_product_detail - assert 404 == 200
+FAILED tests/test_order_fsm.py::test_seller_advances_order - RuntimeError: Ev...
+FAILED tests/test_reviews.py::test_duplicate_review_returns_409 - RuntimeErro...
+FAILED tests/test_reviews.py::test_get_product_reviews - RuntimeError: Event ...
+=========== 4 failed, 87 passed, 336 warnings in 679.37s (0:11:19) ============

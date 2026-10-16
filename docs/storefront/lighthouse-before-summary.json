@@ -1,0 +1,2616 @@
+[
+  {
+    "phase": "before",
+    "locale": "en",
+    "page": "home",
+    "url": "http://localhost:3007/en",
+    "performance": 0.63,
+    "accessibility": 0.92,
+    "warnings": [],
+    "failedAudits": [
+      {
+        "id": "mainthread-work-breakdown",
+        "title": "Minimize main-thread work",
+        "details": {
+          "type": "table",
+          "headings": [
+            {
+              "key": "groupLabel",
+              "valueType": "text",
+              "label": "Category"
+            },
+            {
+              "key": "duration",
+              "valueType": "ms",
+              "granularity": 1,
+              "label": "Time Spent"
+            }
+          ],
+          "items": [
+            {
+              "group": "styleLayout",
+              "groupLabel": "Style & Layout",
+              "duration": 1104.42
+            },
+            {
+              "group": "scriptEvaluation",
+              "groupLabel": "Script Evaluation",
+              "duration": 860.2759999999976
+            },
+            {
+              "group": "other",
+              "groupLabel": "Other",
+              "duration": 692.7680000000004
+            },
+            {
+              "group": "scriptParseCompile",
+              "groupLabel": "Script Parsing & Compilation",
+              "duration": 124.50000000000003
+            },
+            {
+              "group": "paintCompositeRender",
+              "groupLabel": "Rendering",
+              "duration": 110.99199999999998
+            },
+            {
+              "group": "parseHTML",
+              "groupLabel": "Parse HTML & CSS",
+              "duration": 58.57199999999999
+            }
+          ],
+          "sortedBy": [
+            "duration"
+          ]
+        }
+      },
+      {
+        "id": "color-contrast",
+        "title": "Background and foreground colors do not have a sufficient contrast ratio.",
+        "details": {
+          "type": "table",
+          "headings": [
+            {
+              "key": "node",
+              "valueType": "node",
+              "subItemsHeading": {
+                "key": "relatedNode",
+                "valueType": "node"
+              },
+              "label": "Failing Elements"
+            }
+          ],
+          "items": [
+            {
+              "node": {
+                "type": "node",
+                "lhId": "1-1-BUTTON",
+                "path": "1,HTML,1,BODY,1,HEADER,0,DIV,0,DIV,2,NAV,0,DIV,0,BUTTON",
+                "selector": "div.flex > nav.flex > div.flex > button.px-2",
+                "boundingRect": {
+                  "top": 18,
+                  "bottom": 46,
+                  "left": 207,
+                  "right": 241,
+                  "width": 34,
+                  "height": 28
+                },
+                "snippet": "<button class=\"px-2 py-1 rounded-md text-sm font-medium transition-colors bg-orange-500 t…\">",
+                "nodeLabel": "EN",
+                "explanation": "Fix any of the following:\n  Element has insufficient color contrast of 2.8 (foreground color: #ffffff, background color: #f97316, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+              }
+            },
+            {
+              "node": {
+                "type": "node",
+                "lhId": "1-2-A",
+                "path": "1,HTML,1,BODY,4,MAIN,0,DIV,2,SECTION,0,DIV,2,A",
+                "selector": "div.pb-20 > section.max-w-7xl > div.flex > a.ms-auto",
+                "boundingRect": {
+                  "top": 445,
+                  "bottom": 461,
+                  "left": 318,
+                  "right": 374,
+                  "width": 56,
+                  "height": 16
+                },
+                "snippet": "<a class=\"ms-auto text-xs font-medium text-cyan-600 dark:text-cyan-400 hover:underli…\" href=\"/en/products\">",
+                "nodeLabel": "View all →",
+                "explanation": "Fix any of the following:\n  Element has insufficient color contrast of 3.68 (foreground color: #0891b2, background color: #ffffff, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+              },
+              "subItems": {
+                "type": "subitems",
+                "items": [
+                  {
+                    "relatedNode": {
+                      "type": "node",
+                      "lhId": "1-3-BODY",
+                      "path": "1,HTML,1,BODY",
+                      "selector": "body.__variable_d8ebd1",
+                      "boundingRect": {
+                        "top": 0,
+                        "bottom": 3754,
+                        "left": 0,
+                        "right": 390,
+                        "width": 390,
+                        "height": 3754
+                      },
+                      "snippet": "<body class=\"__variable_d8ebd1 __variable_e6a2a8 __variable_6b975f font-sans antialiase…\">",
+                      "nodeLabel": "body.__variable_d8ebd1"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "node": {
+                "type": "node",
+                "lhId": "1-4-A",
+                "path": "1,HTML,1,BODY,4,MAIN,0,DIV,3,SECTION,0,DIV,1,DIV,1,DIV,3,DIV,0,A",
+                "selector": "div.relative > div.text-center > div.mt-6 > a.inline-flex",
+                "boundingRect": {
+                  "top": 1684,
+                  "bottom": 1724,
+                  "left": 125,
+                  "right": 265,
+                  "width": 140,
+                  "height": 40
+                },
+                "snippet": "<a class=\"inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-whit…\" href=\"/en/auth/register\">",
+                "nodeLabel": "Start Selling",
+                "explanation": "Fix any of the following:\n  Element has insufficient color contrast of 2.8 (foreground color: #ffffff, background color: #f97316, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+              }
+            },
+            {
+              "node": {
+                "type": "node",
+                "lhId": "1-5-A",
+                "path": "1,HTML,1,BODY,4,MAIN,0,DIV,7,SECTION,0,DIV,2,A",
+                "selector": "div.pb-20 > section.max-w-7xl > div.flex > a.ms-auto",
+                "boundingRect": {
+                  "top": 3274,
+                  "bottom": 3290,
+                  "left": 318,
+                  "right": 374,
+                  "width": 56,
+                  "height": 16
+                },
+                "snippet": "<a class=\"ms-auto text-xs font-medium text-cyan-600 dark:text-cyan-400 hover:underli…\" href=\"/en/products\">",
+                "nodeLabel": "View all →",
+                "explanation": "Fix any of the following:\n  Element has insufficient color contrast of 3.68 (foreground color: #0891b2, background color: #ffffff, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+              },
+              "subItems": {
+                "type": "subitems",
+                "items": [
+                  {
+                    "relatedNode": {
+                      "type": "node",
+                      "lhId": "1-3-BODY",
+                      "path": "1,HTML,1,BODY",
+                      "selector": "body.__variable_d8ebd1",
+                      "boundingRect": {
+                        "top": 0,
+                        "bottom": 3754,
+                        "left": 0,
+                        "right": 390,
+                        "width": 390,
+                        "height": 3754
+                      },
+                      "snippet": "<body class=\"__variable_d8ebd1 __variable_e6a2a8 __variable_6b975f font-sans antialiase…\">",
+                      "nodeLabel": "body.__variable_d8ebd1"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "node": {
+                "type": "node",
+                "lhId": "1-6-A",
+                "path": "1,HTML,1,BODY,4,MAIN,0,DIV,7,SECTION,2,DIV,3,A",
+                "selector": "div.pb-20 > section.max-w-7xl > div.py-16 > a.mt-5",
+                "boundingRect": {
+                  "top": 3570,
+                  "bottom": 3610,
+                  "left": 110,
+                  "right": 280,
+                  "width": 171,
+                  "height": 40
+                },
+                "snippet": "<a class=\"mt-5 inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text…\" href=\"/en/auth/register\">",
+                "nodeLabel": "Register as Seller",
+                "explanation": "Fix any of the following:\n  Element has insufficient color contrast of 2.8 (foreground color: #ffffff, background color: #f97316, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+              }
+            }
+          ],
+          "debugData": {
+            "type": "debugdata",
+            "impact": "serious",
+            "tags": [
+              "cat.color",
+              "wcag2aa",
+              "wcag143",
+              "TTv5",
+              "TT13.c",
+              "EN-301-549",
+              "EN-9.1.4.3",
+              "ACT",
+              "RGAAv4",
+              "RGAA-3.2.1"
+            ]
+          }
+        }
+      },
+      {
+        "id": "target-size",
+        "title": "Touch targets do not have sufficient size or spacing.",
+        "details": {
+          "type": "table",
+          "headings": [
+            {
+              "key": "node",
+              "valueType": "node",
+              "subItemsHeading": {
+                "key": "relatedNode",
+                "valueType": "node"
+              },
+              "label": "Failing Elements"
+            }
+          ],
+          "items": [
+            {
+              "node": {
+                "type": "node",
+                "lhId": "1-7-BUTTON",
+                "path": "1,HTML,1,BODY,4,MAIN,0,DIV,0,SECTION,3,DIV,1,BUTTON",
+                "selector": "div.pb-20 > section.relative > div.absolute > button.h-1.5",
+                "boundingRect": {
+                  "top": 210,
+                  "bottom": 216,
+                  "left": 203,
+                  "right": 211,
+                  "width": 8,
+                  "height": 6
+                },
+                "snippet": "<button class=\"h-1.5 rounded-full transition-all duration-300 w-2 bg-white/40 hover:bg-wh…\" aria-label=\"Go to slide 2\">",
+                "nodeLabel": "Go to slide 2",
+                "explanation": "Fix any of the following:\n  Target has insufficient size (8px by 6px, should be at least 24px by 24px)\n  Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of 8px instead of at least 24px."
+              },
+              "subItems": {
+                "type": "subitems",
+                "items": [
+                  {
+                    "relatedNode": {
+                      "type": "node",
+                      "lhId": "1-8-BUTTON",
+                      "path": "1,HTML,1,BODY,4,MAIN,0,DIV,0,SECTION,3,DIV,2,BUTTON",
+                      "selector": "div.pb-20 > section.relative > div.absolute > button.h-1.5",
+                      "boundingRect": {
+                        "top": 210,
+                        "bottom": 216,
+                        "left": 219,
+                        "right": 227,
+                        "width": 8,
+                        "height": 6
+                      },
+                      "snippet": "<button class=\"h-1.5 rounded-full transition-all duration-300 w-2 bg-white/40 hover:bg-wh…\" aria-label=\"Go to slide 3\">",
+                      "nodeLabel": "Go to slide 3"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "node": {
+                "type": "node",
+                "lhId": "1-8-BUTTON",
+                "path": "1,HTML,1,BODY,4,MAIN,0,DIV,0,SECTION,3,DIV,2,BUTTON",
+                "selector": "div.pb-20 > section.relative > div.absolute > button.h-1.5",
+                "boundingRect": {
+                  "top": 210,
+                  "bottom": 216,
+                  "left": 219,
+                  "right": 227,
+                  "width": 8,
+                  "height": 6
+                },
+                "snippet": "<button class=\"h-1.5 rounded-full transition-all duration-300 w-2 bg-white/40 hover:bg-wh…\" aria-label=\"Go to slide 3\">",
+                "nodeLabel": "Go to slide 3",
+                "explanation": "Fix any of the following:\n  Target has insufficient size (8px by 6px, should be at least 24px by 24px)\n  Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of 8px instead of at least 24px."
+              },
+              "subItems": {
+                "type": "subitems",
+                "items": [
+                  {
+                    "relatedNode": {
+                      "type": "node",
+                      "lhId": "1-7-BUTTON",
+                      "path": "1,HTML,1,BODY,4,MAIN,0,DIV,0,SECTION,3,DIV,1,BUTTON",
+                      "selector": "div.pb-20 > section.relative > div.absolute > button.h-1.5",
+                      "boundingRect": {
+                        "top": 210,
+                        "bottom": 216,
+                        "left": 203,
+                        "right": 211,
+                        "width": 8,
+                        "height": 6
+                      },
+                      "snippet": "<button class=\"h-1.5 rounded-full transition-all duration-300 w-2 bg-white/40 hover:bg-wh…\" aria-label=\"Go to slide 2\">",
+                      "nodeLabel": "Go to slide 2"
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "debugData": {
+            "type": "debugdata",
+            "impact": "serious",
+            "tags": [
+              "cat.sensory-and-visual-cues",
+              "wcag22aa",
+              "wcag258",
+              "EN-301-549v4",
+              "EN-9.2.5.8"
+            ]
+          }
+        }
+      },
+      {
+        "id": "image-delivery-insight",
+        "title": "Improve image delivery",
+        "details": {
+          "type": "table",
+          "headings": [
+            {
+              "key": "node",
+              "valueType": "node",
+              "label": ""
+            },
+            {
+              "key": "url",
+              "valueType": "url",
+              "label": "URL",
+              "subItemsHeading": {
+                "key": "reason",
+                "valueType": "text"
+              }
+            },
+            {
+              "key": "totalBytes",
+              "valueType": "bytes",
+              "label": "Resource Size"
+            },
+            {
+              "key": "wastedBytes",
+              "valueType": "bytes",
+              "label": "Est Savings",
+              "subItemsHeading": {
+                "key": "wastedBytes",
+                "valueType": "bytes"
+              }
+            }
+          ],
+          "items": [
+            {
+              "node": {
+                "type": "node",
+                "lhId": "page-0-IMG",
+                "path": "1,HTML,1,BODY,1,HEADER,0,DIV,0,DIV,0,A,0,DIV,0,IMG",
+                "selector": "div.flex > a.flex-shrink-0 > div.bg-gray-900 > img.h-9",
+                "boundingRect": {
+                  "top": 14,
+                  "bottom": 50,
+                  "left": 22,
+                  "right": 112,
+                  "width": 90,
+                  "height": 36
+                },
+                "snippet": "<img alt=\"ShopUnity\" fetchpriority=\"high\" width=\"160\" height=\"44\" decoding=\"async\" data-nimg=\"1\" class=\"h-9 w-auto object-contain\" style=\"color:transparent\" srcset=\"/_next/image?url=%2Ficons%2Fshopunity-logo.png&amp;w=256&amp;q=75 1x, /_next/image…\" src=\"http://localhost:3007/_next/image?url=%2Ficons%2Fshopunity-logo.png&amp;w=256&amp;…\">",
+                "nodeLabel": "ShopUnity"
+              },
+              "url": "http://localhost:3007/_next/image?url=%2Ficons%2Fshopunity-logo.png&w=256&q=75",
+              "totalBytes": 477198,
+              "wastedBytes": 476769,
+              "subItems": {
+                "type": "subitems",
+                "items": [
+                  {
+                    "reason": "This image file is larger than it needs to be (3000x1200) for its displayed dimensions (90x36). Use responsive images to reduce the image download size.",
+                    "wastedBytes": 476769
+                  }
+                ]
+              }
+            },
+            {
+              "node": {
+                "type": "node",
+                "lhId": "page-1-IMG",
+                "path": "1,HTML,1,BODY,4,MAIN,0,DIV,0,SECTION,0,DIV,0,DIV,1,DIV,0,IMG",
+                "selector": "div.overflow-hidden > div.flex > div.relative > img.object-cover",
+                "boundingRect": {
+                  "top": 89,
+                  "bottom": 232,
+                  "left": 374,
+                  "right": 732,
+                  "width": 358,
+                  "height": 143
+                },
+                "snippet": "<img alt=\"Latest Electronics &amp; Gadgets\" loading=\"lazy\" decoding=\"async\" data-nimg=\"fill\" class=\"object-cover\" style=\"position: absolute; height: 100%; width: 100%; inset: 0px;\" sizes=\"(max-width: 768px) 100vw, 1400px\" srcset=\"/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1518770660439-4…\" src=\"http://localhost:3007/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2F…\">",
+                "nodeLabel": "Latest Electronics & Gadgets"
+              },
+              "url": "http://localhost:3007/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1518770660439-4636190af475%3Fauto%3Dformat%26w%3D1400%26q%3D80&w=640&q=75",
+              "totalBytes": 233452,
+              "wastedBytes": 219217,
+              "subItems": {
+                "type": "subitems",
+                "items": [
+                  {
+                    "reason": "Using a modern image format (WebP, AVIF) or increasing the image compression could improve this image's download size.",
+                    "wastedBytes": 103196
+                  },
+                  {
+                    "reason": "This image file is larger than it needs to be (1400x558) for its displayed dimensions (358x239). Use responsive images to reduce the image download size.",
+                    "wastedBytes": 207939
+                  }
+                ]
+              }
+            },
+            {
+              "node": {
+                "type": "node",
+                "lhId": "page-2-IMG",
+                "path": "1,HTML,1,BODY,4,MAIN,0,DIV,0,SECTION,0,DIV,0,DIV,0,DIV,0,IMG",
+                "selector": "div.overflow-hidden > div.flex > div.relative > img.object-cover",
+                "boundingRect": {
+                  "top": 89,
+                  "bottom": 232,
+                  "left": 16,
+                  "right": 374,
+                  "width": 358,
+                  "height": 143
+                },
+                "snippet": "<img alt=\"Premium Pakistani Textiles\" fetchpriority=\"high\" decoding=\"async\" data-nimg=\"fill\" class=\"object-cover\" style=\"position: absolute; height: 100%; width: 100%; inset: 0px;\" sizes=\"(max-width: 768px) 100vw, 1400px\" srcset=\"/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1483985988355-7…\" src=\"http://localhost:3007/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2F…\">",
+                "nodeLabel": "Premium Pakistani Textiles"
+              },
+              "url": "http://localhost:3007/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1483985988355-763728e1935b%3Fauto%3Dformat%26w%3D1400%26q%3D80&w=640&q=75",
+              "totalBytes": 139985,
+              "wastedBytes": 125750,
+              "subItems": {
+                "type": "subitems",
+                "items": [
+                  {
+                    "reason": "Using a modern image format (WebP, AVIF) or increasing the image compression could improve this image's download size.",
+                    "wastedBytes": 9729
+                  },
+                  {
+                    "reason": "This image file is larger than it needs to be (1400x558) for its displayed dimensions (358x239). Use responsive images to reduce the image download size.",
+                    "wastedBytes": 124687
+                  }
+                ]
+              }
+            },
+            {
+              "node": {
+                "type": "node",
+                "lhId": "page-3-IMG",
+                "path": "1,HTML,1,BODY,4,MAIN,0,DIV,0,SECTION,0,DIV,0,DIV,2,DIV,0,IMG",
+                "selector": "div.overflow-hidden > div.flex > div.relative > img.object-cover",
+                "boundingRect": {
+                  "top": 89,
+                  "bottom": 232,
+                  "left": 732,
+                  "right": 1090,
+                  "width": 358,
+                  "height": 143
+                },
+                "snippet": "<img alt=\"Bulk Sourcing Made Simple\" loading=\"lazy\" decoding=\"async\" data-nimg=\"fill\" class=\"object-cover\" style=\"position: absolute; height: 100%; width: 100%; inset: 0px;\" sizes=\"(max-width: 768px) 100vw, 1400px\" srcset=\"/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1507679799987-c…\" src=\"http://localhost:3007/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2F…\">",
+                "nodeLabel": "Bulk Sourcing Made Simple"
+              },
+              "url": "http://localhost:3007/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1507679799987-c73779587ccf%3Fauto%3Dformat%26w%3D1400%26q%3D80&w=640&q=75",
+              "totalBytes": 123475,
+              "wastedBytes": 109981,
+              "subItems": {
+                "type": "subitems",
+                "items": [
+                  {
+                    "reason": "This image file is larger than it needs to be (1400x558) for its displayed dimensions (358x239). Use responsive images to reduce the image download size.",
+                    "wastedBytes": 109981
+                  }
+                ]
+              }
+            },
+            {
+              "node": {
+                "type": "node",
+                "lhId": "page-4-IMG",
+                "path": "1,HTML,1,BODY,4,MAIN,0,DIV,4,SECTION,0,DIV,0,IMG",
+                "selector": "div.pb-20 > section.max-w-7xl > div.relative > img.w-full",
+                "boundingRect": {
+                  "top": 1931,
+                  "bottom": 2123,
+                  "left": 16,
+                  "right": 374,
+                  "width": 358,
+                  "height": 192
+                },
+                "snippet": "<img alt=\"B2B Wholesale Marketplace\" loading=\"lazy\" width=\"1200\" height=\"400\" decoding=\"async\" data-nimg=\"1\" class=\"w-full h-48 sm:h-64 object-cover object-center\" style=\"color:transparent\" srcset=\"/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1542744094-2463…\" src=\"http://localhost:3007/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2F…\">",
+                "nodeLabel": "B2B Wholesale Marketplace"
+              },
+              "url": "http://localhost:3007/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1542744094-24638eff58bb%3Fauto%3Dformat%26w%3D1200%26q%3D75&w=1200&q=75",
+              "totalBytes": 102804,
+              "wastedBytes": 91415,
+              "subItems": {
+                "type": "subitems",
+                "items": [
+                  {
+                    "reason": "This image file is larger than it needs to be (1200x643) for its displayed dimensions (358x239). Use responsive images to reduce the image download size.",
+                    "wastedBytes": 91415
+                  }
+                ]
+              }
+            },
+            {
+              "node": {
+                "type": "node",
+                "lhId": "page-5-IMG",
+                "path": "1,HTML,1,BODY,4,MAIN,0,DIV,2,SECTION,1,DIV,1,A,0,IMG",
+                "selector": "section.max-w-7xl > div.grid > a.group > img.object-cover",
+                "boundingRect": {
+                  "top": 487,
+                  "bottom": 718,
+                  "left": 201,
+                  "right": 374,
+                  "width": 173,
+                  "height": 231
+                },
+                "snippet": "<img alt=\"Electronics\" loading=\"lazy\" decoding=\"async\" data-nimg=\"fill\" class=\"object-cover group-hover:scale-105 transition-transform duration-500\" style=\"position: absolute; height: 100%; width: 100%; inset: 0px;\" sizes=\"(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 17vw\" srcset=\"/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1526374965328-7…\" src=\"http://localhost:3007/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2F…\">",
+                "nodeLabel": "Electronics"
+              },
+              "url": "http://localhost:3007/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1526374965328-7f61d4dc18c5%3Fauto%3Dformat%26w%3D400%26q%3D75&w=256&q=75",
+              "totalBytes": 31377,
+              "wastedBytes": 22451,
+              "subItems": {
+                "type": "subitems",
+                "items": [
+                  {
+                    "reason": "Using a modern image format (WebP, AVIF) or increasing the image compression could improve this image's download size.",
+                    "wastedBytes": 22451
+                  }
+                ]
+              }
+            },
+            {
+              "node": {
+                "type": "node",
+                "lhId": "page-6-IMG",
+                "path": "1,HTML,1,BODY,4,MAIN,0,DIV,2,SECTION,1,DIV,5,A,0,IMG",
+                "selector": "section.max-w-7xl > div.grid > a.group > img.object-cover",
+                "boundingRect": {
+                  "top": 973,
+                  "bottom": 1203,
+                  "left": 201,
+                  "right": 374,
+                  "width": 173,
+                  "height": 231
+                },
+                "snippet": "<img alt=\"Tools &amp; Hardware\" loading=\"lazy\" decoding=\"async\" data-nimg=\"fill\" class=\"object-cover group-hover:scale-105 transition-transform duration-500\" style=\"position: absolute; height: 100%; width: 100%; inset: 0px;\" sizes=\"(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 17vw\" srcset=\"/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1530124566582-a…\" src=\"http://localhost:3007/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2F…\">",
+                "nodeLabel": "Tools & Hardware"
+              },
+              "url": "http://localhost:3007/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1530124566582-a618bc2615dc%3Fauto%3Dformat%26w%3D400%26q%3D75&w=256&q=75",
+              "totalBytes": 28766,
+              "wastedBytes": 19840,
+              "subItems": {
+                "type": "subitems",
+                "items": [
+                  {
+                    "reason": "Using a modern image format (WebP, AVIF) or increasing the image compression could improve this image's download size.",
+                    "wastedBytes": 19840
+                  }
+                ]
+              }
+            },
+            {
+              "node": {
+                "type": "node",
+                "lhId": "page-7-IMG",
+                "path": "1,HTML,1,BODY,4,MAIN,0,DIV,2,SECTION,1,DIV,3,A,0,IMG",
+                "selector": "section.max-w-7xl > div.grid > a.group > img.object-cover",
+                "boundingRect": {
+                  "top": 730,
+                  "bottom": 961,
+                  "left": 201,
+                  "right": 374,
+                  "width": 173,
+                  "height": 231
+                },
+                "snippet": "<img alt=\"Kitchen &amp; Home\" loading=\"lazy\" decoding=\"async\" data-nimg=\"fill\" class=\"object-cover group-hover:scale-105 transition-transform duration-500\" style=\"position: absolute; height: 100%; width: 100%; inset: 0px;\" sizes=\"(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 17vw\" srcset=\"/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1556909114-f6e7…\" src=\"http://localhost:3007/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2F…\">",
+                "nodeLabel": "Kitchen & Home"
+              },
+              "url": "http://localhost:3007/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1556909114-f6e7ad7d3136%3Fauto%3Dformat%26w%3D400%26q%3D75&w=256&q=75",
+              "totalBytes": 28118,
+              "wastedBytes": 19192,
+              "subItems": {
+                "type": "subitems",
+                "items": [
+                  {
+                    "reason": "Using a modern image format (WebP, AVIF) or increasing the image compression could improve this image's download size.",
+                    "wastedBytes": 19192
+                  }
+                ]
+              }
+            },
+            {
+              "node": {
+                "type": "node",
+                "lhId": "page-8-IMG",
+                "path": "1,HTML,1,BODY,4,MAIN,0,DIV,2,SECTION,1,DIV,0,A,0,IMG",
+                "selector": "section.max-w-7xl > div.grid > a.group > img.object-cover",
+                "boundingRect": {
+                  "top": 487,
+                  "bottom": 718,
+                  "left": 16,
+                  "right": 189,
+                  "width": 173,
+                  "height": 231
+                },
+                "snippet": "<img alt=\"Textiles &amp; Fashion\" loading=\"lazy\" decoding=\"async\" data-nimg=\"fill\" class=\"object-cover group-hover:scale-105 transition-transform duration-500\" style=\"position: absolute; height: 100%; width: 100%; inset: 0px;\" sizes=\"(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 17vw\" srcset=\"/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1558618666-fcd2…\" src=\"http://localhost:3007/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2F…\">",
+                "nodeLabel": "Textiles & Fashion"
+              },
+              "url": "http://localhost:3007/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1558618666-fcd25c85cd64%3Fauto%3Dformat%26w%3D400%26q%3D75&w=256&q=75",
+              "totalBytes": 21745,
+              "wastedBytes": 12819,
+              "subItems": {
+                "type": "subitems",
+                "items": [
+                  {
+                    "reason": "Using a modern image format (WebP, AVIF) or increasing the image compression could improve this image's download size.",
+                    "wastedBytes": 12819
+                  }
+                ]
+              }
+            },
+            {
+              "node": {
+                "type": "node",
+                "lhId": "page-9-IMG",
+                "path": "1,HTML,1,BODY,4,MAIN,0,DIV,2,SECTION,1,DIV,4,A,0,IMG",
+                "selector": "section.max-w-7xl > div.grid > a.group > img.object-cover",
+                "boundingRect": {
+                  "top": 973,
+                  "bottom": 1203,
+                  "left": 16,
+                  "right": 189,
+                  "width": 173,
+                  "height": 231
+                },
+                "snippet": "<img alt=\"Auto Parts\" loading=\"lazy\" decoding=\"async\" data-nimg=\"fill\" class=\"object-cover group-hover:scale-105 transition-transform duration-500\" style=\"position: absolute; height: 100%; width: 100%; inset: 0px;\" sizes=\"(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 17vw\" srcset=\"/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1503376780353-7…\" src=\"http://localhost:3007/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2F…\">",
+                "nodeLabel": "Auto Parts"
+              },
+              "url": "http://localhost:3007/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1503376780353-7e6692767b70%3Fauto%3Dformat%26w%3D400%26q%3D75&w=256&q=75",
+              "totalBytes": 21369,
+              "wastedBytes": 12443,
+              "subItems": {
+                "type": "subitems",
+                "items": [
+                  {
+                    "reason": "Using a modern image format (WebP, AVIF) or increasing the image compression could improve this image's download size.",
+                    "wastedBytes": 12443
+                  }
+                ]
+              }
+            },
+            {
+              "node": {
+                "type": "node",
+                "lhId": "page-10-IMG",
+                "path": "1,HTML,1,BODY,4,MAIN,0,DIV,2,SECTION,1,DIV,2,A,0,IMG",
+                "selector": "section.max-w-7xl > div.grid > a.group > img.object-cover",
+                "boundingRect": {
+                  "top": 730,
+                  "bottom": 961,
+                  "left": 16,
+                  "right": 189,
+                  "width": 173,
+                  "height": 231
+                },
+                "snippet": "<img alt=\"Furniture\" loading=\"lazy\" decoding=\"async\" data-nimg=\"fill\" class=\"object-cover group-hover:scale-105 transition-transform duration-500\" style=\"position: absolute; height: 100%; width: 100%; inset: 0px;\" sizes=\"(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 17vw\" srcset=\"/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1555041469-a586…\" src=\"http://localhost:3007/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2F…\">",
+                "nodeLabel": "Furniture"
+              },
+              "url": "http://localhost:3007/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1555041469-a586c61ea9bc%3Fauto%3Dformat%26w%3D400%26q%3D75&w=256&q=75",
+              "totalBytes": 15907,
+              "wastedBytes": 6981,
+              "subItems": {
+                "type": "subitems",
+                "items": [
+                  {
+                    "reason": "Using a modern image format (WebP, AVIF) or increasing the image compression could improve this image's download size.",
+                    "wastedBytes": 6981
+                  }
+                ]
+              }
+            }
+          ],
+          "debugData": {
+            "type": "debugdata",
+            "wastedBytes": 1116858
+          }
+        }
+      },
+      {
+        "id": "legacy-javascript-insight",
+        "title": "Legacy JavaScript",
+        "details": {
+          "type": "table",
+          "headings": [
+            {
+              "key": "url",
+              "valueType": "url",
+              "subItemsHeading": {
+                "key": "location",
+                "valueType": "source-location"
+              },
+              "label": "URL"
+            },
+            {
+              "key": null,
+              "valueType": "code",
+              "subItemsHeading": {
+                "key": "signal"
+              },
+              "label": ""
+            },
+            {
+              "key": "wastedBytes",
+              "valueType": "bytes",
+              "label": "Wasted bytes"
+            }
+          ],
+          "items": [
+            {
+              "url": "http://localhost:3007/_next/static/chunks/2117-c08c90281f3631e2.js",
+              "wastedBytes": 11458,
+              "subItems": {
+                "type": "subitems",
+                "items": [
+                  {
+                    "signal": "Array.prototype.at",
+                    "location": {
+                      "type": "source-location",
+                      "url": "http://localhost:3007/_next/static/chunks/2117-c08c90281f3631e2.js",
+                      "urlProvider": "network",
+                      "line": 0,
+                      "column": 1274
+                    }
+                  },
+                  {
+                    "signal": "Array.prototype.flat",
+                    "location": {
+                      "type": "source-location",
+                      "url": "http://localhost:3007/_next/static/chunks/2117-c08c90281f3631e2.js",
+                      "urlProvider": "network",
+                      "line": 0,
+                      "column": 662
+                    }
+                  },
+                  {
+                    "signal": "Array.prototype.flatMap",
+                    "location": {
+                      "type": "source-location",
+                      "url": "http://localhost:3007/_next/static/chunks/2117-c08c90281f3631e2.js",
+                      "urlProvider": "network",
+                      "line": 0,
+                      "column": 775
+                    }
+                  },
+                  {
+                    "signal": "Object.fromEntries",
+                    "location": {
+                      "type": "source-location",
+                      "url": "http://localhost:3007/_next/static/chunks/2117-c08c90281f3631e2.js",
+                      "urlProvider": "network",
+                      "line": 0,
+                      "column": 1151
+                    }
+                  },
+                  {
+                    "signal": "Object.hasOwn",
+                    "location": {
+                      "type": "source-location",
+                      "url": "http://localhost:3007/_next/static/chunks/2117-c08c90281f3631e2.js",
+                      "urlProvider": "network",
+                      "line": 0,
+                      "column": 1409
+                    }
+                  },
+                  {
+                    "signal": "String.prototype.trimEnd",
+                    "location": {
+                      "type": "source-location",
+                      "url": "http://localhost:3007/_next/static/chunks/2117-c08c90281f3631e2.js",
+                      "urlProvider": "network",
+                      "line": 0,
+                      "column": 404
+                    }
+                  },
+                  {
+                    "signal": "String.prototype.trimStart",
+                    "location": {
+                      "type": "source-location",
+                      "url": "http://localhost:3007/_next/static/chunks/2117-c08c90281f3631e2.js",
+                      "urlProvider": "network",
+                      "line": 0,
+                      "column": 319
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "debugData": {
+            "type": "debugdata",
+            "wastedBytes": 11458
+          }
+        }
+      },
+      {
+        "id": "network-dependency-tree-insight",
+        "title": "Network dependency tree",
+        "details": {
+          "type": "list",
+          "items": [
+            {
+              "type": "list-section",
+              "value": {
+                "type": "network-tree",
+                "chains": {
+                  "1B3541DC3EDEF944F79E408905781570": {
+                    "url": "http://localhost:3007/en",
+                    "navStartToEndTime": 199,
+                    "transferSize": 18975,
+                    "isLongest": true,
+                    "children": {
+                      "33296.5": {
+                        "url": "http://localhost:3007/_next/static/css/ac39bab816e253cf.css",
+                        "navStartToEndTime": 439,
+                        "transferSize": 8542,
+                        "isLongest": true,
+                        "children": {}
+                      },
+                      "33296.4": {
+                        "url": "http://localhost:3007/_next/static/css/d64ad7d4ce969ebb.css",
+                        "navStartToEndTime": 226,
+                        "transferSize": 2411,
+                        "children": {}
+                      }
+                    }
+                  }
+                },
+                "longestChain": {
+                  "duration": 439
+                }
+              }
+            },
+            {
+              "type": "list-section",
+              "title": "Preconnected origins",
+              "description": "[preconnect](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) hints help the browser establish a connection earlier in the page load, saving time when the first request for that origin is made. The following are the origins that the page preconnected to.",
+              "value": {
+                "type": "text",
+                "value": "no origins were preconnected"
+              }
+            },
+            {
+              "type": "list-section",
+              "title": "Preconnect candidates",
+              "description": "Add [preconnect](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) hints to your most important origins, but try to use no more than 4.",
+              "value": {
+                "type": "text",
+                "value": "No additional origins are good candidates for preconnecting"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "render-blocking-insight",
+        "title": "Render-blocking requests",
+        "details": {
+          "type": "table",
+          "headings": [
+            {
+              "key": "url",
+              "valueType": "url",
+              "label": "URL"
+            },
+            {
+              "key": "totalBytes",
+              "valueType": "bytes",
+              "label": "Transfer Size"
+            },
+            {
+              "key": "wastedMs",
+              "valueType": "timespanMs",
+              "label": "Duration"
+            }
+          ],
+          "items": [
+            {
+              "url": "http://localhost:3007/_next/static/css/ac39bab816e253cf.css",
+              "totalBytes": 8542,
+              "wastedMs": 324
+            },
+            {
+              "url": "http://localhost:3007/_next/static/css/d64ad7d4ce969ebb.css",
+              "totalBytes": 2411,
+              "wastedMs": 174
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "phase": "before",
+    "locale": "en",
+    "page": "search",
+    "url": "http://localhost:3007/en/search?q=cotton",
+    "performance": 0.87,
+    "accessibility": 0.94,
+    "warnings": [],
+    "failedAudits": [
+      {
+        "id": "color-contrast",
+        "title": "Background and foreground colors do not have a sufficient contrast ratio.",
+        "details": {
+          "type": "table",
+          "headings": [
+            {
+              "key": "node",
+              "valueType": "node",
+              "subItemsHeading": {
+                "key": "relatedNode",
+                "valueType": "node"
+              },
+              "label": "Failing Elements"
+            }
+          ],
+          "items": [
+            {
+              "node": {
+                "type": "node",
+                "lhId": "1-1-BUTTON",
+                "path": "1,HTML,1,BODY,1,HEADER,0,DIV,0,DIV,2,NAV,0,DIV,0,BUTTON",
+                "selector": "div.flex > nav.flex > div.flex > button.px-2",
+                "boundingRect": {
+                  "top": 18,
+                  "bottom": 46,
+                  "left": 207,
+                  "right": 241,
+                  "width": 34,
+                  "height": 28
+                },
+                "snippet": "<button class=\"px-2 py-1 rounded-md text-sm font-medium transition-colors bg-orange-500 t…\">",
+                "nodeLabel": "EN",
+                "explanation": "Fix any of the following:\n  Element has insufficient color contrast of 2.8 (foreground color: #ffffff, background color: #f97316, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+              }
+            },
+            {
+              "node": {
+                "type": "node",
+                "lhId": "1-2-P",
+                "path": "1,HTML,1,BODY,4,MAIN,0,DIV,1,DIV,1,DIV,0,A,1,P",
+                "selector": "div > div.grid > a.flex > p.text-xs",
+                "boundingRect": {
+                  "top": 257,
+                  "bottom": 273,
+                  "left": 33,
+                  "right": 170,
+                  "width": 137,
+                  "height": 16
+                },
+                "snippet": "<p class=\"text-xs text-gray-400 dark:text-gray-500\">",
+                "nodeLabel": "DEMO",
+                "explanation": "Fix any of the following:\n  Element has insufficient color contrast of 2.53 (foreground color: #9ca3af, background color: #ffffff, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+              },
+              "subItems": {
+                "type": "subitems",
+                "items": [
+                  {
+                    "relatedNode": {
+                      "type": "node",
+                      "lhId": "1-3-A",
+                      "path": "1,HTML,1,BODY,4,MAIN,0,DIV,1,DIV,1,DIV,0,A",
+                      "selector": "div.max-w-7xl > div > div.grid > a.flex",
+                      "boundingRect": {
+                        "top": 193,
+                        "bottom": 322,
+                        "left": 16,
+                        "right": 187,
+                        "width": 171,
+                        "height": 129
+                      },
+                      "snippet": "<a aria-label=\"DEMO — Cotton fabric — DEMO — PKR 1,250.5\" class=\"flex flex-col rounded-2xl border border-gray-100 dark:border-gray-800 bg-w…\" href=\"/en/products/demo-cotton\">",
+                      "nodeLabel": "DEMO — Cotton fabric\n\nDEMO\n\nPKR 1,250.5"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "node": {
+                "type": "node",
+                "lhId": "1-4-P",
+                "path": "1,HTML,1,BODY,4,MAIN,0,DIV,1,DIV,1,DIV,0,A,2,P",
+                "selector": "div > div.grid > a.flex > p.mt-auto",
+                "boundingRect": {
+                  "top": 281,
+                  "bottom": 305,
+                  "left": 33,
+                  "right": 170,
+                  "width": 137,
+                  "height": 24
+                },
+                "snippet": "<p class=\"mt-auto text-base font-bold text-orange-500\">",
+                "nodeLabel": "PKR 1,250.5",
+                "explanation": "Fix any of the following:\n  Element has insufficient color contrast of 2.8 (foreground color: #f97316, background color: #ffffff, font size: 12.0pt (16px), font weight: bold). Expected contrast ratio of 4.5:1"
+              },
+              "subItems": {
+                "type": "subitems",
+                "items": [
+                  {
+                    "relatedNode": {
+                      "type": "node",
+                      "lhId": "1-3-A",
+                      "path": "1,HTML,1,BODY,4,MAIN,0,DIV,1,DIV,1,DIV,0,A",
+                      "selector": "div.max-w-7xl > div > div.grid > a.flex",
+                      "boundingRect": {
+                        "top": 193,
+                        "bottom": 322,
+                        "left": 16,
+                        "right": 187,
+                        "width": 171,
+                        "height": 129
+                      },
+                      "snippet": "<a aria-label=\"DEMO — Cotton fabric — DEMO — PKR 1,250.5\" class=\"flex flex-col rounded-2xl border border-gray-100 dark:border-gray-800 bg-w…\" href=\"/en/products/demo-cotton\">",
+                      "nodeLabel": "DEMO — Cotton fabric\n\nDEMO\n\nPKR 1,250.5"
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "debugData": {
+            "type": "debugdata",
+            "impact": "serious",
+            "tags": [
+              "cat.color",
+              "wcag2aa",
+              "wcag143",
+              "TTv5",
+              "TT13.c",
+              "EN-301-549",
+              "EN-9.1.4.3",
+              "ACT",
+              "RGAAv4",
+              "RGAA-3.2.1"
+            ]
+          }
+        }
+      },
+      {
+        "id": "heading-order",
+        "title": "Heading elements are not in a sequentially-descending order",
+        "details": {
+          "type": "table",
+          "headings": [
+            {
+              "key": "node",
+              "valueType": "node",
+              "subItemsHeading": {
+                "key": "relatedNode",
+                "valueType": "node"
+              },
+              "label": "Failing Elements"
+            }
+          ],
+          "items": [
+            {
+              "node": {
+                "type": "node",
+                "lhId": "1-5-H3",
+                "path": "1,HTML,1,BODY,4,MAIN,0,DIV,1,DIV,1,DIV,0,A,0,H3",
+                "selector": "div > div.grid > a.flex > h3.text-sm",
+                "boundingRect": {
+                  "top": 210,
+                  "bottom": 249,
+                  "left": 33,
+                  "right": 170,
+                  "width": 137,
+                  "height": 39
+                },
+                "snippet": "<h3 class=\"text-sm font-medium text-gray-900 dark:text-white line-clamp-2 leading-snug\">",
+                "nodeLabel": "DEMO — Cotton fabric",
+                "explanation": "Fix any of the following:\n  Heading order invalid"
+              }
+            }
+          ],
+          "debugData": {
+            "type": "debugdata",
+            "impact": "moderate",
+            "tags": [
+              "cat.semantics",
+              "best-practice"
+            ]
+          }
+        }
+      },
+      {
+        "id": "label-content-name-mismatch",
+        "title": "Elements with visible text labels do not have matching accessible names.",
+        "details": {
+          "type": "table",
+          "headings": [
+            {
+              "key": "node",
+              "valueType": "node",
+              "subItemsHeading": {
+                "key": "relatedNode",
+                "valueType": "node"
+              },
+              "label": "Failing Elements"
+            }
+          ],
+          "items": [
+            {
+              "node": {
+                "type": "node",
+                "lhId": "1-3-A",
+                "path": "1,HTML,1,BODY,4,MAIN,0,DIV,1,DIV,1,DIV,0,A",
+                "selector": "div.max-w-7xl > div > div.grid > a.flex",
+                "boundingRect": {
+                  "top": 193,
+                  "bottom": 322,
+                  "left": 16,
+                  "right": 187,
+                  "width": 171,
+                  "height": 129
+                },
+                "snippet": "<a aria-label=\"DEMO — Cotton fabric — DEMO — PKR 1,250.5\" class=\"flex flex-col rounded-2xl border border-gray-100 dark:border-gray-800 bg-w…\" href=\"/en/products/demo-cotton\">",
+                "nodeLabel": "DEMO — Cotton fabric\n\nDEMO\n\nPKR 1,250.5",
+                "explanation": "Fix any of the following:\n  Text inside the element is not included in the accessible name"
+              }
+            }
+          ],
+          "debugData": {
+            "type": "debugdata",
+            "impact": "serious",
+            "tags": [
+              "cat.semantics",
+              "wcag21a",
+              "wcag253",
+              "EN-301-549",
+              "EN-9.2.5.3",
+              "RGAAv4",
+              "RGAA-6.1.5"
+            ]
+          }
+        }
+      },
+      {
+        "id": "image-delivery-insight",
+        "title": "Improve image delivery",
+        "details": {
+          "type": "table",
+          "headings": [
+            {
+              "key": "node",
+              "valueType": "node",
+              "label": ""
+            },
+            {
+              "key": "url",
+              "valueType": "url",
+              "label": "URL",
+              "subItemsHeading": {
+                "key": "reason",
+                "valueType": "text"
+              }
+            },
+            {
+              "key": "totalBytes",
+              "valueType": "bytes",
+              "label": "Resource Size"
+            },
+            {
+              "key": "wastedBytes",
+              "valueType": "bytes",
+              "label": "Est Savings",
+              "subItemsHeading": {
+                "key": "wastedBytes",
+                "valueType": "bytes"
+              }
+            }
+          ],
+          "items": [
+            {
+              "node": {
+                "type": "node",
+                "lhId": "page-0-IMG",
+                "path": "1,HTML,1,BODY,1,HEADER,0,DIV,0,DIV,0,A,0,DIV,0,IMG",
+                "selector": "div.flex > a.flex-shrink-0 > div.bg-gray-900 > img.h-9",
+                "boundingRect": {
+                  "top": 14,
+                  "bottom": 50,
+                  "left": 22,
+                  "right": 112,
+                  "width": 90,
+                  "height": 36
+                },
+                "snippet": "<img alt=\"ShopUnity\" fetchpriority=\"high\" width=\"160\" height=\"44\" decoding=\"async\" data-nimg=\"1\" class=\"h-9 w-auto object-contain\" style=\"color:transparent\" srcset=\"/_next/image?url=%2Ficons%2Fshopunity-logo.png&amp;w=256&amp;q=75 1x, /_next/image…\" src=\"http://localhost:3007/_next/image?url=%2Ficons%2Fshopunity-logo.png&amp;w=256&amp;…\">",
+                "nodeLabel": "ShopUnity"
+              },
+              "url": "http://localhost:3007/_next/image?url=%2Ficons%2Fshopunity-logo.png&w=256&q=75",
+              "totalBytes": 477198,
+              "wastedBytes": 476769,
+              "subItems": {
+                "type": "subitems",
+                "items": [
+                  {
+                    "reason": "This image file is larger than it needs to be (3000x1200) for its displayed dimensions (90x36). Use responsive images to reduce the image download size.",
+                    "wastedBytes": 476769
+                  }
+                ]
+              }
+            }
+          ],
+          "debugData": {
+            "type": "debugdata",
+            "wastedBytes": 476769
+          }
+        }
+      },
+      {
+        "id": "network-dependency-tree-insight",
+        "title": "Network dependency tree",
+        "details": {
+          "type": "list",
+          "items": [
+            {
+              "type": "list-section",
+              "value": {
+                "type": "network-tree",
+                "chains": {
+                  "F12D886D33B42CA8AC4B57EA15629EF8": {
+                    "url": "http://localhost:3007/en/search?q=cotton",
+                    "navStartToEndTime": 125,
+                    "transferSize": 8218,
+                    "isLongest": true,
+                    "children": {
+                      "34312.4": {
+                        "url": "http://localhost:3007/_next/static/css/ac39bab816e253cf.css",
+                        "navStartToEndTime": 149,
+                        "transferSize": 8542,
+                        "isLongest": true,
+                        "children": {}
+                      },
+                      "34312.3": {
+                        "url": "http://localhost:3007/_next/static/css/d64ad7d4ce969ebb.css",
+                        "navStartToEndTime": 144,
+                        "transferSize": 2411,
+                        "children": {}
+                      }
+                    }
+                  }
+                },
+                "longestChain": {
+                  "duration": 149
+                }
+              }
+            },
+            {
+              "type": "list-section",
+              "title": "Preconnected origins",
+              "description": "[preconnect](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) hints help the browser establish a connection earlier in the page load, saving time when the first request for that origin is made. The following are the origins that the page preconnected to.",
+              "value": {
+                "type": "text",
+                "value": "no origins were preconnected"
+              }
+            },
+            {
+              "type": "list-section",
+              "title": "Preconnect candidates",
+              "description": "Add [preconnect](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) hints to your most important origins, but try to use no more than 4.",
+              "value": {
+                "type": "text",
+                "value": "No additional origins are good candidates for preconnecting"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "render-blocking-insight",
+        "title": "Render-blocking requests",
+        "details": {
+          "type": "table",
+          "headings": [
+            {
+              "key": "url",
+              "valueType": "url",
+              "label": "URL"
+            },
+            {
+              "key": "totalBytes",
+              "valueType": "bytes",
+              "label": "Transfer Size"
+            },
+            {
+              "key": "wastedMs",
+              "valueType": "timespanMs",
+              "label": "Duration"
+            }
+          ],
+          "items": [
+            {
+              "url": "http://localhost:3007/_next/static/css/ac39bab816e253cf.css",
+              "totalBytes": 8542,
+              "wastedMs": 310
+            },
+            {
+              "url": "http://localhost:3007/_next/static/css/d64ad7d4ce969ebb.css",
+              "totalBytes": 2411,
+              "wastedMs": 160
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "phase": "before",
+    "locale": "ar",
+    "page": "home",
+    "url": "http://localhost:3007/ar",
+    "performance": 0.69,
+    "accessibility": 0.92,
+    "warnings": [],
+    "failedAudits": [
+      {
+        "id": "mainthread-work-breakdown",
+        "title": "Minimize main-thread work",
+        "details": {
+          "type": "table",
+          "headings": [
+            {
+              "key": "groupLabel",
+              "valueType": "text",
+              "label": "Category"
+            },
+            {
+              "key": "duration",
+              "valueType": "ms",
+              "granularity": 1,
+              "label": "Time Spent"
+            }
+          ],
+          "items": [
+            {
+              "group": "styleLayout",
+              "groupLabel": "Style & Layout",
+              "duration": 817.756
+            },
+            {
+              "group": "scriptEvaluation",
+              "groupLabel": "Script Evaluation",
+              "duration": 763.6279999999972
+            },
+            {
+              "group": "other",
+              "groupLabel": "Other",
+              "duration": 526.4360000000016
+            },
+            {
+              "group": "scriptParseCompile",
+              "groupLabel": "Script Parsing & Compilation",
+              "duration": 135.244
+            },
+            {
+              "group": "paintCompositeRender",
+              "groupLabel": "Rendering",
+              "duration": 100.90799999999996
+            },
+            {
+              "group": "parseHTML",
+              "groupLabel": "Parse HTML & CSS",
+              "duration": 52.208
+            }
+          ],
+          "sortedBy": [
+            "duration"
+          ]
+        }
+      },
+      {
+        "id": "color-contrast",
+        "title": "Background and foreground colors do not have a sufficient contrast ratio.",
+        "details": {
+          "type": "table",
+          "headings": [
+            {
+              "key": "node",
+              "valueType": "node",
+              "subItemsHeading": {
+                "key": "relatedNode",
+                "valueType": "node"
+              },
+              "label": "Failing Elements"
+            }
+          ],
+          "items": [
+            {
+              "node": {
+                "type": "node",
+                "lhId": "1-1-A",
+                "path": "1,HTML,1,BODY,4,MAIN,0,DIV,2,SECTION,0,DIV,2,A",
+                "selector": "div.pb-20 > section.max-w-7xl > div.flex > a.ms-auto",
+                "boundingRect": {
+                  "top": 445,
+                  "bottom": 461,
+                  "left": 92,
+                  "right": 148,
+                  "width": 56,
+                  "height": 16
+                },
+                "snippet": "<a class=\"ms-auto text-xs font-medium text-cyan-600 dark:text-cyan-400 hover:underli…\" href=\"/ar/products\">",
+                "nodeLabel": "View all →",
+                "explanation": "Fix any of the following:\n  Element has insufficient color contrast of 3.68 (foreground color: #0891b2, background color: #ffffff, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+              },
+              "subItems": {
+                "type": "subitems",
+                "items": [
+                  {
+                    "relatedNode": {
+                      "type": "node",
+                      "lhId": "1-2-BODY",
+                      "path": "1,HTML,1,BODY",
+                      "selector": "body.__variable_d8ebd1",
+                      "boundingRect": {
+                        "top": 0,
+                        "bottom": 3754,
+                        "left": 76,
+                        "right": 466,
+                        "width": 390,
+                        "height": 3754
+                      },
+                      "snippet": "<body class=\"__variable_d8ebd1 __variable_e6a2a8 __variable_6b975f font-sans antialiase…\">",
+                      "nodeLabel": "body.__variable_d8ebd1"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "node": {
+                "type": "node",
+                "lhId": "1-3-A",
+                "path": "1,HTML,1,BODY,4,MAIN,0,DIV,3,SECTION,0,DIV,1,DIV,1,DIV,3,DIV,0,A",
+                "selector": "div.relative > div.text-center > div.mt-6 > a.inline-flex",
+                "boundingRect": {
+                  "top": 1684,
+                  "bottom": 1724,
+                  "left": 201,
+                  "right": 341,
+                  "width": 140,
+                  "height": 40
+                },
+                "snippet": "<a class=\"inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-whit…\" href=\"/ar/auth/register\">",
+                "nodeLabel": "Start Selling",
+                "explanation": "Fix any of the following:\n  Element has insufficient color contrast of 2.8 (foreground color: #ffffff, background color: #f97316, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+              }
+            },
+            {
+              "node": {
+                "type": "node",
+                "lhId": "1-4-A",
+                "path": "1,HTML,1,BODY,4,MAIN,0,DIV,7,SECTION,0,DIV,2,A",
+                "selector": "div.pb-20 > section.max-w-7xl > div.flex > a.ms-auto",
+                "boundingRect": {
+                  "top": 3274,
+                  "bottom": 3290,
+                  "left": 92,
+                  "right": 148,
+                  "width": 56,
+                  "height": 16
+                },
+                "snippet": "<a class=\"ms-auto text-xs font-medium text-cyan-600 dark:text-cyan-400 hover:underli…\" href=\"/ar/products\">",
+                "nodeLabel": "View all →",
+                "explanation": "Fix any of the following:\n  Element has insufficient color contrast of 3.68 (foreground color: #0891b2, background color: #ffffff, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+              },
+              "subItems": {
+                "type": "subitems",
+                "items": [
+                  {
+                    "relatedNode": {
+                      "type": "node",
+                      "lhId": "1-2-BODY",
+                      "path": "1,HTML,1,BODY",
+                      "selector": "body.__variable_d8ebd1",
+                      "boundingRect": {
+                        "top": 0,
+                        "bottom": 3754,
+                        "left": 76,
+                        "right": 466,
+                        "width": 390,
+                        "height": 3754
+                      },
+                      "snippet": "<body class=\"__variable_d8ebd1 __variable_e6a2a8 __variable_6b975f font-sans antialiase…\">",
+                      "nodeLabel": "body.__variable_d8ebd1"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "node": {
+                "type": "node",
+                "lhId": "1-5-A",
+                "path": "1,HTML,1,BODY,4,MAIN,0,DIV,7,SECTION,2,DIV,3,A",
+                "selector": "div.pb-20 > section.max-w-7xl > div.py-16 > a.mt-5",
+                "boundingRect": {
+                  "top": 3570,
+                  "bottom": 3610,
+                  "left": 186,
+                  "right": 356,
+                  "width": 171,
+                  "height": 40
+                },
+                "snippet": "<a class=\"mt-5 inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text…\" href=\"/ar/auth/register\">",
+                "nodeLabel": "Register as Seller",
+                "explanation": "Fix any of the following:\n  Element has insufficient color contrast of 2.8 (foreground color: #ffffff, background color: #f97316, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+              }
+            }
+          ],
+          "debugData": {
+            "type": "debugdata",
+            "impact": "serious",
+            "tags": [
+              "cat.color",
+              "wcag2aa",
+              "wcag143",
+              "TTv5",
+              "TT13.c",
+              "EN-301-549",
+              "EN-9.1.4.3",
+              "ACT",
+              "RGAAv4",
+              "RGAA-3.2.1"
+            ]
+          }
+        }
+      },
+      {
+        "id": "target-size",
+        "title": "Touch targets do not have sufficient size or spacing.",
+        "details": {
+          "type": "table",
+          "headings": [
+            {
+              "key": "node",
+              "valueType": "node",
+              "subItemsHeading": {
+                "key": "relatedNode",
+                "valueType": "node"
+              },
+              "label": "Failing Elements"
+            }
+          ],
+          "items": [
+            {
+              "node": {
+                "type": "node",
+                "lhId": "1-6-BUTTON",
+                "path": "1,HTML,1,BODY,4,MAIN,0,DIV,0,SECTION,3,DIV,1,BUTTON",
+                "selector": "div.pb-20 > section.relative > div.absolute > button.h-1.5",
+                "boundingRect": {
+                  "top": 210,
+                  "bottom": 216,
+                  "left": 191,
+                  "right": 199,
+                  "width": 8,
+                  "height": 6
+                },
+                "snippet": "<button class=\"h-1.5 rounded-full transition-all duration-300 w-2 bg-white/40 hover:bg-wh…\" aria-label=\"Go to slide 2\">",
+                "nodeLabel": "Go to slide 2",
+                "explanation": "Fix any of the following:\n  Target has insufficient size (8px by 6px, should be at least 24px by 24px)\n  Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of 8px instead of at least 24px."
+              },
+              "subItems": {
+                "type": "subitems",
+                "items": [
+                  {
+                    "relatedNode": {
+                      "type": "node",
+                      "lhId": "1-7-BUTTON",
+                      "path": "1,HTML,1,BODY,4,MAIN,0,DIV,0,SECTION,3,DIV,2,BUTTON",
+                      "selector": "div.pb-20 > section.relative > div.absolute > button.h-1.5",
+                      "boundingRect": {
+                        "top": 210,
+                        "bottom": 216,
+                        "left": 175,
+                        "right": 183,
+                        "width": 8,
+                        "height": 6
+                      },
+                      "snippet": "<button class=\"h-1.5 rounded-full transition-all duration-300 w-2 bg-white/40 hover:bg-wh…\" aria-label=\"Go to slide 3\">",
+                      "nodeLabel": "Go to slide 3"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "node": {
+                "type": "node",
+                "lhId": "1-7-BUTTON",
+                "path": "1,HTML,1,BODY,4,MAIN,0,DIV,0,SECTION,3,DIV,2,BUTTON",
+                "selector": "div.pb-20 > section.relative > div.absolute > button.h-1.5",
+                "boundingRect": {
+                  "top": 210,
+                  "bottom": 216,
+                  "left": 175,
+                  "right": 183,
+                  "width": 8,
+                  "height": 6
+                },
+                "snippet": "<button class=\"h-1.5 rounded-full transition-all duration-300 w-2 bg-white/40 hover:bg-wh…\" aria-label=\"Go to slide 3\">",
+                "nodeLabel": "Go to slide 3",
+                "explanation": "Fix any of the following:\n  Target has insufficient size (8px by 6px, should be at least 24px by 24px)\n  Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of 8px instead of at least 24px."
+              },
+              "subItems": {
+                "type": "subitems",
+                "items": [
+                  {
+                    "relatedNode": {
+                      "type": "node",
+                      "lhId": "1-6-BUTTON",
+                      "path": "1,HTML,1,BODY,4,MAIN,0,DIV,0,SECTION,3,DIV,1,BUTTON",
+                      "selector": "div.pb-20 > section.relative > div.absolute > button.h-1.5",
+                      "boundingRect": {
+                        "top": 210,
+                        "bottom": 216,
+                        "left": 191,
+                        "right": 199,
+                        "width": 8,
+                        "height": 6
+                      },
+                      "snippet": "<button class=\"h-1.5 rounded-full transition-all duration-300 w-2 bg-white/40 hover:bg-wh…\" aria-label=\"Go to slide 2\">",
+                      "nodeLabel": "Go to slide 2"
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "debugData": {
+            "type": "debugdata",
+            "impact": "serious",
+            "tags": [
+              "cat.sensory-and-visual-cues",
+              "wcag22aa",
+              "wcag258",
+              "EN-301-549v4",
+              "EN-9.2.5.8"
+            ]
+          }
+        }
+      },
+      {
+        "id": "image-delivery-insight",
+        "title": "Improve image delivery",
+        "details": {
+          "type": "table",
+          "headings": [
+            {
+              "key": "node",
+              "valueType": "node",
+              "label": ""
+            },
+            {
+              "key": "url",
+              "valueType": "url",
+              "label": "URL",
+              "subItemsHeading": {
+                "key": "reason",
+                "valueType": "text"
+              }
+            },
+            {
+              "key": "totalBytes",
+              "valueType": "bytes",
+              "label": "Resource Size"
+            },
+            {
+              "key": "wastedBytes",
+              "valueType": "bytes",
+              "label": "Est Savings",
+              "subItemsHeading": {
+                "key": "wastedBytes",
+                "valueType": "bytes"
+              }
+            }
+          ],
+          "items": [
+            {
+              "node": {
+                "type": "node",
+                "lhId": "page-0-IMG",
+                "path": "1,HTML,1,BODY,1,HEADER,0,DIV,0,DIV,0,A,0,DIV,0,IMG",
+                "selector": "div.flex > a.flex-shrink-0 > div.bg-gray-900 > img.h-9",
+                "boundingRect": {
+                  "top": 14,
+                  "bottom": 50,
+                  "left": 354,
+                  "right": 444,
+                  "width": 90,
+                  "height": 36
+                },
+                "snippet": "<img alt=\"ShopUnity\" fetchpriority=\"high\" width=\"160\" height=\"44\" decoding=\"async\" data-nimg=\"1\" class=\"h-9 w-auto object-contain\" style=\"color:transparent\" srcset=\"/_next/image?url=%2Ficons%2Fshopunity-logo.png&amp;w=256&amp;q=75 1x, /_next/image…\" src=\"http://localhost:3007/_next/image?url=%2Ficons%2Fshopunity-logo.png&amp;w=256&amp;…\">",
+                "nodeLabel": "ShopUnity"
+              },
+              "url": "http://localhost:3007/_next/image?url=%2Ficons%2Fshopunity-logo.png&w=256&q=75",
+              "totalBytes": 477198,
+              "wastedBytes": 476769,
+              "subItems": {
+                "type": "subitems",
+                "items": [
+                  {
+                    "reason": "This image file is larger than it needs to be (3000x1200) for its displayed dimensions (90x36). Use responsive images to reduce the image download size.",
+                    "wastedBytes": 476769
+                  }
+                ]
+              }
+            },
+            {
+              "node": {
+                "type": "node",
+                "lhId": "page-1-IMG",
+                "path": "1,HTML,1,BODY,4,MAIN,0,DIV,0,SECTION,0,DIV,0,DIV,1,DIV,0,IMG",
+                "selector": "div.overflow-hidden > div.flex > div.relative > img.object-cover",
+                "boundingRect": {
+                  "top": 89,
+                  "bottom": 232,
+                  "left": -266,
+                  "right": 92,
+                  "width": 358,
+                  "height": 143
+                },
+                "snippet": "<img alt=\"Latest Electronics &amp; Gadgets\" loading=\"lazy\" decoding=\"async\" data-nimg=\"fill\" class=\"object-cover\" style=\"position: absolute; height: 100%; width: 100%; inset: 0px;\" sizes=\"(max-width: 768px) 100vw, 1400px\" srcset=\"/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1518770660439-4…\" src=\"http://localhost:3007/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2F…\">",
+                "nodeLabel": "Latest Electronics & Gadgets"
+              },
+              "url": "http://localhost:3007/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1518770660439-4636190af475%3Fauto%3Dformat%26w%3D1400%26q%3D80&w=640&q=75",
+              "totalBytes": 233452,
+              "wastedBytes": 219217,
+              "subItems": {
+                "type": "subitems",
+                "items": [
+                  {
+                    "reason": "Using a modern image format (WebP, AVIF) or increasing the image compression could improve this image's download size.",
+                    "wastedBytes": 103196
+                  },
+                  {
+                    "reason": "This image file is larger than it needs to be (1400x558) for its displayed dimensions (358x239). Use responsive images to reduce the image download size.",
+                    "wastedBytes": 207939
+                  }
+                ]
+              }
+            },
+            {
+              "node": {
+                "type": "node",
+                "lhId": "page-2-IMG",
+                "path": "1,HTML,1,BODY,4,MAIN,0,DIV,0,SECTION,0,DIV,0,DIV,0,DIV,0,IMG",
+                "selector": "div.overflow-hidden > div.flex > div.relative > img.object-cover",
+                "boundingRect": {
+                  "top": 89,
+                  "bottom": 232,
+                  "left": 92,
+                  "right": 450,
+                  "width": 358,
+                  "height": 143
+                },
+                "snippet": "<img alt=\"Premium Pakistani Textiles\" fetchpriority=\"high\" decoding=\"async\" data-nimg=\"fill\" class=\"object-cover\" style=\"position: absolute; height: 100%; width: 100%; inset: 0px;\" sizes=\"(max-width: 768px) 100vw, 1400px\" srcset=\"/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1483985988355-7…\" src=\"http://localhost:3007/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2F…\">",
+                "nodeLabel": "Premium Pakistani Textiles"
+              },
+              "url": "http://localhost:3007/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1483985988355-763728e1935b%3Fauto%3Dformat%26w%3D1400%26q%3D80&w=640&q=75",
+              "totalBytes": 139985,
+              "wastedBytes": 125750,
+              "subItems": {
+                "type": "subitems",
+                "items": [
+                  {
+                    "reason": "Using a modern image format (WebP, AVIF) or increasing the image compression could improve this image's download size.",
+                    "wastedBytes": 9729
+                  },
+                  {
+                    "reason": "This image file is larger than it needs to be (1400x558) for its displayed dimensions (358x239). Use responsive images to reduce the image download size.",
+                    "wastedBytes": 124687
+                  }
+                ]
+              }
+            },
+            {
+              "node": {
+                "type": "node",
+                "lhId": "page-3-IMG",
+                "path": "1,HTML,1,BODY,4,MAIN,0,DIV,0,SECTION,0,DIV,0,DIV,2,DIV,0,IMG",
+                "selector": "div.overflow-hidden > div.flex > div.relative > img.object-cover",
+                "boundingRect": {
+                  "top": 89,
+                  "bottom": 232,
+                  "left": -624,
+                  "right": -266,
+                  "width": 358,
+                  "height": 143
+                },
+                "snippet": "<img alt=\"Bulk Sourcing Made Simple\" loading=\"lazy\" decoding=\"async\" data-nimg=\"fill\" class=\"object-cover\" style=\"position: absolute; height: 100%; width: 100%; inset: 0px;\" sizes=\"(max-width: 768px) 100vw, 1400px\" srcset=\"/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1507679799987-c…\" src=\"http://localhost:3007/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2F…\">",
+                "nodeLabel": "Bulk Sourcing Made Simple"
+              },
+              "url": "http://localhost:3007/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1507679799987-c73779587ccf%3Fauto%3Dformat%26w%3D1400%26q%3D80&w=640&q=75",
+              "totalBytes": 123475,
+              "wastedBytes": 109981,
+              "subItems": {
+                "type": "subitems",
+                "items": [
+                  {
+                    "reason": "This image file is larger than it needs to be (1400x558) for its displayed dimensions (358x239). Use responsive images to reduce the image download size.",
+                    "wastedBytes": 109981
+                  }
+                ]
+              }
+            },
+            {
+              "node": {
+                "type": "node",
+                "lhId": "page-4-IMG",
+                "path": "1,HTML,1,BODY,4,MAIN,0,DIV,4,SECTION,0,DIV,0,IMG",
+                "selector": "div.pb-20 > section.max-w-7xl > div.relative > img.w-full",
+                "boundingRect": {
+                  "top": 1931,
+                  "bottom": 2123,
+                  "left": 92,
+                  "right": 450,
+                  "width": 358,
+                  "height": 192
+                },
+                "snippet": "<img alt=\"B2B Wholesale Marketplace\" loading=\"lazy\" width=\"1200\" height=\"400\" decoding=\"async\" data-nimg=\"1\" class=\"w-full h-48 sm:h-64 object-cover object-center\" style=\"color:transparent\" srcset=\"/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1542744094-2463…\" src=\"http://localhost:3007/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2F…\">",
+                "nodeLabel": "B2B Wholesale Marketplace"
+              },
+              "url": "http://localhost:3007/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1542744094-24638eff58bb%3Fauto%3Dformat%26w%3D1200%26q%3D75&w=1200&q=75",
+              "totalBytes": 102804,
+              "wastedBytes": 91415,
+              "subItems": {
+                "type": "subitems",
+                "items": [
+                  {
+                    "reason": "This image file is larger than it needs to be (1200x643) for its displayed dimensions (358x239). Use responsive images to reduce the image download size.",
+                    "wastedBytes": 91415
+                  }
+                ]
+              }
+            },
+            {
+              "node": {
+                "type": "node",
+                "lhId": "page-5-IMG",
+                "path": "1,HTML,1,BODY,4,MAIN,0,DIV,2,SECTION,1,DIV,1,A,0,IMG",
+                "selector": "section.max-w-7xl > div.grid > a.group > img.object-cover",
+                "boundingRect": {
+                  "top": 487,
+                  "bottom": 718,
+                  "left": 92,
+                  "right": 265,
+                  "width": 173,
+                  "height": 231
+                },
+                "snippet": "<img alt=\"Electronics\" loading=\"lazy\" decoding=\"async\" data-nimg=\"fill\" class=\"object-cover group-hover:scale-105 transition-transform duration-500\" style=\"position: absolute; height: 100%; width: 100%; inset: 0px;\" sizes=\"(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 17vw\" srcset=\"/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1526374965328-7…\" src=\"http://localhost:3007/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2F…\">",
+                "nodeLabel": "Electronics"
+              },
+              "url": "http://localhost:3007/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1526374965328-7f61d4dc18c5%3Fauto%3Dformat%26w%3D400%26q%3D75&w=256&q=75",
+              "totalBytes": 31377,
+              "wastedBytes": 22451,
+              "subItems": {
+                "type": "subitems",
+                "items": [
+                  {
+                    "reason": "Using a modern image format (WebP, AVIF) or increasing the image compression could improve this image's download size.",
+                    "wastedBytes": 22451
+                  }
+                ]
+              }
+            },
+            {
+              "node": {
+                "type": "node",
+                "lhId": "page-6-IMG",
+                "path": "1,HTML,1,BODY,4,MAIN,0,DIV,2,SECTION,1,DIV,5,A,0,IMG",
+                "selector": "section.max-w-7xl > div.grid > a.group > img.object-cover",
+                "boundingRect": {
+                  "top": 973,
+                  "bottom": 1203,
+                  "left": 92,
+                  "right": 265,
+                  "width": 173,
+                  "height": 231
+                },
+                "snippet": "<img alt=\"Tools &amp; Hardware\" loading=\"lazy\" decoding=\"async\" data-nimg=\"fill\" class=\"object-cover group-hover:scale-105 transition-transform duration-500\" style=\"position: absolute; height: 100%; width: 100%; inset: 0px;\" sizes=\"(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 17vw\" srcset=\"/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1530124566582-a…\" src=\"http://localhost:3007/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2F…\">",
+                "nodeLabel": "Tools & Hardware"
+              },
+              "url": "http://localhost:3007/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1530124566582-a618bc2615dc%3Fauto%3Dformat%26w%3D400%26q%3D75&w=256&q=75",
+              "totalBytes": 28766,
+              "wastedBytes": 19840,
+              "subItems": {
+                "type": "subitems",
+                "items": [
+                  {
+                    "reason": "Using a modern image format (WebP, AVIF) or increasing the image compression could improve this image's download size.",
+                    "wastedBytes": 19840
+                  }
+                ]
+              }
+            },
+            {
+              "node": {
+                "type": "node",
+                "lhId": "page-7-IMG",
+                "path": "1,HTML,1,BODY,4,MAIN,0,DIV,2,SECTION,1,DIV,3,A,0,IMG",
+                "selector": "section.max-w-7xl > div.grid > a.group > img.object-cover",
+                "boundingRect": {
+                  "top": 730,
+                  "bottom": 961,
+                  "left": 92,
+                  "right": 265,
+                  "width": 173,
+                  "height": 231
+                },
+                "snippet": "<img alt=\"Kitchen &amp; Home\" loading=\"lazy\" decoding=\"async\" data-nimg=\"fill\" class=\"object-cover group-hover:scale-105 transition-transform duration-500\" style=\"position: absolute; height: 100%; width: 100%; inset: 0px;\" sizes=\"(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 17vw\" srcset=\"/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1556909114-f6e7…\" src=\"http://localhost:3007/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2F…\">",
+                "nodeLabel": "Kitchen & Home"
+              },
+              "url": "http://localhost:3007/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1556909114-f6e7ad7d3136%3Fauto%3Dformat%26w%3D400%26q%3D75&w=256&q=75",
+              "totalBytes": 28118,
+              "wastedBytes": 19192,
+              "subItems": {
+                "type": "subitems",
+                "items": [
+                  {
+                    "reason": "Using a modern image format (WebP, AVIF) or increasing the image compression could improve this image's download size.",
+                    "wastedBytes": 19192
+                  }
+                ]
+              }
+            },
+            {
+              "node": {
+                "type": "node",
+                "lhId": "page-8-IMG",
+                "path": "1,HTML,1,BODY,4,MAIN,0,DIV,2,SECTION,1,DIV,0,A,0,IMG",
+                "selector": "section.max-w-7xl > div.grid > a.group > img.object-cover",
+                "boundingRect": {
+                  "top": 487,
+                  "bottom": 718,
+                  "left": 277,
+                  "right": 450,
+                  "width": 173,
+                  "height": 231
+                },
+                "snippet": "<img alt=\"Textiles &amp; Fashion\" loading=\"lazy\" decoding=\"async\" data-nimg=\"fill\" class=\"object-cover group-hover:scale-105 transition-transform duration-500\" style=\"position: absolute; height: 100%; width: 100%; inset: 0px;\" sizes=\"(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 17vw\" srcset=\"/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1558618666-fcd2…\" src=\"http://localhost:3007/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2F…\">",
+                "nodeLabel": "Textiles & Fashion"
+              },
+              "url": "http://localhost:3007/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1558618666-fcd25c85cd64%3Fauto%3Dformat%26w%3D400%26q%3D75&w=256&q=75",
+              "totalBytes": 21745,
+              "wastedBytes": 12819,
+              "subItems": {
+                "type": "subitems",
+                "items": [
+                  {
+                    "reason": "Using a modern image format (WebP, AVIF) or increasing the image compression could improve this image's download size.",
+                    "wastedBytes": 12819
+                  }
+                ]
+              }
+            },
+            {
+              "node": {
+                "type": "node",
+                "lhId": "page-9-IMG",
+                "path": "1,HTML,1,BODY,4,MAIN,0,DIV,2,SECTION,1,DIV,4,A,0,IMG",
+                "selector": "section.max-w-7xl > div.grid > a.group > img.object-cover",
+                "boundingRect": {
+                  "top": 973,
+                  "bottom": 1203,
+                  "left": 277,
+                  "right": 450,
+                  "width": 173,
+                  "height": 231
+                },
+                "snippet": "<img alt=\"Auto Parts\" loading=\"lazy\" decoding=\"async\" data-nimg=\"fill\" class=\"object-cover group-hover:scale-105 transition-transform duration-500\" style=\"position: absolute; height: 100%; width: 100%; inset: 0px;\" sizes=\"(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 17vw\" srcset=\"/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1503376780353-7…\" src=\"http://localhost:3007/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2F…\">",
+                "nodeLabel": "Auto Parts"
+              },
+              "url": "http://localhost:3007/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1503376780353-7e6692767b70%3Fauto%3Dformat%26w%3D400%26q%3D75&w=256&q=75",
+              "totalBytes": 21369,
+              "wastedBytes": 12443,
+              "subItems": {
+                "type": "subitems",
+                "items": [
+                  {
+                    "reason": "Using a modern image format (WebP, AVIF) or increasing the image compression could improve this image's download size.",
+                    "wastedBytes": 12443
+                  }
+                ]
+              }
+            },
+            {
+              "node": {
+                "type": "node",
+                "lhId": "page-10-IMG",
+                "path": "1,HTML,1,BODY,4,MAIN,0,DIV,2,SECTION,1,DIV,2,A,0,IMG",
+                "selector": "section.max-w-7xl > div.grid > a.group > img.object-cover",
+                "boundingRect": {
+                  "top": 730,
+                  "bottom": 961,
+                  "left": 277,
+                  "right": 450,
+                  "width": 173,
+                  "height": 231
+                },
+                "snippet": "<img alt=\"Furniture\" loading=\"lazy\" decoding=\"async\" data-nimg=\"fill\" class=\"object-cover group-hover:scale-105 transition-transform duration-500\" style=\"position: absolute; height: 100%; width: 100%; inset: 0px;\" sizes=\"(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 17vw\" srcset=\"/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1555041469-a586…\" src=\"http://localhost:3007/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2F…\">",
+                "nodeLabel": "Furniture"
+              },
+              "url": "http://localhost:3007/_next/image?url=https%3A%2F%2Fimages.unsplash.com%2Fphoto-1555041469-a586c61ea9bc%3Fauto%3Dformat%26w%3D400%26q%3D75&w=256&q=75",
+              "totalBytes": 15907,
+              "wastedBytes": 6981,
+              "subItems": {
+                "type": "subitems",
+                "items": [
+                  {
+                    "reason": "Using a modern image format (WebP, AVIF) or increasing the image compression could improve this image's download size.",
+                    "wastedBytes": 6981
+                  }
+                ]
+              }
+            }
+          ],
+          "debugData": {
+            "type": "debugdata",
+            "wastedBytes": 1116858
+          }
+        }
+      },
+      {
+        "id": "network-dependency-tree-insight",
+        "title": "Network dependency tree",
+        "details": {
+          "type": "list",
+          "items": [
+            {
+              "type": "list-section",
+              "value": {
+                "type": "network-tree",
+                "chains": {
+                  "1A9987BFD4B27E33FC635F1C9EB755FD": {
+                    "url": "http://localhost:3007/ar",
+                    "navStartToEndTime": 87,
+                    "transferSize": 19334,
+                    "isLongest": true,
+                    "children": {
+                      "37376.5": {
+                        "url": "http://localhost:3007/_next/static/css/ac39bab816e253cf.css",
+                        "navStartToEndTime": 112,
+                        "transferSize": 8542,
+                        "isLongest": true,
+                        "children": {}
+                      },
+                      "37376.4": {
+                        "url": "http://localhost:3007/_next/static/css/d64ad7d4ce969ebb.css",
+                        "navStartToEndTime": 110,
+                        "transferSize": 2411,
+                        "children": {}
+                      }
+                    }
+                  }
+                },
+                "longestChain": {
+                  "duration": 112
+                }
+              }
+            },
+            {
+              "type": "list-section",
+              "title": "Preconnected origins",
+              "description": "[preconnect](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) hints help the browser establish a connection earlier in the page load, saving time when the first request for that origin is made. The following are the origins that the page preconnected to.",
+              "value": {
+                "type": "text",
+                "value": "no origins were preconnected"
+              }
+            },
+            {
+              "type": "list-section",
+              "title": "Preconnect candidates",
+              "description": "Add [preconnect](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) hints to your most important origins, but try to use no more than 4.",
+              "value": {
+                "type": "text",
+                "value": "No additional origins are good candidates for preconnecting"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "render-blocking-insight",
+        "title": "Render-blocking requests",
+        "details": {
+          "type": "table",
+          "headings": [
+            {
+              "key": "url",
+              "valueType": "url",
+              "label": "URL"
+            },
+            {
+              "key": "totalBytes",
+              "valueType": "bytes",
+              "label": "Transfer Size"
+            },
+            {
+              "key": "wastedMs",
+              "valueType": "timespanMs",
+              "label": "Duration"
+            }
+          ],
+          "items": [
+            {
+              "url": "http://localhost:3007/_next/static/css/ac39bab816e253cf.css",
+              "totalBytes": 8542,
+              "wastedMs": 316
+            },
+            {
+              "url": "http://localhost:3007/_next/static/css/d64ad7d4ce969ebb.css",
+              "totalBytes": 2411,
+              "wastedMs": 166
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "phase": "before",
+    "locale": "ar",
+    "page": "search",
+    "url": "http://localhost:3007/ar/search?q=cotton",
+    "performance": 0.84,
+    "accessibility": 0.94,
+    "warnings": [],
+    "failedAudits": [
+      {
+        "id": "color-contrast",
+        "title": "Background and foreground colors do not have a sufficient contrast ratio.",
+        "details": {
+          "type": "table",
+          "headings": [
+            {
+              "key": "node",
+              "valueType": "node",
+              "subItemsHeading": {
+                "key": "relatedNode",
+                "valueType": "node"
+              },
+              "label": "Failing Elements"
+            }
+          ],
+          "items": [
+            {
+              "node": {
+                "type": "node",
+                "lhId": "1-1-P",
+                "path": "1,HTML,1,BODY,4,MAIN,0,DIV,1,DIV,1,DIV,0,A,1,P",
+                "selector": "div > div.grid > a.flex > p.text-xs",
+                "boundingRect": {
+                  "top": 257,
+                  "bottom": 273,
+                  "left": 296,
+                  "right": 433,
+                  "width": 137,
+                  "height": 16
+                },
+                "snippet": "<p class=\"text-xs text-gray-400 dark:text-gray-500\">",
+                "nodeLabel": "DEMO",
+                "explanation": "Fix any of the following:\n  Element has insufficient color contrast of 2.53 (foreground color: #9ca3af, background color: #ffffff, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+              },
+              "subItems": {
+                "type": "subitems",
+                "items": [
+                  {
+                    "relatedNode": {
+                      "type": "node",
+                      "lhId": "1-2-A",
+                      "path": "1,HTML,1,BODY,4,MAIN,0,DIV,1,DIV,1,DIV,0,A",
+                      "selector": "div.max-w-7xl > div > div.grid > a.flex",
+                      "boundingRect": {
+                        "top": 193,
+                        "bottom": 322,
+                        "left": 279,
+                        "right": 450,
+                        "width": 171,
+                        "height": 129
+                      },
+                      "snippet": "<a aria-label=\"DEMO — Cotton fabric — DEMO — PKR 1,250.5\" class=\"flex flex-col rounded-2xl border border-gray-100 dark:border-gray-800 bg-w…\" href=\"/ar/products/demo-cotton\">",
+                      "nodeLabel": "DEMO — Cotton fabric\n\nDEMO\n\nPKR 1,250.5"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "node": {
+                "type": "node",
+                "lhId": "1-3-P",
+                "path": "1,HTML,1,BODY,4,MAIN,0,DIV,1,DIV,1,DIV,0,A,2,P",
+                "selector": "div > div.grid > a.flex > p.mt-auto",
+                "boundingRect": {
+                  "top": 281,
+                  "bottom": 305,
+                  "left": 296,
+                  "right": 433,
+                  "width": 137,
+                  "height": 24
+                },
+                "snippet": "<p class=\"mt-auto text-base font-bold text-orange-500\">",
+                "nodeLabel": "PKR 1,250.5",
+                "explanation": "Fix any of the following:\n  Element has insufficient color contrast of 2.8 (foreground color: #f97316, background color: #ffffff, font size: 12.0pt (16px), font weight: bold). Expected contrast ratio of 4.5:1"
+              },
+              "subItems": {
+                "type": "subitems",
+                "items": [
+                  {
+                    "relatedNode": {
+                      "type": "node",
+                      "lhId": "1-2-A",
+                      "path": "1,HTML,1,BODY,4,MAIN,0,DIV,1,DIV,1,DIV,0,A",
+                      "selector": "div.max-w-7xl > div > div.grid > a.flex",
+                      "boundingRect": {
+                        "top": 193,
+                        "bottom": 322,
+                        "left": 279,
+                        "right": 450,
+                        "width": 171,
+                        "height": 129
+                      },
+                      "snippet": "<a aria-label=\"DEMO — Cotton fabric — DEMO — PKR 1,250.5\" class=\"flex flex-col rounded-2xl border border-gray-100 dark:border-gray-800 bg-w…\" href=\"/ar/products/demo-cotton\">",
+                      "nodeLabel": "DEMO — Cotton fabric\n\nDEMO\n\nPKR 1,250.5"
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "debugData": {
+            "type": "debugdata",
+            "impact": "serious",
+            "tags": [
+              "cat.color",
+              "wcag2aa",
+              "wcag143",
+              "TTv5",
+              "TT13.c",
+              "EN-301-549",
+              "EN-9.1.4.3",
+              "ACT",
+              "RGAAv4",
+              "RGAA-3.2.1"
+            ]
+          }
+        }
+      },
+      {
+        "id": "heading-order",
+        "title": "Heading elements are not in a sequentially-descending order",
+        "details": {
+          "type": "table",
+          "headings": [
+            {
+              "key": "node",
+              "valueType": "node",
+              "subItemsHeading": {
+                "key": "relatedNode",
+                "valueType": "node"
+              },
+              "label": "Failing Elements"
+            }
+          ],
+          "items": [
+            {
+              "node": {
+                "type": "node",
+                "lhId": "1-4-H3",
+                "path": "1,HTML,1,BODY,4,MAIN,0,DIV,1,DIV,1,DIV,0,A,0,H3",
+                "selector": "div > div.grid > a.flex > h3.text-sm",
+                "boundingRect": {
+                  "top": 210,
+                  "bottom": 249,
+                  "left": 296,
+                  "right": 433,
+                  "width": 137,
+                  "height": 39
+                },
+                "snippet": "<h3 class=\"text-sm font-medium text-gray-900 dark:text-white line-clamp-2 leading-snug\">",
+                "nodeLabel": "DEMO — Cotton fabric",
+                "explanation": "Fix any of the following:\n  Heading order invalid"
+              }
+            }
+          ],
+          "debugData": {
+            "type": "debugdata",
+            "impact": "moderate",
+            "tags": [
+              "cat.semantics",
+              "best-practice"
+            ]
+          }
+        }
+      },
+      {
+        "id": "label-content-name-mismatch",
+        "title": "Elements with visible text labels do not have matching accessible names.",
+        "details": {
+          "type": "table",
+          "headings": [
+            {
+              "key": "node",
+              "valueType": "node",
+              "subItemsHeading": {
+                "key": "relatedNode",
+                "valueType": "node"
+              },
+              "label": "Failing Elements"
+            }
+          ],
+          "items": [
+            {
+              "node": {
+                "type": "node",
+                "lhId": "1-2-A",
+                "path": "1,HTML,1,BODY,4,MAIN,0,DIV,1,DIV,1,DIV,0,A",
+                "selector": "div.max-w-7xl > div > div.grid > a.flex",
+                "boundingRect": {
+                  "top": 193,
+                  "bottom": 322,
+                  "left": 279,
+                  "right": 450,
+                  "width": 171,
+                  "height": 129
+                },
+                "snippet": "<a aria-label=\"DEMO — Cotton fabric — DEMO — PKR 1,250.5\" class=\"flex flex-col rounded-2xl border border-gray-100 dark:border-gray-800 bg-w…\" href=\"/ar/products/demo-cotton\">",
+                "nodeLabel": "DEMO — Cotton fabric\n\nDEMO\n\nPKR 1,250.5",
+                "explanation": "Fix any of the following:\n  Text inside the element is not included in the accessible name"
+              }
+            }
+          ],
+          "debugData": {
+            "type": "debugdata",
+            "impact": "serious",
+            "tags": [
+              "cat.semantics",
+              "wcag21a",
+              "wcag253",
+              "EN-301-549",
+              "EN-9.2.5.3",
+              "RGAAv4",
+              "RGAA-6.1.5"
+            ]
+          }
+        }
+      },
+      {
+        "id": "forced-reflow-insight",
+        "title": "Forced reflow",
+        "details": {
+          "type": "list",
+          "items": [
+            {
+              "type": "table",
+              "headings": [
+                {
+                  "key": "source",
+                  "valueType": "source-location",
+                  "label": "Source"
+                },
+                {
+                  "key": "reflowTime",
+                  "valueType": "ms",
+                  "granularity": 1,
+                  "label": "Total reflow time"
+                }
+              ],
+              "items": [
+                {
+                  "source": {
+                    "type": "text",
+                    "value": "[unattributed]"
+                  },
+                  "reflowTime": 86.013
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "image-delivery-insight",
+        "title": "Improve image delivery",
+        "details": {
+          "type": "table",
+          "headings": [
+            {
+              "key": "node",
+              "valueType": "node",
+              "label": ""
+            },
+            {
+              "key": "url",
+              "valueType": "url",
+              "label": "URL",
+              "subItemsHeading": {
+                "key": "reason",
+                "valueType": "text"
+              }
+            },
+            {
+              "key": "totalBytes",
+              "valueType": "bytes",
+              "label": "Resource Size"
+            },
+            {
+              "key": "wastedBytes",
+              "valueType": "bytes",
+              "label": "Est Savings",
+              "subItemsHeading": {
+                "key": "wastedBytes",
+                "valueType": "bytes"
+              }
+            }
+          ],
+          "items": [
+            {
+              "node": {
+                "type": "node",
+                "lhId": "page-0-IMG",
+                "path": "1,HTML,1,BODY,1,HEADER,0,DIV,0,DIV,0,A,0,DIV,0,IMG",
+                "selector": "div.flex > a.flex-shrink-0 > div.bg-gray-900 > img.h-9",
+                "boundingRect": {
+                  "top": 14,
+                  "bottom": 50,
+                  "left": 354,
+                  "right": 444,
+                  "width": 90,
+                  "height": 36
+                },
+                "snippet": "<img alt=\"ShopUnity\" fetchpriority=\"high\" width=\"160\" height=\"44\" decoding=\"async\" data-nimg=\"1\" class=\"h-9 w-auto object-contain\" style=\"color:transparent\" srcset=\"/_next/image?url=%2Ficons%2Fshopunity-logo.png&amp;w=256&amp;q=75 1x, /_next/image…\" src=\"http://localhost:3007/_next/image?url=%2Ficons%2Fshopunity-logo.png&amp;w=256&amp;…\">",
+                "nodeLabel": "ShopUnity"
+              },
+              "url": "http://localhost:3007/_next/image?url=%2Ficons%2Fshopunity-logo.png&w=256&q=75",
+              "totalBytes": 477198,
+              "wastedBytes": 476769,
+              "subItems": {
+                "type": "subitems",
+                "items": [
+                  {
+                    "reason": "This image file is larger than it needs to be (3000x1200) for its displayed dimensions (90x36). Use responsive images to reduce the image download size.",
+                    "wastedBytes": 476769
+                  }
+                ]
+              }
+            }
+          ],
+          "debugData": {
+            "type": "debugdata",
+            "wastedBytes": 476769
+          }
+        }
+      },
+      {
+        "id": "network-dependency-tree-insight",
+        "title": "Network dependency tree",
+        "details": {
+          "type": "list",
+          "items": [
+            {
+              "type": "list-section",
+              "value": {
+                "type": "network-tree",
+                "chains": {
+                  "680878647AED5B1B28C84BB7EC28C3AF": {
+                    "url": "http://localhost:3007/ar/search?q=cotton",
+                    "navStartToEndTime": 99,
+                    "transferSize": 8589,
+                    "isLongest": true,
+                    "children": {
+                      "25976.4": {
+                        "url": "http://localhost:3007/_next/static/css/ac39bab816e253cf.css",
+                        "navStartToEndTime": 120,
+                        "transferSize": 8542,
+                        "isLongest": true,
+                        "children": {}
+                      },
+                      "25976.3": {
+                        "url": "http://localhost:3007/_next/static/css/d64ad7d4ce969ebb.css",
+                        "navStartToEndTime": 116,
+                        "transferSize": 2411,
+                        "children": {}
+                      }
+                    }
+                  }
+                },
+                "longestChain": {
+                  "duration": 120
+                }
+              }
+            },
+            {
+              "type": "list-section",
+              "title": "Preconnected origins",
+              "description": "[preconnect](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) hints help the browser establish a connection earlier in the page load, saving time when the first request for that origin is made. The following are the origins that the page preconnected to.",
+              "value": {
+                "type": "text",
+                "value": "no origins were preconnected"
+              }
+            },
+            {
+              "type": "list-section",
+              "title": "Preconnect candidates",
+              "description": "Add [preconnect](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/) hints to your most important origins, but try to use no more than 4.",
+              "value": {
+                "type": "text",
+                "value": "No additional origins are good candidates for preconnecting"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "render-blocking-insight",
+        "title": "Render-blocking requests",
+        "details": {
+          "type": "table",
+          "headings": [
+            {
+              "key": "url",
+              "valueType": "url",
+              "label": "URL"
+            },
+            {
+              "key": "totalBytes",
+              "valueType": "bytes",
+              "label": "Transfer Size"
+            },
+            {
+              "key": "wastedMs",
+              "valueType": "timespanMs",
+              "label": "Duration"
+            }
+          ],
+          "items": [
+            {
+              "url": "http://localhost:3007/_next/static/css/ac39bab816e253cf.css",
+              "totalBytes": 8542,
+              "wastedMs": 312
+            },
+            {
+              "url": "http://localhost:3007/_next/static/css/d64ad7d4ce969ebb.css",
+              "totalBytes": 2411,
+              "wastedMs": 162
+            }
+          ]
+        }
+      }
+    ]
+  }
+]

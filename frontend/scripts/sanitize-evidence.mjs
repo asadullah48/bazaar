@@ -11,9 +11,10 @@ const roots = [
   [process.env.BAZAAR_BASELINE_ROOT, '[baseline]'],
   [repo.replace(/[\\/]$/, ''), '[repo]'],
   [os.homedir(), '[user]'],
+  [path.dirname(process.execPath), '[node-runtime]'],
 ].filter(([value]) => value).sort((a, b) => b[0].length - a[0].length);
 const escape = value => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-const forbidden = /[A-Za-z]:(?:\\|\/)+(?:Users)(?:\\|\/)|OneDrive/gi;
+const forbidden = /\b[A-Za-z]:(?:\\|\/)+|OneDrive/gi;
 const files = [];
 async function walk(directory) {
   for (const entry of await fs.readdir(directory, { withFileTypes: true })) {

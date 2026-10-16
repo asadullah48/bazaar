@@ -1,0 +1,92 @@
+npm notice run frontend@0.1.0 build
+npm notice run next build
+  ▲ Next.js 14.2.35
+
+   Creating an optimized production build ...
+<w> [webpack.cache.PackFileCacheStrategy/webpack.FileSystemInfo] Parsing of [baseline]\frontend\node_modules\next-intl\dist\esm\production\extractor\format\index.js for build dependencies failed at 'import(t)'.
+<w> Build dependencies behind this expression are ignored and might cause incorrect cache invalidation.
+<w> [webpack.cache.PackFileCacheStrategy/webpack.FileSystemInfo] Parsing of [baseline]\frontend\node_modules\next-intl\dist\esm\production\extractor\format\index.js for build dependencies failed at 'import(t)'.
+<w> Build dependencies behind this expression are ignored and might cause incorrect cache invalidation.
+<w> [webpack.cache.PackFileCacheStrategy/webpack.FileSystemInfo] Parsing of [baseline]\frontend\node_modules\next-intl\dist\esm\production\extractor\format\index.js for build dependencies failed at 'import(t)'.
+<w> Build dependencies behind this expression are ignored and might cause incorrect cache invalidation.
+ ✓ Compiled successfully
+   Linting and checking validity of types ...
+
+./src/app/[locale]/admin/payouts/page.tsx
+44:6  Warning: React Hook useEffect has a missing dependency: 'load'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/app/[locale]/admin/products/page.tsx
+38:6  Warning: React Hook useEffect has a missing dependency: 'load'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/app/[locale]/admin/sellers/page.tsx
+38:6  Warning: React Hook useEffect has a missing dependency: 'load'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/app/[locale]/rfq/[id]/page.tsx
+50:6  Warning: React Hook useEffect has a missing dependency: 'reload'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/app/[locale]/seller/products/page.tsx
+38:6  Warning: React Hook useEffect has a missing dependency: 'loadProducts'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/components/home/flash-deals.tsx
+74:15  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./src/components/product/product-qr.tsx
+25:7  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/basic-features/eslint#disabling-rules
+   Collecting page data ...
+   Generating static pages (0/7) ...
+   Generating static pages (1/7) 
+   Generating static pages (3/7) 
+   Generating static pages (5/7) 
+ ✓ Generating static pages (7/7)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                              Size     First Load JS
+┌ ○ /_not-found                          876 B          88.2 kB
+├ ƒ /[locale]                            11.2 kB         134 kB
+├ ƒ /[locale]/account                    5.59 kB         116 kB
+├ ƒ /[locale]/admin                      3.92 kB         114 kB
+├ ƒ /[locale]/admin/campaigns            2.76 kB         113 kB
+├ ƒ /[locale]/admin/campaigns/new        2.09 kB         103 kB
+├ ƒ /[locale]/admin/payouts              3.23 kB        92.4 kB
+├ ƒ /[locale]/admin/products             3.23 kB        92.4 kB
+├ ƒ /[locale]/admin/sellers              3.14 kB        92.3 kB
+├ ƒ /[locale]/auth/forgot-password       3.85 kB         114 kB
+├ ƒ /[locale]/auth/login                 1.85 kB         115 kB
+├ ƒ /[locale]/auth/register              2.45 kB         115 kB
+├ ƒ /[locale]/auth/reset-password        1.74 kB         115 kB
+├ ƒ /[locale]/checkout                   4.55 kB         111 kB
+├ ƒ /[locale]/orders                     2.66 kB         113 kB
+├ ƒ /[locale]/orders/[id]                2.59 kB         116 kB
+├ ƒ /[locale]/products                   371 B           123 kB
+├ ƒ /[locale]/products/[slug]            6.17 kB         125 kB
+├ ƒ /[locale]/rfq                        4.09 kB         114 kB
+├ ƒ /[locale]/rfq/[id]                   2.77 kB         116 kB
+├ ƒ /[locale]/rfq/new                    1.62 kB         115 kB
+├ ƒ /[locale]/search                     178 B          96.2 kB
+├ ƒ /[locale]/seller                     1.86 kB         110 kB
+├ ƒ /[locale]/seller/analytics           2.69 kB        91.9 kB
+├ ƒ /[locale]/seller/financials          2.97 kB        92.2 kB
+├ ƒ /[locale]/seller/inventory           2.76 kB          92 kB
+├ ƒ /[locale]/seller/orders              2.93 kB         113 kB
+├ ƒ /[locale]/seller/orders/[id]         1.92 kB         115 kB
+├ ƒ /[locale]/seller/payouts             2.99 kB        92.2 kB
+├ ƒ /[locale]/seller/products            2.23 kB         115 kB
+├ ƒ /[locale]/seller/products/new        5.85 kB         107 kB
+├ ƒ /[locale]/sellers/[slug]             1.61 kB         121 kB
+├ ○ /manifest.webmanifest                0 B                0 B
+├ ○ /payment/failure                     1.14 kB        97.1 kB
+└ ○ /payment/success                     961 B          96.9 kB
++ First Load JS shared by all            87.3 kB
+  ├ chunks/2117-c08c90281f3631e2.js      31.7 kB
+  ├ chunks/fd9d1056-8928ab8342e6d041.js  53.6 kB
+  └ other shared chunks (total)          1.9 kB
+
+
+ƒ Middleware                             38.1 kB
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
