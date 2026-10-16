@@ -5,12 +5,16 @@ import Link from "next/link";
 import { X, Trash2, Plus, Minus, ShoppingBag } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useCartStore } from "@/store/cart-store";
+import { formatPrice } from "@/lib/format-price";
 
 export function CartSidebar({ locale }: { locale: string }) {
   const t = useTranslations("cart");
+  const text=(en:string,ar:string,ur:string)=>locale === "ar" ? ar : locale === "ur" ? ur : en;
   const { items, isOpen, closeCart, removeItem, updateQty, totalPrice } =
     useCartStore();
   const overlayRef = useRef<HTMLDivElement>(null);
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  useEffect(() => { if (isOpen) dialogRef.current?.showModal(); else dialogRef.current?.close(); }, [isOpen]);
 
   // Close on Escape
   useEffect(() => {
@@ -28,12 +32,7 @@ export function CartSidebar({ locale }: { locale: string }) {
     return () => { document.body.style.overflow = ""; };
   }, [isOpen]);
 
-  const fmt = (n: number) =>
-    new Intl.NumberFormat("en-PK", {
-      style: "currency",
-      currency: "PKR",
-      maximumFractionDigits: 0,
-    }).format(n);
+  const fmt = (n:number) => formatPrice(n,locale as "en"|"ar"|"ur");
 
   return (
     <>
@@ -48,12 +47,15 @@ export function CartSidebar({ locale }: { locale: string }) {
       />
 
       {/* Drawer — slides in from the end (right in LTR, left in RTL) */}
-      <aside
+      <dialog
+        ref={dialogRef}
+        onCancel={closeCart}
+        onClick={e => { if (e.target === e.currentTarget) closeCart(); }}
         role="dialog"
         aria-modal="true"
         aria-label={t("title")}
-        className={`fixed top-0 end-0 z-50 h-full w-full max-w-sm bg-white dark:bg-gray-900 shadow-2xl flex flex-col transition-transform duration-300 ease-in-out ${
-          isOpen ? "translate-x-0" : "translate-x-full rtl:-translate-x-full"
+        className={`fixed inset-y-0 start-auto end-0 z-50 m-0 h-full max-h-none w-full max-w-sm bg-white dark:bg-gray-900 shadow-2xl open:flex flex-col backdrop:bg-black/40 transition-transform duration-300 ease-in-out ${
+          isOpen ? "translate-x-0" : "hidden"
         }`}
       >
         {/* Header */}
@@ -64,29 +66,30 @@ export function CartSidebar({ locale }: { locale: string }) {
           <button
             onClick={closeCart}
             className="p-1.5 rounded-lg text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-            aria-label="Close cart"
+            aria-label={text("Close cart","إغلاق السلة","ٹوکری بند کریں")}
           >
             <X size={20} />
           </button>
         </div>
 
+        <p className="px-5 pt-4 text-sm">{text("Cart → Checkout", "السلة ← إتمام الطلب", "ٹوکری ← آرڈر")}</p>
         {/* Items list */}
         <div className="flex-1 overflow-y-auto px-5 py-4 space-y-4">
           {items.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full gap-4 text-center">
               <ShoppingBag size={48} className="text-gray-200 dark:text-gray-700" />
-              <p className="text-gray-500 dark:text-gray-400">{t("empty")}</p>
+              <p className="text-gray-500 dark:text-gray-600 dark:text-gray-400">{t("empty")}</p>
               <button
                 onClick={closeCart}
-                className="text-sm text-orange-500 hover:underline"
+                className="text-sm text-orange-700 dark:text-orange-300 hover:underline"
               >
-                Continue shopping
+                {text("Continue shopping","متابعة التسوق","خریداری جاری رکھیں")}
               </button>
             </div>
           ) : (
             items.map((item) => (
               <div
-                key={item.product_id}
+                key={item.variant_id ?? item.product_id}
                 className="flex gap-3 items-start pb-4 border-b border-gray-100 dark:border-gray-800 last:border-0"
               >
                 {/* Thumbnail */}
@@ -105,17 +108,17 @@ export function CartSidebar({ locale }: { locale: string }) {
                   <p className="text-sm font-medium text-gray-900 dark:text-white line-clamp-2 leading-snug">
                     {item.name}
                   </p>
-                  <p className="text-xs text-gray-400 mt-0.5">{item.seller_name}</p>
-                  <p className="text-sm font-semibold text-orange-500 mt-1">
+                  <p className="text-xs text-gray-600 dark:text-gray-400 mt-0.5">{item.seller_name}</p>
+                  <p className="text-sm font-semibold text-orange-700 dark:text-orange-300 mt-1">
                     {fmt(item.price)}
                   </p>
 
                   {/* Qty controls */}
                   <div className="flex items-center gap-2 mt-2">
                     <button
-                      onClick={() => updateQty(item.product_id, item.quantity - 1)}
-                      className="w-6 h-6 rounded-md border border-gray-200 dark:border-gray-700 flex items-center justify-center text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-                      aria-label="Decrease quantity"
+                      onClick={() => updateQty(item.variant_id ?? item.product_id, item.quantity - 1)}
+                      className="w-11 h-11 rounded-md border border-gray-200 dark:border-gray-700 flex items-center justify-center text-gray-600 dark:text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                      aria-label={text("Decrease quantity","تقليل الكمية","مقدار کم کریں")}
                     >
                       <Minus size={12} />
                     </button>
@@ -125,18 +128,18 @@ export function CartSidebar({ locale }: { locale: string }) {
                     <button
                       onClick={() =>
                         updateQty(
-                          item.product_id,
+                          item.variant_id ?? item.product_id,
                           Math.min(item.quantity + 1, item.stock_qty)
                         )
                       }
                       disabled={item.quantity >= item.stock_qty}
-                      className="w-6 h-6 rounded-md border border-gray-200 dark:border-gray-700 flex items-center justify-center text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-40 transition-colors"
-                      aria-label="Increase quantity"
+                      className="w-11 h-11 rounded-md border border-gray-200 dark:border-gray-700 flex items-center justify-center text-gray-600 dark:text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-40 transition-colors"
+                      aria-label={text("Increase quantity","زيادة الكمية","مقدار بڑھائیں")}
                     >
                       <Plus size={12} />
                     </button>
                     <button
-                      onClick={() => removeItem(item.product_id)}
+                      onClick={() => removeItem(item.variant_id ?? item.product_id)}
                       className="ms-auto p-1 rounded-md text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
                       aria-label={t("remove")}
                     >
@@ -154,18 +157,18 @@ export function CartSidebar({ locale }: { locale: string }) {
           <div className="border-t border-gray-100 dark:border-gray-800 px-5 py-5 space-y-4">
             <div className="flex justify-between text-base font-semibold text-gray-900 dark:text-white">
               <span>{t("total")}</span>
-              <span className="text-orange-500">{fmt(totalPrice())}</span>
+              <span className="text-orange-700 dark:text-orange-300">{fmt(totalPrice())}</span>
             </div>
             <Link
               href={`/${locale}/checkout`}
               onClick={closeCart}
-              className="block w-full text-center bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-6 rounded-xl transition-colors"
+              className="block w-full text-center bg-orange-700 hover:bg-orange-800 text-white font-semibold py-3 px-6 rounded-xl transition-colors"
             >
               {t("checkout")}
             </Link>
           </div>
         )}
-      </aside>
+      </dialog>
     </>
   );
 }

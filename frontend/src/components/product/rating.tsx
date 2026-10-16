@@ -4,10 +4,11 @@ interface RatingProps {
   value: number | null | undefined;
   count?: number;
   size?: number;
+  verifiedReview?: boolean;
 }
 
-export function Rating({ value, count, size = 14 }: RatingProps) {
-  if (!value) return null;
+export function Rating({ value, count, size = 14, verifiedReview = false }: RatingProps) {
+  if (!value || (!verifiedReview && (!count || count < 1))) return null;
   const stars = Math.round(value * 2) / 2; // round to 0.5
 
   return (

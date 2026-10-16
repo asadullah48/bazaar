@@ -11,6 +11,7 @@ export function formatPrice(amount: number, locale: Locale = "en"): string {
   return new Intl.NumberFormat(locale === "en" ? "en-PK" : locale, {
     style: "currency",
     currency,
-    maximumFractionDigits: 0,
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
   }).format(amount);
 }

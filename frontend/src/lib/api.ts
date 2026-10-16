@@ -122,6 +122,10 @@ export interface ApiProduct {
   images: { id: string; url: string; alt: string | null; is_primary: boolean }[];
   seller: { id: string; display_name: string; slug: string };
   seo_data?: Record<string, unknown> | null;
+  description?: string | null;
+  attributes?: Record<string, unknown> | null;
+  variants?: { id: string; price: number; stock_qty: number; sku_code: string; is_active: boolean }[];
+  b2b_tiers?: { id: string; min_qty: number; max_qty: number | null; price_per_unit: number }[];
 }
 
 export interface ProductListResponse {
@@ -147,10 +151,19 @@ export const productsApi = {
     if (params?.search) qs.set("q", params.search);
     if (params?.min_price != null) qs.set("min_price", String(params.min_price));
     if (params?.max_price != null) qs.set("max_price", String(params.max_price));
-    return request<ProductListResponse>(`/v1/products?${qs}`);
+    qs.set("limit", String(params?.size ?? 16));
+    const path = params?.search ? "/v1/search" : "/v1/products";
+    return request<SearchListResponse>(`${path}?${qs}`).then(async result => ({
+      items: (await Promise.all(result.items.filter(i => i.slug).map(i => productsApi.get(i.slug!).catch(() => null)))).filter((p): p is ApiProduct => p !== null),
+      total: result.total, page: result.page, size: params?.size ?? 16,
+    }));
   },
 
-  get: (slug: string) => request<ApiProduct>(`/v1/products/${slug}`),
+  catalog: (page = 1, filters = new URLSearchParams()) => {
+    const qs = new URLSearchParams(filters); qs.set("page", String(page)); qs.set("limit", "16");
+    return request<SearchListResponse>(`/v1/products?${qs}`);
+  },
+  get: (slug: string) => request<ApiProduct>(`/v1/products/${encodeURIComponent(slug)}`),
 };
 
 // ── Reviews ───────────────────────────────────────────────────────────────────
@@ -608,10 +621,10 @@ export interface SearchListResponse {
 }
 
 export const searchApi = {
-  search: (q: string, page = 1) =>
-    request<SearchListResponse>(
-      `/v1/search?q=${encodeURIComponent(q)}&page=${page}&limit=20`
-    ),
+  search: (q: string, page = 1, filters = new URLSearchParams()) => {
+    const qs = new URLSearchParams(filters); qs.set("q", q); qs.set("page", String(page)); qs.set("limit", "16");
+    return request<SearchListResponse>(`/v1/search?${qs}`);
+  },
 };
 
 // ── Orders (buyer) ────────────────────────────────────────────────────────────

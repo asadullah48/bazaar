@@ -37,3 +37,12 @@ html[dir="ltr"] {
     box-shadow: 0 8px 32px -6px rgba(249, 115, 22, 0.24), 0 4px 16px -2px rgba(8, 145, 178, 0.18);
   }
 }
+
+@layer components {
+  .market-input { @apply block w-full min-h-11 mt-2 px-3 py-2 rounded-lg border border-gray-300 bg-white text-gray-900 dark:bg-gray-900 dark:border-gray-600 dark:text-white; }
+  .market-button { @apply inline-flex items-center justify-center min-h-11 px-5 py-3 rounded-lg bg-orange-700 hover:bg-orange-800 text-white font-semibold; }
+}
+:focus-visible { outline: 3px solid #0e7490; outline-offset: 3px; }
+html { scroll-padding-top: 9rem; }
+html[dir="rtl"] { font-family: Tahoma, Arial, sans-serif; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; } }

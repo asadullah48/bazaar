@@ -25,7 +25,7 @@ export function ProductGallery({
           alt={sorted[active]?.alt ?? name}
           fill
           priority
-          className="object-cover"
+          className="object-contain"
           sizes="(max-width: 768px) 100vw, 50vw"
         />
       </div>
@@ -36,6 +36,8 @@ export function ProductGallery({
           {sorted.map((img, i) => (
             <button
               key={img.id}
+              aria-label={`${name} — ${i + 1}`}
+              aria-pressed={i === active}
               onClick={() => setActive(i)}
               className={clsx(
                 "relative w-16 h-16 flex-shrink-0 rounded-xl overflow-hidden border-2 transition-colors",
@@ -48,7 +50,7 @@ export function ProductGallery({
                 src={img.url}
                 alt={img.alt ?? name}
                 fill
-                className="object-cover"
+                className="object-contain"
                 sizes="64px"
               />
             </button>

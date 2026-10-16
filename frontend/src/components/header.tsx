@@ -1,153 +1,39 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
-import { ShoppingCart, Search, User, Package, LogOut, FileText } from "lucide-react";
-import { useTranslations } from "next-intl";
-import { useLocale } from "next-intl";
+import { Search, ShoppingCart, User } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { LanguageSwitcher } from "./language-switcher";
-import { ThemeToggle } from "./theme-toggle";
 import { useCartStore } from "@/store/cart-store";
-import { useAuthStore } from "@/store/auth-store";
-import { authApi } from "@/lib/api";
+import { categoriesApi, CategoryNode } from "@/lib/api";
 
 export function Header() {
-  const t = useTranslations();
-  const tAuth = useTranslations("auth");
-  const locale = useLocale();
-  const router = useRouter();
+  const locale = useLocale(); const t = useTranslations(); const router = useRouter();
   const { openCart, totalItems } = useCartStore();
-  const count = totalItems();
-  const [query, setQuery] = useState("");
-
-  const isAuthenticated = useAuthStore((s) => !!s.accessToken);
-  const role = useAuthStore((s) => s.role);
-  const accessToken = useAuthStore((s) => s.accessToken);
-  const refreshToken = useAuthStore((s) => s.refreshToken);
-  const clearTokens = useAuthStore((s) => s.clearTokens);
-
-  function handleSearch(e: React.FormEvent) {
-    e.preventDefault();
-    if (query.trim()) router.push(`/${locale}/search?q=${encodeURIComponent(query.trim())}`);
-  }
-
-  async function handleSignOut() {
-    if (refreshToken) {
-      try { await authApi.logout(refreshToken); } catch {}
-    }
-    clearTokens();
-    router.push(`/${locale}`);
-  }
-
-  return (
-    <header className="sticky top-0 z-50 w-full border-b border-gray-100 dark:border-gray-800 bg-white/90 dark:bg-gray-950/90 backdrop-blur-sm relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center h-16 gap-4">
-          {/* Logo */}
-          <Link href={`/${locale}`} className="flex-shrink-0">
-            <div className="bg-gray-900 rounded-lg px-1.5 py-0.5">
-              <Image
-                src="/icons/shopunity-logo.png"
-                alt="ShopUnity"
-                width={160}
-                height={44}
-                className="h-9 w-auto object-contain"
-                priority
-              />
-            </div>
-          </Link>
-
-          {/* Search */}
-          <form onSubmit={handleSearch} className="flex-1 max-w-xl mx-auto">
-            <div className="relative">
-              <Search
-                size={16}
-                className="absolute start-3 top-1/2 -translate-y-1/2 text-gray-400"
-              />
-              <input
-                type="search"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder={t("common.search")}
-                className="w-full ps-9 pe-4 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 dark:text-gray-100 placeholder:text-gray-400"
-              />
-            </div>
-          </form>
-
-          {/* Right controls */}
-          <nav className="flex items-center gap-2 flex-shrink-0">
-            <LanguageSwitcher />
-            <ThemeToggle />
-            {isAuthenticated ? (
-              <div className="flex items-center gap-2">
-                <span className="text-xs font-medium text-gray-500 dark:text-gray-400 hidden sm:block">
-                  {role}
-                </span>
-                <button
-                  onClick={handleSignOut}
-                  className="text-sm text-gray-600 dark:text-gray-400 hover:text-red-500 transition-colors px-2 py-1"
-                >
-                  {tAuth("sign_out")}
-                </button>
-              </div>
-            ) : (
-              <Link
-                href={`/${locale}/auth/login`}
-                aria-label={tAuth("sign_in")}
-                className="p-2 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-              >
-                <User size={20} />
-              </Link>
-            )}
-
-            {accessToken && (
-              <>
-                {(role === "consumer" || role === "business_buyer") && (
-                  <Link
-                    href={`/${locale}/rfq`}
-                    className="p-2 rounded-lg text-cyan-600 dark:text-cyan-400 hover:bg-cyan-50 dark:hover:bg-cyan-900/20 transition-colors"
-                    aria-label="RFQ"
-                    title="Request for Quotes"
-                  >
-                    <FileText size={20} />
-                  </Link>
-                )}
-                <Link
-                  href={`/${locale}/orders`}
-                  className="p-2 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-                  aria-label={t("nav.orders")}
-                >
-                  <Package size={20} />
-                </Link>
-                <button
-                  onClick={handleSignOut}
-                  className="p-2 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-                  aria-label={t("auth.sign_out")}
-                >
-                  <LogOut size={20} />
-                </button>
-              </>
-            )}
-
-            {/* Cart button with badge */}
-            <button
-              onClick={openCart}
-              className="relative p-2 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-              aria-label={t("nav.cart")}
-            >
-              <ShoppingCart size={20} />
-              {count > 0 && (
-                <span className="absolute -top-0.5 -end-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-orange-500 text-[10px] font-bold text-white">
-                  {count > 9 ? "9+" : count}
-                </span>
-              )}
-            </button>
-          </nav>
-        </div>
-      </div>
-      {/* Brand gradient accent line */}
-      <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-orange-500 via-orange-400 to-cyan-500 opacity-80" />
-    </header>
-  );
+  const [query, setQuery] = useState(""); const [category, setCategory] = useState("");
+  const [categories, setCategories] = useState<CategoryNode[]>([]);
+  const [ready, setReady] = useState(false);
+  useEffect(() => { setReady(true); categoriesApi.tree().then(setCategories).catch(() => {}); }, []);
+  const text = (en: string, ar: string, ur: string) => locale === "ar" ? ar : locale === "ur" ? ur : en;
+  return <header className="sticky top-0 z-30 border-b-2 border-orange-500 bg-white dark:bg-gray-950">
+    <a href="#main-content" className="sr-only focus:not-sr-only focus:block p-3">{text("Skip to content", "انتقل للمحتوى", "مواد پر جائیں")}</a>
+    <div className="max-w-7xl mx-auto px-4 py-3 grid grid-cols-[1fr_auto] md:grid-cols-[auto_1fr_auto] gap-3 items-center">
+      <Link href={`/${locale}`} className="text-2xl font-extrabold text-orange-700 dark:text-orange-400 tracking-tight">Bazaar<span className="text-cyan-700">.</span></Link>
+      <form role="search" onSubmit={e => { e.preventDefault(); const qs = new URLSearchParams(); if(query.trim()) qs.set("q", query.trim()); if(category) qs.set("category_id", category); router.push(`/${locale}/products?${qs}`); }} className="order-3 col-span-2 md:order-none md:col-span-1 flex min-w-0 rounded-lg border border-gray-400 focus-within:ring-2 focus-within:ring-cyan-700">
+        <label className="sr-only" htmlFor="search-category">{text("Category", "الفئة", "زمرہ")}</label>
+        <select id="search-category" value={category} onChange={e => setCategory(e.target.value)} className="max-w-28 sm:max-w-40 bg-gray-100 dark:bg-gray-800 rounded-s-lg px-2 text-sm">
+          <option value="">{text("All categories", "كل الفئات", "تمام زمرے")}</option>{categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
+        </select>
+        <label className="sr-only" htmlFor="store-search">{t("common.search")}</label>
+        <input id="store-search" type="search" value={query} onChange={e => setQuery(e.target.value)} placeholder={t("common.search")} className="min-w-0 flex-1 bg-transparent px-3 py-3"/>
+        <button className="bg-orange-700 hover:bg-orange-800 text-white px-4 rounded-e-lg" aria-label={t("common.search")}><Search size={20}/></button>
+      </form>
+      <nav className="flex items-center gap-1" aria-label={text("Account and cart", "الحساب والسلة", "اکاؤنٹ اور ٹوکری")}>
+        <LanguageSwitcher/>
+        <Link href={`/${locale}/account`} className="p-2" aria-label={text("Account", "الحساب", "اکاؤنٹ")}><User size={20}/></Link>
+        <button onClick={openCart} className="flex items-center gap-1 p-2" aria-label={`${t("nav.cart")} ${ready ? totalItems() : ""}`}><ShoppingCart size={20}/><span className="min-w-5 text-sm font-bold" aria-live="polite">{ready ? totalItems() : ""}</span></button>
+      </nav>
+    </div>
+  </header>;
 }

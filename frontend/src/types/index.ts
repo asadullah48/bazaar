@@ -15,6 +15,8 @@ export interface Product {
   avg_rating?: number | null;
   review_count?: number;
   is_b2b_eligible?: boolean;
+  variants?: { id: string; price: number; stock_qty: number; sku_code: string; is_active: boolean }[];
+  b2b_tiers?: { id: string; min_qty: number; max_qty: number | null; price_per_unit: number }[];
 }
 
 export interface ProductImage {
@@ -25,6 +27,7 @@ export interface ProductImage {
 }
 
 export interface CartItem {
+  variant_id?: string;
   product_id: string;
   name: string;
   slug: string;

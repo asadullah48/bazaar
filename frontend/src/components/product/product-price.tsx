@@ -1,3 +1,5 @@
+"use client";
+import { useLocale } from "next-intl";
 interface ProductPriceProps {
   price: number;
   comparePrice?: number | null;
@@ -11,11 +13,13 @@ export function ProductPrice({
   currency = "PKR",
   className = "",
 }: ProductPriceProps) {
+  const locale = useLocale();
   const fmt = (n: number) =>
-    new Intl.NumberFormat("en-PK", {
+    new Intl.NumberFormat(locale === "en" ? "en-PK" : locale, {
       style: "currency",
       currency,
-      maximumFractionDigits: 0,
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
     }).format(n);
 
   const discountPct =
