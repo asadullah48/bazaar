@@ -94,6 +94,22 @@ Playwright now honors the fixture's existing `DEMO_API_PORT` setting in its read
 
 [Installed dependency tree](storefront/security-installed-dependencies.json) (exit 0) confirms the overridden versions; [installed audit](storefront/npm-audit-installed.json) (exit 1) independently confirms the same 8 remaining entries.
 
+### VERIFIED — final security follow-up run
+
+A further fresh clone of **pushed commit `a2f2976d00333943bd26a6d4f8f10d783ac577a6`** ran the exact sequence `npm ci && npm run build && npx playwright test`, with `DEMO_API_PORT=19180` and `NEXT_PUBLIC_API_URL=http://127.0.0.1:19180` set before the command. Platform: **Windows**, Node v24.19.0, npm 12.2.0. No source edits, reused node_modules or build cache; a post-run diff confirmed the source, manifests, lockfile and TypeScript/Playwright configuration were unchanged.
+
+- Install: **`added 523 packages, and audited 524 packages in 2m`**; succeeded.
+- Production build: **Next.js 14.2.35**, succeeded, **7 lint warnings**. Cache/startup warnings and npm's blocked install-script warnings are retained in the transcript.
+- Playwright: **`10 passed (27.9s)`**.
+- Overall sequence exit code: **0**.
+- Audit: **12 → 8 vulnerable package entries**; remaining **1 critical, 5 high, 2 moderate**. Audit exit code remains **1**.
+
+[Exact final command output](storefront/security-fresh-clone-validation.txt) · [Final Playwright JSON](storefront/security-playwright.json). Later evidence-only commits do not change the validated source or lockfile. The final evidence hygiene check covered **81 files and 40 screenshots**, with **0 remaining absolute local-path matches**.
+
+### NOT VERIFIED
+
+Linux execution, exploitability of the remaining advisories in a deployed configuration, production security and live provider processing were not verified. No direct dependency or audited package received a major upgrade; no forced audit fix was performed. The passing fixture journeys do not verify the API-error-state contrast issue recorded above. Backend tests and Lighthouse were not rerun for this dependency-only follow-up; their earlier results remain historical evidence. No merge, deployment or portfolio change was performed.
+
 ## Mobile Lighthouse — Next.js 14 before and after
 
 One sequential run per page/locale, at 390px mobile emulation, with the same browser and Lighthouse settings. These earlier source-copy measurements precede the regenerated lockfile; they are not fresh-clone Lighthouse measurements. These are local, clearly labelled demo-fixture measurements, not production traffic benchmarks.

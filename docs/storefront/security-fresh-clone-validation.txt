@@ -1,0 +1,149 @@
+a2f2976d00333943bd26a6d4f8f10d783ac577a6
+v24.19.0
+12.2.0
+NEXT_PUBLIC_API_URL=http://127.0.0.1:19180
+DEMO_API_PORT=19180
+COMMAND: npm ci && npm run build && npx playwright test
+npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+npm warn deprecated @humanwhocodes/config-array@0.13.0: Use @eslint/config-array instead
+npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+npm warn deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
+npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+npm warn deprecated eslint@8.57.1: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+
+added 523 packages, and audited 524 packages in 2m
+
+173 packages are looking for funding
+  run `npm fund` for details
+
+8 vulnerabilities (2 moderate, 5 high, 1 critical)
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+npm warn install-scripts 3 packages had install scripts blocked because they are not covered by allowScripts:
+npm warn install-scripts   @parcel/watcher@2.6.0 (install: node scripts/build-from-source.js)
+npm warn install-scripts   @swc/core@1.16.18 (postinstall: node postinstall.js)
+npm warn install-scripts   unrs-resolver@1.12.2 (postinstall: node postinstall.js)
+npm warn install-scripts
+npm warn install-scripts Run `npm install-scripts ls` to review, or `npm install-scripts approve <pkg>` to allow.
+npm notice run frontend@0.1.0 build
+npm notice run next build
+  ▲ Next.js 14.2.35
+
+   Creating an optimized production build ...
+<w> [webpack.cache.PackFileCacheStrategy/webpack.FileSystemInfo] Parsing of [build]\bazaar-security-final\frontend\node_modules\next-intl\dist\esm\production\extractor\format\index.js for build dependencies failed at 'import(t(c).href)'.
+<w> Build dependencies behind this expression are ignored and might cause incorrect cache invalidation.
+<w> [webpack.cache.PackFileCacheStrategy/webpack.FileSystemInfo] Parsing of [build]\bazaar-security-final\frontend\node_modules\next-intl\dist\esm\production\extractor\format\index.js for build dependencies failed at 'import(t(c).href)'.
+<w> Build dependencies behind this expression are ignored and might cause incorrect cache invalidation.
+<w> [webpack.cache.PackFileCacheStrategy/webpack.FileSystemInfo] Parsing of [build]\bazaar-security-final\frontend\node_modules\next-intl\dist\esm\production\extractor\format\index.js for build dependencies failed at 'import(t(c).href)'.
+<w> Build dependencies behind this expression are ignored and might cause incorrect cache invalidation.
+ ✓ Compiled successfully
+   Linting and checking validity of types ...
+
+./src/app/[locale]/admin/payouts/page.tsx
+44:6  Warning: React Hook useEffect has a missing dependency: 'load'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/app/[locale]/admin/products/page.tsx
+38:6  Warning: React Hook useEffect has a missing dependency: 'load'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/app/[locale]/admin/sellers/page.tsx
+38:6  Warning: React Hook useEffect has a missing dependency: 'load'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/app/[locale]/rfq/[id]/page.tsx
+50:6  Warning: React Hook useEffect has a missing dependency: 'reload'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/app/[locale]/seller/products/page.tsx
+38:6  Warning: React Hook useEffect has a missing dependency: 'loadProducts'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/components/home/flash-deals.tsx
+74:15  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./src/components/product/product-qr.tsx
+25:7  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/basic-features/eslint#disabling-rules
+   Collecting page data ...
+   Generating static pages (0/7) ...
+   Generating static pages (1/7) 
+   Generating static pages (3/7) 
+   Generating static pages (5/7) 
+ ✓ Generating static pages (7/7)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                              Size     First Load JS
+┌ ○ /_not-found                          876 B          88.1 kB
+├ ƒ /[locale]                            2.34 kB         122 kB
+├ ƒ /[locale]/account                    7.71 kB         116 kB
+├ ƒ /[locale]/admin                      2.85 kB         114 kB
+├ ƒ /[locale]/admin/campaigns            4.67 kB         113 kB
+├ ƒ /[locale]/admin/campaigns/new        3.18 kB         102 kB
+├ ƒ /[locale]/admin/payouts              4.28 kB        91.5 kB
+├ ƒ /[locale]/admin/products             4.28 kB        91.5 kB
+├ ƒ /[locale]/admin/sellers              4.19 kB        91.5 kB
+├ ƒ /[locale]/auth/forgot-password       5.96 kB         114 kB
+├ ƒ /[locale]/auth/login                 3.53 kB         115 kB
+├ ƒ /[locale]/auth/register              4.12 kB         115 kB
+├ ƒ /[locale]/auth/reset-password        6.43 kB         114 kB
+├ ƒ /[locale]/checkout                   7.73 kB         116 kB
+├ ƒ /[locale]/orders                     4.57 kB         113 kB
+├ ƒ /[locale]/orders/[id]                4.24 kB         115 kB
+├ ƒ /[locale]/products                   2.34 kB         122 kB
+├ ƒ /[locale]/products/[slug]            7.6 kB          127 kB
+├ ƒ /[locale]/rfq                        6.21 kB         114 kB
+├ ƒ /[locale]/rfq/[id]                   4.39 kB         116 kB
+├ ƒ /[locale]/rfq/new                    3.26 kB         114 kB
+├ ƒ /[locale]/search                     2.34 kB         122 kB
+├ ƒ /[locale]/seller                     2.73 kB         111 kB
+├ ƒ /[locale]/seller/analytics           3.75 kB          91 kB
+├ ƒ /[locale]/seller/financials          4.03 kB        91.3 kB
+├ ƒ /[locale]/seller/inventory           3.81 kB        91.1 kB
+├ ƒ /[locale]/seller/orders              3.98 kB         112 kB
+├ ƒ /[locale]/seller/orders/[id]         3.54 kB         115 kB
+├ ƒ /[locale]/seller/payouts             4.03 kB        91.3 kB
+├ ƒ /[locale]/seller/products            3.87 kB         115 kB
+├ ƒ /[locale]/seller/products/new        4.87 kB         107 kB
+├ ƒ /[locale]/sellers/[slug]             2.33 kB         122 kB
+├ ○ /manifest.webmanifest                0 B                0 B
+├ ○ /payment/failure                     1.14 kB        97.1 kB
+└ ○ /payment/success                     961 B          96.9 kB
++ First Load JS shared by all            87.3 kB
+  ├ chunks/2117-c08c90281f3631e2.js      31.7 kB
+  ├ chunks/fd9d1056-8928ab8342e6d041.js  53.6 kB
+  └ other shared chunks (total)          1.9 kB
+
+
+ƒ Middleware                             36.9 kB
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+npm notice run frontend@0.1.0 npx
+npm notice run playwright test
+[WebServer] npm notice run frontend@0.1.0 start
+[WebServer] npm notice run next start
+[WebServer] (node:36720) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer]  ⚠ "next start" does not work with "output: standalone" configuration. Use "node .next/standalone/server.js" instead.
+
+Running 10 tests using 1 worker
+
+(node:28100) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer]  ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+  ok  1 tests\storefront.spec.ts:6:6 › en 1440: storefront journey, semantics and screenshots (2.9s)
+  ok  2 tests\storefront.spec.ts:6:6 › en 390: storefront journey, semantics and screenshots (1.9s)
+  ok  3 tests\storefront.spec.ts:6:6 › ar 1440: storefront journey, semantics and screenshots (2.6s)
+  ok  4 tests\storefront.spec.ts:6:6 › ar 390: storefront journey, semantics and screenshots (2.0s)
+  ok  5 tests\storefront.spec.ts:26:5 › filters preserve query and show empty state (514ms)
+  ok  6 tests\storefront.spec.ts:27:5 › price range rejects reversed boundaries (452ms)
+  ok  7 tests\storefront.spec.ts:29:5 › Urdu is RTL and language switching preserves filters (698ms)
+  ok  8 tests\storefront.spec.ts:31:5 › sandbox failure preserves cart and retry does not create another order (947ms)
+  ok  9 tests\storefront.spec.ts:49:5 › mobile buying surfaces pass automated WCAG AA rules (8.2s)
+  ok 10 tests\storefront.spec.ts:64:5 › hosted payment submits provider fields rather than the wrapper (898ms)
+
+  10 passed (27.9s)
+Sequence exit code: 0

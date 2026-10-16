@@ -1,8 +1,8 @@
 {
-  "filesChecked": 79,
+  "filesChecked": 81,
   "screenshotsChecked": 40,
   "metadataChunksRemoved": 0,
-  "redactedFiles": 3,
+  "redactedFiles": 0,
   "remainingMatches": 0,
   "files": [
     "docs/STOREFRONT-PHASE-1.md",
@@ -80,8 +80,10 @@
     "docs/storefront/screenshots.json",
     "docs/storefront/security-default-api-failed.json",
     "docs/storefront/security-default-api-failed.txt",
+    "docs/storefront/security-fresh-clone-validation.txt",
     "docs/storefront/security-installed-dependencies.json",
     "docs/storefront/security-ipv4-startup-failed.txt",
+    "docs/storefront/security-playwright.json",
     "docs/storefront/typecheck-after.txt"
   ],
   "remaining": []
