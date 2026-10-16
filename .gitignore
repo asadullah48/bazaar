@@ -39,6 +39,8 @@ redisdata/
 # AI & automation tool artifacts
 .claude/
 .playwright-mcp/
+frontend/test-results/
+frontend/playwright-report/
 CLAUDE.md
 
 # Development screenshots (root-level only)

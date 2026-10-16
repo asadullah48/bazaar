@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 import path from 'node:path';
+import { readFileSync } from 'node:fs';
 // Requires scripts/demo-api.cjs and a running storefront. All shown products are DEMO fixtures.
 for(const locale of ['en','ar']) for(const width of [1440,390]) {
  test(`${locale} ${width}: storefront journey, semantics and screenshots`,async({page})=>{
@@ -43,4 +44,19 @@ test('sandbox failure preserves cart and retry does not create another order',as
  await page.getByRole('button',{name:'Retry payment',exact:true}).click();
  await expect(page.getByRole('alert').filter({hasText:'Payment could not start'})).toBeVisible();
  expect(checkoutCalls).toBe(1);
+});
+
+test('mobile buying surfaces pass automated WCAG AA rules',async({page})=>{
+ test.setTimeout(120000);
+ await page.setViewportSize({width:390,height:900});
+ await page.addInitScript(()=>{
+  localStorage.setItem('bazaar-auth',JSON.stringify({state:{accessToken:'DEMO-NOT-A-CREDENTIAL',role:'consumer'},version:0}));
+  localStorage.setItem('bazaar-cart',JSON.stringify({state:{items:[{product_id:'10000000-0000-4000-8000-000000000001',variant_id:'30000000-0000-4000-8000-000000000001',name:'DEMO — Cotton fabric',slug:'demo-cotton',image_url:'/demo-product.svg',price:1250.5,quantity:1,stock_qty:12,seller_name:'DEMO seller'}]},version:0}));
+ });
+ const source=readFileSync(path.join('node_modules','axe-core','axe.min.js'),'utf8');
+ const check=async()=>{await page.evaluate(source);const result=await page.evaluate('axe.run(document,{runOnly:{type:"tag",values:["wcag2a","wcag2aa","wcag21a","wcag21aa"]}})');expect(result.violations.map((v:{id:string;nodes:{target:string[]}[]})=>({id:v.id,targets:v.nodes.map(n=>n.target)}))).toEqual([]);};
+ for(const locale of ['en','ar','ur']){
+  for(const suffix of ['', '/products?q=cotton', '/products/demo-cotton', '/checkout']){await page.goto(`/${locale}${suffix}`);await check();}
+  await page.locator('header nav button').last().click();await expect(page.getByRole('dialog')).toBeVisible();await check();await page.keyboard.press('Escape');
+ }
 });
