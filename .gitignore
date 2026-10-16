@@ -39,6 +39,8 @@ redisdata/
 # AI & automation tool artifacts
 .claude/
 .playwright-mcp/
+frontend/test-results/
+frontend/playwright-report/
 CLAUDE.md
 
 # Development screenshots (root-level only)
@@ -52,3 +54,6 @@ backend/test_db.py
 
 # Nested git repos / stray dirs
 bazaar/
+
+frontend/test-results/
+frontend/playwright-report/

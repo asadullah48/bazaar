@@ -12,6 +12,8 @@ export function toProduct(p: ApiProduct): Product {
     avg_rating: p.avg_rating,
     review_count: p.review_count,
     is_b2b_eligible: p.is_b2b_eligible,
+    variants: p.variants,
+    b2b_tiers: p.b2b_tiers,
     images:
       p.images.length > 0
         ? p.images

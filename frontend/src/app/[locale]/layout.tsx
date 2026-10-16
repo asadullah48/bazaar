@@ -1,21 +1,10 @@
 import type { Metadata } from "next";
-import { Inter, Noto_Kufi_Arabic, Noto_Nastaliq_Urdu } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { Providers } from "@/components/providers";
 import { Header } from "@/components/header";
 import { CartSidebar } from "@/components/cart/cart-sidebar";
 import "../globals.css";
-
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
-const notoKufi = Noto_Kufi_Arabic({
-  subsets: ["arabic"],
-  variable: "--font-arabic",
-});
-const notoNastaliq = Noto_Nastaliq_Urdu({
-  subsets: ["arabic"],
-  variable: "--font-urdu",
-});
 
 export async function generateMetadata({
   params,
@@ -26,7 +15,7 @@ export async function generateMetadata({
   const base = process.env.NEXT_PUBLIC_BASE_URL ?? "https://shopunity.pk";
 
   return {
-    title: "ShopUnity — Pakistan's Marketplace",
+    title: "Bazaar — Pakistan's Marketplace",
     description: "Shop textiles, electronics, furniture, toys and more",
     manifest: "/manifest.webmanifest",
     icons: {
@@ -39,7 +28,7 @@ export async function generateMetadata({
     appleWebApp: {
       capable: true,
       statusBarStyle: "default",
-      title: "ShopUnity",
+      title: "Bazaar",
     },
     formatDetection: { telephone: false },
     alternates: {
@@ -67,13 +56,13 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} dir={dir} suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${notoKufi.variable} ${notoNastaliq.variable} font-sans antialiased bg-white dark:bg-gray-950`}
+        className={"font-sans antialiased bg-white dark:bg-gray-950"}
       >
         <NextIntlClientProvider messages={messages}>
           <Providers>
             <Header />
             <CartSidebar locale={locale} />
-            <main>{children}</main>
+            <main id="main-content">{children}</main>
           </Providers>
         </NextIntlClientProvider>
       </body>

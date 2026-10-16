@@ -1,245 +1,73 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
-import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
+import Link from "next/link";
 import { useLocale } from "next-intl";
-import Image from "next/image";
 import { useCartStore } from "@/store/cart-store";
 import { useAuthStore } from "@/store/auth-store";
-import { ApiError, checkoutApi, paymentsApi, GatewayConfig, GatewayName } from "@/lib/api";
-
-const GATEWAY_LABELS: Record<string, { label: string; icon: string }> = {
-  jazzcash:  { label: "JazzCash",       icon: "🔴" },
-  easypaisa: { label: "EasyPaisa",      icon: "🟢" },
-  nayapay:   { label: "Naya Pay",       icon: "🔵" },
-  meezan:    { label: "Meezan Bank",    icon: "🕌" },
-  alfalah:   { label: "Bank Alfalah",   icon: "🏦" },
-  checkout:  { label: "Card (Visa/MC)", icon: "💳" },
-};
-
-type Step = "cart" | "processing";
+import { apiFetch, GatewayConfig, paymentsApi } from "@/lib/api";
+import { formatPrice } from "@/lib/format-price";
 
 export default function CheckoutPage() {
   const locale = useLocale();
-  const router = useRouter();
-  const { items, totalPrice, clearCart } = useCartStore();
-  const { accessToken } = useAuthStore();
-
-  const [step, setStep] = useState<Step>("cart");
-  const [gateways, setGateways] = useState<GatewayConfig[]>([]);
-  const [selected, setSelected] = useState<GatewayName | "cod">("jazzcash");
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  // Used to auto-submit POST-based gateway forms (JazzCash / Meezan / Alfalah)
-  const formRef = useRef<HTMLFormElement>(null);
-  const [formAction, setFormAction] = useState("");
-  const [formFields, setFormFields] = useState<Record<string, string>>({});
-
-  useEffect(() => {
-    if (!accessToken) router.push(`/${locale}/auth/login`);
-  }, [accessToken, locale, router]);
-
-  useEffect(() => {
-    paymentsApi.gateways().then(setGateways).catch(() => setGateways([]));
-  }, []);
-
-  // Auto-submit hidden form once fields are set (form-based gateways)
-  useEffect(() => {
-    if (formAction && Object.keys(formFields).length > 0 && formRef.current) {
-      formRef.current.submit();
-    }
-  }, [formAction, formFields]);
-
-  const fmt = (n: number) =>
-    new Intl.NumberFormat("en-PK", {
-      style: "currency",
-      currency: "PKR",
-      maximumFractionDigits: 0,
-    }).format(n);
-
-  async function proceedToPayment() {
-    setError("");
-    setLoading(true);
+  const text = useCallback((en:string, ar:string, ur:string) => locale === "ar" ? ar : locale === "ur" ? ur : en, [locale]);
+  const {items, updateQty, removeItem, totalPrice, clearCart} = useCartStore();
+  const token = useAuthStore(s => s.accessToken);
+  const [ready,setReady] = useState(false); const [gateways,setGateways] = useState<GatewayConfig[]>([]);
+  const [selected,setSelected] = useState("cod"); const [error,setError] = useState(""); const [busy,setBusy] = useState(false);
+  const [order,setOrder] = useState<{checkout_session_id:string; orders:{id:string; total_amount:number}[]} | null>(null);
+  const [address,setAddress] = useState({full_name:"",phone:"",address_line1:"",city:""});
+  useEffect(() => {setReady(true); paymentsApi.gateways().then(setGateways).catch(() => setError(text("Payment options could not be loaded. Please try again.","تعذر تحميل خيارات الدفع. حاول مرة أخرى.","ادائیگی کے طریقے لوڈ نہیں ہوئے۔ دوبارہ کوشش کریں۔")));}, [text]);
+  const fmt = (n:number) => formatPrice(n, locale as "en"|"ar"|"ur");
+  async function json(path:string, init:RequestInit = {}) {
+    const response = await apiFetch(path,init); const body = await response.json();
+    if (!response.ok) throw new Error(typeof body.detail === "string" ? body.detail : text("Please check your details and try again.","تحقق من بياناتك وحاول مرة أخرى.","تفصیلات درست کریں اور دوبارہ کوشش کریں۔"));
+    return body;
+  }
+  async function submit(e:React.FormEvent<HTMLFormElement>) {
+    e.preventDefault(); if(busy || !token) return; setBusy(true); setError("");
     try {
-      const res = await checkoutApi.place(accessToken!, {
-        items: items.map((i) => ({
-          product_id: i.product_id,
-          quantity: i.quantity,
-          is_b2b: false,
-        })),
-      });
-      clearCart();
-
-      if (selected === "cod") {
-        router.push(`/${locale}/payment/success?orders=${res.orders.map((o) => o.id).join(",")}`);
-        return;
+      if(Object.values(address).some(v => !v.trim())) throw new Error(text("Complete every address field.","أكمل جميع حقول العنوان.","پتے کے تمام خانے مکمل کریں۔"));
+      let result = order;
+      if(!result) {
+        if(items.some(i => !i.variant_id)) throw new Error(text("A saved item needs refreshing. Remove it and add it again from its product page.","أحد المنتجات المحفوظة يحتاج للتحديث. احذفه وأضفه من صفحة المنتج.","محفوظ مصنوعہ تازہ کرنا ضروری ہے۔ اسے ہٹا کر دوبارہ شامل کریں۔"));
+        const remote = await json("/v1/cart");
+        if(remote.items.some((r:{variant_id:string;is_b2b:boolean}) => r.is_b2b || !items.some(i => i.variant_id === r.variant_id))) throw new Error(text("Your account cart differs from this device. Review it before ordering; no order was created.","سلة حسابك تختلف عن هذا الجهاز. راجعها قبل الطلب؛ لم يتم إنشاء طلب.","اکاؤنٹ کی ٹوکری اس آلے سے مختلف ہے۔ آرڈر سے پہلے جائزہ لیں۔"));
+        for(const item of items) {
+          const existing = remote.items.find((r:{variant_id:string}) => r.variant_id === item.variant_id);
+          await json(existing ? `/v1/cart/items/${existing.id}` : "/v1/cart/items",{method:existing ? "PUT" : "POST",body:JSON.stringify({variant_id:item.variant_id,quantity:item.quantity,is_b2b:false})});
+        }
+        result = await json("/v1/checkout",{method:"POST",body:JSON.stringify({address,payment_method:selected === "checkout" ? "card" : selected})});
+        setOrder(result);
       }
-
-      setStep("processing");
-
-      const payRes = await paymentsApi.initiate(accessToken!, {
-        checkout_session_id: res.checkout_session_id,
-        gateway: selected as GatewayName,
-        currency: "PKR",
-      });
-
-      if (!payRes.success) {
-        setError(payRes.error ?? "Payment gateway error");
-        setStep("cart");
-        return;
-      }
-
-      if (payRes.payment_data && payRes.redirect_url) {
-        // Form-based gateway: set fields and let the useEffect auto-submit
-        setFormAction(payRes.redirect_url);
-        setFormFields(payRes.payment_data);
-      } else if (payRes.redirect_url) {
-        window.location.href = payRes.redirect_url;
-      }
-    } catch (err) {
-      setError(err instanceof ApiError ? err.message : "Checkout failed");
-      setStep("cart");
-    } finally {
-      setLoading(false);
-    }
+      if(selected === "cod") { clearCart(); return; }
+      const gw = gateways.find(g => g.name === selected);
+      if(!gw || gw.environment !== "sandbox" || selected === "checkout") throw new Error(text("This payment option is unavailable for this phase.","خيار الدفع غير متاح في هذه المرحلة.","ادائیگی کا یہ طریقہ اس مرحلے میں دستیاب نہیں۔"));
+      const pay = await paymentsApi.initiate(token,{checkout_session_id:result!.checkout_session_id,gateway:selected as "jazzcash"|"easypaisa",customer_info:{name:address.full_name,phone:address.phone},currency:"PKR"});
+      if(!pay.success || !pay.redirect_url) throw new Error(text("Payment could not start. Your order is saved; retry payment below.","تعذر بدء الدفع. طلبك محفوظ؛ أعد المحاولة أدناه.","ادائیگی شروع نہیں ہوئی۔ آرڈر محفوظ ہے؛ دوبارہ کوشش کریں۔"));
+      const data = pay.payment_data as unknown as {method?:string;fields?:Record<string,string>};
+      if(data?.method === "POST" && data.fields) {
+        const form = document.createElement("form"); form.method="POST"; form.action=pay.redirect_url;
+        for(const [name,value] of Object.entries(data.fields)){const input=document.createElement("input");input.type="hidden";input.name=name;input.value=String(value);form.appendChild(input);}
+        document.body.appendChild(form); form.submit();
+      } else window.location.assign(pay.redirect_url);
+    } catch(e) {setError(e instanceof Error ? e.message : text("Checkout failed. Please try again.","تعذر إتمام الطلب. حاول مرة أخرى.","آرڈر مکمل نہیں ہوا۔ دوبارہ کوشش کریں۔"));} finally {setBusy(false);}
   }
-
-  if (items.length === 0 && step === "cart") {
-    return (
-      <div className="min-h-[70vh] flex flex-col items-center justify-center text-center px-4 gap-4">
-        <p className="text-gray-500 dark:text-gray-400">Your cart is empty.</p>
-        <button onClick={() => router.push(`/${locale}`)} className="text-orange-500 hover:underline">
-          Continue Shopping
-        </button>
-      </div>
-    );
-  }
-
-  if (step === "processing") {
-    return (
-      <div className="min-h-[70vh] flex flex-col items-center justify-center gap-4 text-center">
-        <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin" />
-        <p className="text-gray-600 dark:text-gray-400">Connecting to payment gateway…</p>
-        {/* Hidden auto-submit form for POST-based gateways */}
-        <form ref={formRef} method="POST" action={formAction} className="hidden">
-          {Object.entries(formFields).map(([k, v]) => (
-            <input key={k} type="hidden" name={k} value={v} />
-          ))}
-        </form>
-      </div>
-    );
-  }
-
-  return (
-    <div className="max-w-2xl mx-auto px-4 py-10 space-y-6">
-      <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Checkout</h1>
-
-      {error && (
-        <div className="bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 text-sm px-4 py-3 rounded-xl">
-          {error}
-        </div>
-      )}
-
-      {/* Order summary */}
-      <div className="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-2xl divide-y divide-gray-100 dark:divide-gray-800">
-        {items.map((item) => (
-          <div key={item.product_id} className="flex items-center gap-4 p-4">
-            <div className="relative w-14 h-14 rounded-xl overflow-hidden bg-gray-50 dark:bg-gray-800 flex-shrink-0">
-              <Image src={item.image_url} alt={item.name} fill className="object-cover" sizes="56px" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-gray-900 dark:text-white line-clamp-1">{item.name}</p>
-              <p className="text-xs text-gray-400">{item.seller_name} · Qty {item.quantity}</p>
-            </div>
-            <p className="text-sm font-semibold text-orange-500">{fmt(item.price * item.quantity)}</p>
-          </div>
-        ))}
-      </div>
-
-      {/* Order total */}
-      <div className="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-2xl p-5 space-y-3">
-        <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400">
-          <span>Subtotal</span>
-          <span>{fmt(totalPrice())}</span>
-        </div>
-        <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400">
-          <span>Shipping</span>
-          <span className="text-green-600">Free</span>
-        </div>
-        <div className="flex justify-between text-base font-bold text-gray-900 dark:text-white border-t border-gray-100 dark:border-gray-800 pt-3">
-          <span>Total</span>
-          <span className="text-orange-500">{fmt(totalPrice())}</span>
-        </div>
-      </div>
-
-      {/* Payment method selection */}
-      <div className="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-2xl p-5 space-y-3">
-        <h2 className="text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wide">
-          Payment Method
-        </h2>
-
-        {/* COD — always available */}
-        <label className="flex items-center gap-3 cursor-pointer p-3 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-          <input
-            type="radio"
-            name="gateway"
-            value="cod"
-            checked={selected === "cod"}
-            onChange={() => setSelected("cod")}
-            className="accent-orange-500"
-          />
-          <span className="text-xl">🚚</span>
-          <span className="text-sm font-medium text-gray-800 dark:text-gray-200">Cash on Delivery</span>
-        </label>
-
-        {/* Active gateway options */}
-        {gateways.map((gw) => {
-          const meta = GATEWAY_LABELS[gw.name] ?? { label: gw.name, icon: "💰" };
-          return (
-            <label
-              key={gw.name}
-              className="flex items-center gap-3 cursor-pointer p-3 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
-            >
-              <input
-                type="radio"
-                name="gateway"
-                value={gw.name}
-                checked={selected === gw.name}
-                onChange={() => setSelected(gw.name as GatewayName)}
-                className="accent-orange-500"
-              />
-              <span className="text-xl">{meta.icon}</span>
-              <div className="flex-1">
-                <span className="text-sm font-medium text-gray-800 dark:text-gray-200">{meta.label}</span>
-                {gw.environment === "sandbox" && (
-                  <span className="ml-2 text-[10px] bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 px-1.5 py-0.5 rounded">
-                    sandbox
-                  </span>
-                )}
-              </div>
-              <span className="text-xs text-gray-400">{gw.supported_currencies.join(", ")}</span>
-            </label>
-          );
-        })}
-
-        {gateways.length === 0 && (
-          <p className="text-xs text-gray-400 pl-3">
-            Online payment gateways not yet configured — Cash on Delivery available.
-          </p>
-        )}
-      </div>
-
-      <button
-        onClick={proceedToPayment}
-        disabled={loading}
-        className="w-full bg-orange-500 hover:bg-orange-600 disabled:bg-orange-300 text-white font-bold py-4 rounded-2xl text-lg transition-colors"
-      >
-        {loading
-          ? "Processing…"
-          : selected === "cod"
-          ? "Place Order (COD)"
-          : `Pay with ${GATEWAY_LABELS[selected]?.label ?? selected}`}
-      </button>
-    </div>
-  );
+  if(!ready) return <div role="status" className="p-10">{text("Loading checkout…","جارٍ تحميل الطلب…","آرڈر لوڈ ہو رہا ہے…")}</div>;
+  if(order && selected === "cod") return <section className="max-w-3xl mx-auto p-8"><h1 className="text-2xl font-bold">{text("Order received — cash on delivery","تم استلام الطلب — الدفع عند الاستلام","آرڈر موصول — وصولی پر ادائیگی")}</h1>{order.orders.map(o => <Link className="block underline p-3" key={o.id} href={`/${locale}/orders/${o.id}`}>{o.id} · {fmt(o.total_amount)}</Link>)}</section>;
+  if(!items.length) return <section className="p-12 text-center"><h1 className="text-2xl font-bold">{text("Your cart is empty","سلتك فارغة","آپ کی ٹوکری خالی ہے")}</h1><Link className="inline-block underline p-4" href={`/${locale}/products`}>{text("Browse products","تصفح المنتجات","مصنوعات دیکھیں")}</Link></section>;
+  return <div className="max-w-6xl mx-auto px-4 py-8">
+    <ol className="flex gap-4 text-sm mb-8" aria-label={text("Checkout steps","خطوات الطلب","آرڈر کے مراحل")}><li>{text("Cart","السلة","ٹوکری")}</li><li aria-current="step">{text("Address & payment","العنوان والدفع","پتہ اور ادائیگی")}</li><li>{text("Confirmation","التأكيد","تصدیق")}</li></ol>
+    <h1 className="text-3xl font-bold mb-6">{text("Checkout","إتمام الطلب","آرڈر مکمل کریں")}</h1>
+    {!token && <p role="alert" className="mb-5"><Link className="underline" href={`/${locale}/auth/login`}>{text("Sign in to place your order","سجل الدخول لإتمام الطلب","آرڈر کے لیے سائن ان کریں")}</Link></p>}
+    {error && <p role="alert" className="rounded-lg border border-red-300 bg-red-50 text-red-800 p-4 mb-5">{error}</p>}
+    <form onSubmit={submit} className="grid lg:grid-cols-[1fr_24rem] gap-8">
+      <div className="space-y-6"><fieldset disabled={busy || !!order} className="border rounded-xl p-5"><legend className="font-semibold px-2">{text("Delivery address","عنوان التسليم","ترسیل کا پتہ")}</legend>{([['full_name',text('Full name','الاسم الكامل','پورا نام')],['phone',text('Phone','الهاتف','فون')],['address_line1',text('Street address','عنوان الشارع','مکمل پتہ')],['city',text('City','المدينة','شہر')]] as const).map(([key,label]) => <label key={key} className="block mb-4">{label}<input className="market-input" name={key} type={key === 'phone' ? 'tel' : 'text'} autoComplete={{full_name:'name',phone:'tel',address_line1:'street-address',city:'address-level2'}[key]} required value={address[key]} onChange={e => setAddress({...address,[key]:e.target.value})}/></label>)}</fieldset>
+      <fieldset disabled={busy || !!order} className="border rounded-xl p-5 space-y-4"><legend className="font-semibold px-2">{text("Payment method","طريقة الدفع","ادائیگی کا طریقہ")}</legend>
+        <label className="flex items-center gap-3"><input type="radio" name="payment" checked={selected === 'cod'} onChange={() => setSelected('cod')}/>{text("Cash on delivery","الدفع عند الاستلام","وصولی پر ادائیگی")}</label>
+        {gateways.filter(g => g.name !== 'checkout' && g.environment === 'sandbox').map(g => <label key={g.name} className="flex items-center gap-3"><input type="radio" name="payment" checked={selected === g.name} onChange={() => setSelected(g.name)}/>{g.name} · {text("Sandbox test payment","دفع تجريبي","آزمائشی ادائیگی")}</label>)}
+        <p className="text-sm">{text("JazzCash and Easypaisa adapters default to sandbox. Successful test transactions are unverified. Card integration is partial and unavailable here. Live payments are unavailable in this phase.","تكامل JazzCash وEasypaisa افتراضيًا تجريبي. نجاح المعاملات غير مؤكد. تكامل البطاقة جزئي وغير متاح هنا. الدفع الفعلي غير متاح في هذه المرحلة.","JazzCash اور Easypaisa سینڈباکس پر مبنی ہیں۔ کامیاب آزمائشی لین دین غیر تصدیق شدہ ہے۔ کارڈ انضمام جزوی ہے اور یہاں دستیاب نہیں۔ لائیو ادائیگی اس مرحلے میں دستیاب نہیں۔")}</p>
+      </fieldset></div>
+      <aside className="border rounded-xl p-5 h-fit lg:sticky lg:top-28 space-y-5"><h2 className="text-xl font-semibold">{text("Order summary","ملخص الطلب","آرڈر کا خلاصہ")}</h2>{items.map(i => <div key={i.variant_id ?? i.product_id} className="border-b pb-4"><Link href={`/${locale}/products/${i.slug}`} className="font-medium">{i.name}</Link><p>{fmt(i.price)}</p><label className="block text-sm">{text("Quantity","الكمية","مقدار")}<input aria-label={`${text("Quantity","الكمية","مقدار")} ${i.name}`} className="market-input max-w-24" type="number" min="1" max={i.stock_qty} value={i.quantity} disabled={!!order || busy} onChange={e => updateQty(i.variant_id ?? i.product_id,Number(e.target.value))}/></label><button type="button" disabled={!!order || busy} className="underline text-sm py-2" onClick={() => removeItem(i.variant_id ?? i.product_id)}>{text("Remove","حذف","ہٹائیں")}</button></div>)}<div className="flex justify-between font-semibold"><span>{text("Subtotal","المجموع الفرعي","ذیلی کل")}</span><span>{fmt(totalPrice())}</span></div><p className="text-sm">{text("Shipping and final totals are confirmed when the server creates the order. No delivery date is promised.","تؤكد رسوم الشحن والمجموع النهائي عند إنشاء الطلب. لا يوجد موعد تسليم مضمون.","ترسیل اور حتمی رقم آرڈر بننے پر تصدیق ہوگی۔ ترسیل کی تاریخ کی ضمانت نہیں۔")}</p><button className="market-button w-full" disabled={!token || busy}>{busy ? text("Processing…","جارٍ التنفيذ…","جاری ہے…") : order ? text("Retry payment","إعادة الدفع","ادائیگی دوبارہ کریں") : text("Place order","تأكيد الطلب","آرڈر دیں")}</button></aside>
+    </form>
+  </div>;
 }

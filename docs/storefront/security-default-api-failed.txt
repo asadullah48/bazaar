@@ -1,0 +1,369 @@
+npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+npm warn deprecated @humanwhocodes/config-array@0.13.0: Use @eslint/config-array instead
+npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+npm warn deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
+npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+npm warn deprecated eslint@8.57.1: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+
+added 523 packages, and audited 524 packages in 2m
+
+173 packages are looking for funding
+  run `npm fund` for details
+
+8 vulnerabilities (2 moderate, 5 high, 1 critical)
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+npm warn install-scripts 3 packages had install scripts blocked because they are not covered by allowScripts:
+npm warn install-scripts   @parcel/watcher@2.6.0 (install: node scripts/build-from-source.js)
+npm warn install-scripts   @swc/core@1.16.18 (postinstall: node postinstall.js)
+npm warn install-scripts   unrs-resolver@1.12.2 (postinstall: node postinstall.js)
+npm warn install-scripts
+npm warn install-scripts Run `npm install-scripts ls` to review, or `npm install-scripts approve <pkg>` to allow.
+npm notice run frontend@0.1.0 build
+npm notice run next build
+  ▲ Next.js 14.2.35
+
+   Creating an optimized production build ...
+<w> [webpack.cache.PackFileCacheStrategy/webpack.FileSystemInfo] Parsing of [build]\bazaar-audit-verify\frontend\node_modules\next-intl\dist\esm\production\extractor\format\index.js for build dependencies failed at 'import(t(c).href)'.
+<w> Build dependencies behind this expression are ignored and might cause incorrect cache invalidation.
+<w> [webpack.cache.PackFileCacheStrategy/webpack.FileSystemInfo] Parsing of [build]\bazaar-audit-verify\frontend\node_modules\next-intl\dist\esm\production\extractor\format\index.js for build dependencies failed at 'import(t(c).href)'.
+<w> Build dependencies behind this expression are ignored and might cause incorrect cache invalidation.
+<w> [webpack.cache.PackFileCacheStrategy/webpack.FileSystemInfo] Parsing of [build]\bazaar-audit-verify\frontend\node_modules\next-intl\dist\esm\production\extractor\format\index.js for build dependencies failed at 'import(t(c).href)'.
+<w> Build dependencies behind this expression are ignored and might cause incorrect cache invalidation.
+ ✓ Compiled successfully
+   Linting and checking validity of types ...
+
+./src/app/[locale]/admin/payouts/page.tsx
+44:6  Warning: React Hook useEffect has a missing dependency: 'load'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/app/[locale]/admin/products/page.tsx
+38:6  Warning: React Hook useEffect has a missing dependency: 'load'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/app/[locale]/admin/sellers/page.tsx
+38:6  Warning: React Hook useEffect has a missing dependency: 'load'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/app/[locale]/rfq/[id]/page.tsx
+50:6  Warning: React Hook useEffect has a missing dependency: 'reload'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/app/[locale]/seller/products/page.tsx
+38:6  Warning: React Hook useEffect has a missing dependency: 'loadProducts'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/components/home/flash-deals.tsx
+74:15  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./src/components/product/product-qr.tsx
+25:7  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/basic-features/eslint#disabling-rules
+   Collecting page data ...
+   Generating static pages (0/7) ...
+   Generating static pages (1/7) 
+   Generating static pages (3/7) 
+   Generating static pages (5/7) 
+ ✓ Generating static pages (7/7)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                              Size     First Load JS
+┌ ○ /_not-found                          876 B          88.1 kB
+├ ƒ /[locale]                            2.34 kB         122 kB
+├ ƒ /[locale]/account                    6.36 kB         116 kB
+├ ƒ /[locale]/admin                      4.71 kB         115 kB
+├ ƒ /[locale]/admin/campaigns            3.61 kB         114 kB
+├ ƒ /[locale]/admin/campaigns/new        2.09 kB         103 kB
+├ ƒ /[locale]/admin/payouts              3.2 kB         92.4 kB
+├ ƒ /[locale]/admin/products             3.19 kB        92.4 kB
+├ ƒ /[locale]/admin/sellers              3.1 kB         92.3 kB
+├ ƒ /[locale]/auth/forgot-password       4.63 kB         115 kB
+├ ƒ /[locale]/auth/login                 1.61 kB         115 kB
+├ ƒ /[locale]/auth/register              2.21 kB         116 kB
+├ ƒ /[locale]/auth/reset-password        1.47 kB         115 kB
+├ ƒ /[locale]/checkout                   6.67 kB         117 kB
+├ ƒ /[locale]/orders                     3.5 kB          113 kB
+├ ƒ /[locale]/orders/[id]                2.61 kB         116 kB
+├ ƒ /[locale]/products                   2.34 kB         122 kB
+├ ƒ /[locale]/products/[slug]            7.7 kB          127 kB
+├ ƒ /[locale]/rfq                        4.9 kB          115 kB
+├ ƒ /[locale]/rfq/[id]                   2.78 kB         116 kB
+├ ƒ /[locale]/rfq/new                    1.62 kB         115 kB
+├ ƒ /[locale]/search                     2.34 kB         122 kB
+├ ƒ /[locale]/seller                     2.73 kB         111 kB
+├ ƒ /[locale]/seller/analytics           2.66 kB        91.9 kB
+├ ƒ /[locale]/seller/financials          2.93 kB        92.1 kB
+├ ƒ /[locale]/seller/inventory           2.72 kB        91.9 kB
+├ ƒ /[locale]/seller/orders              2.9 kB          113 kB
+├ ƒ /[locale]/seller/orders/[id]         1.92 kB         116 kB
+├ ƒ /[locale]/seller/payouts             2.95 kB        92.1 kB
+├ ƒ /[locale]/seller/products            5.81 kB         116 kB
+├ ƒ /[locale]/seller/products/new        6.64 kB         108 kB
+├ ƒ /[locale]/sellers/[slug]             2.33 kB         122 kB
+├ ○ /manifest.webmanifest                0 B                0 B
+├ ○ /payment/failure                     1.14 kB        97.1 kB
+└ ○ /payment/success                     961 B          96.9 kB
++ First Load JS shared by all            87.3 kB
+  ├ chunks/2117-c08c90281f3631e2.js      31.7 kB
+  ├ chunks/fd9d1056-8928ab8342e6d041.js  53.6 kB
+  └ other shared chunks (total)          1.9 kB
+
+
+ƒ Middleware                             36.9 kB
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+npm notice run frontend@0.1.0 npx
+npm notice run playwright test
+[WebServer] npm notice run frontend@0.1.0 start
+[WebServer] npm notice run next start
+[WebServer] (node:21360) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer]  ⚠ "next start" does not work with "output: standalone" configuration. Use "node .next/standalone/server.js" instead.
+
+Running 10 tests using 1 worker
+
+(node:30304) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   1 tests\storefront.spec.ts:6:6 › en 1440: storefront journey, semantics and screenshots (10.3s)
+(node:17908) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   2 tests\storefront.spec.ts:6:6 › en 390: storefront journey, semantics and screenshots (9.5s)
+(node:27544) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   3 tests\storefront.spec.ts:6:6 › ar 1440: storefront journey, semantics and screenshots (9.7s)
+(node:30676) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   4 tests\storefront.spec.ts:6:6 › ar 390: storefront journey, semantics and screenshots (8.7s)
+(node:32776) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   5 tests\storefront.spec.ts:26:5 › filters preserve query and show empty state (7.6s)
+(node:29904) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  6 tests\storefront.spec.ts:27:5 › price range rejects reversed boundaries (3.2s)
+  ok  7 tests\storefront.spec.ts:29:5 › Urdu is RTL and language switching preserves filters (2.9s)
+  x   8 tests\storefront.spec.ts:31:5 › sandbox failure preserves cart and retry does not create another order (30.4s)
+(node:5844) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   9 tests\storefront.spec.ts:49:5 › mobile buying surfaces pass automated WCAG AA rules (10.0s)
+(node:9180) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  10 tests\storefront.spec.ts:64:5 › hosted payment submits provider fields rather than the wrapper (30.2s)
+
+
+  1) tests\storefront.spec.ts:6:6 › en 1440: storefront journey, semantics and screenshots ─────────
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByRole('article')
+    Expected: 1
+    Received: 0
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" getByRole('article') with timeout 5000ms
+      - waiting for getByRole('article')
+        13 × locator resolved to 0 elements
+           - unexpected value "0"
+
+
+      10 |   await page.addInitScript(()=>{localStorage.setItem('bazaar-auth',JSON.stringify({state:{accessToken:'DEMO-NOT-A-CREDENTIAL',role:'consumer',refreshToken:null},version:0}));});
+      11 |   const screenshot=async(name:string)=>{await expect(page.locator('html')).toHaveAttribute('dir',locale==='ar'?'rtl':'ltr'); expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBeTruthy();await page.screenshot({path:path.join('..','docs','storefront','after',`${locale}-${width}-${name}.png`),fullPage:true});};
+    > 12 |   await page.goto(`/${locale}`);await expect(page.getByRole('heading',{level:1})).toBeVisible();await expect(page.getByRole('article')).toHaveCount(1);await screenshot('home');
+         |                                                                                                                                         ^
+      13 |   expect(await page.locator('a a, a button').count()).toBe(0);
+      14 |   await page.goto(`/${locale}/search?q=cotton&sort=price_asc`);await expect(page.getByRole('article')).toHaveCount(1);await screenshot('search');
+      15 |   await page.goto(`/${locale}/products/demo-cotton`);await expect(page.getByRole('heading',{level:1})).toHaveText('DEMO — Cotton fabric');await expect(page.locator('table')).toBeVisible();await screenshot('product');
+        at [build]\bazaar-audit-verify\frontend\tests\storefront.spec.ts:12:137
+
+    Error Context: test-results\storefront-en-1440-storefr-153ea-y-semantics-and-screenshots\error-context.md
+
+  2) tests\storefront.spec.ts:6:6 › en 390: storefront journey, semantics and screenshots ──────────
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByRole('article')
+    Expected: 1
+    Received: 0
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" getByRole('article') with timeout 5000ms
+      - waiting for getByRole('article')
+        13 × locator resolved to 0 elements
+           - unexpected value "0"
+
+
+      10 |   await page.addInitScript(()=>{localStorage.setItem('bazaar-auth',JSON.stringify({state:{accessToken:'DEMO-NOT-A-CREDENTIAL',role:'consumer',refreshToken:null},version:0}));});
+      11 |   const screenshot=async(name:string)=>{await expect(page.locator('html')).toHaveAttribute('dir',locale==='ar'?'rtl':'ltr'); expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBeTruthy();await page.screenshot({path:path.join('..','docs','storefront','after',`${locale}-${width}-${name}.png`),fullPage:true});};
+    > 12 |   await page.goto(`/${locale}`);await expect(page.getByRole('heading',{level:1})).toBeVisible();await expect(page.getByRole('article')).toHaveCount(1);await screenshot('home');
+         |                                                                                                                                         ^
+      13 |   expect(await page.locator('a a, a button').count()).toBe(0);
+      14 |   await page.goto(`/${locale}/search?q=cotton&sort=price_asc`);await expect(page.getByRole('article')).toHaveCount(1);await screenshot('search');
+      15 |   await page.goto(`/${locale}/products/demo-cotton`);await expect(page.getByRole('heading',{level:1})).toHaveText('DEMO — Cotton fabric');await expect(page.locator('table')).toBeVisible();await screenshot('product');
+        at [build]\bazaar-audit-verify\frontend\tests\storefront.spec.ts:12:137
+
+    Error Context: test-results\storefront-en-390-storefro-60acd-y-semantics-and-screenshots\error-context.md
+
+  3) tests\storefront.spec.ts:6:6 › ar 1440: storefront journey, semantics and screenshots ─────────
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByRole('article')
+    Expected: 1
+    Received: 0
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" getByRole('article') with timeout 5000ms
+      - waiting for getByRole('article')
+        11 × locator resolved to 0 elements
+           - unexpected value "0"
+
+
+      10 |   await page.addInitScript(()=>{localStorage.setItem('bazaar-auth',JSON.stringify({state:{accessToken:'DEMO-NOT-A-CREDENTIAL',role:'consumer',refreshToken:null},version:0}));});
+      11 |   const screenshot=async(name:string)=>{await expect(page.locator('html')).toHaveAttribute('dir',locale==='ar'?'rtl':'ltr'); expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBeTruthy();await page.screenshot({path:path.join('..','docs','storefront','after',`${locale}-${width}-${name}.png`),fullPage:true});};
+    > 12 |   await page.goto(`/${locale}`);await expect(page.getByRole('heading',{level:1})).toBeVisible();await expect(page.getByRole('article')).toHaveCount(1);await screenshot('home');
+         |                                                                                                                                         ^
+      13 |   expect(await page.locator('a a, a button').count()).toBe(0);
+      14 |   await page.goto(`/${locale}/search?q=cotton&sort=price_asc`);await expect(page.getByRole('article')).toHaveCount(1);await screenshot('search');
+      15 |   await page.goto(`/${locale}/products/demo-cotton`);await expect(page.getByRole('heading',{level:1})).toHaveText('DEMO — Cotton fabric');await expect(page.locator('table')).toBeVisible();await screenshot('product');
+        at [build]\bazaar-audit-verify\frontend\tests\storefront.spec.ts:12:137
+
+    Error Context: test-results\storefront-ar-1440-storefr-a047e-y-semantics-and-screenshots\error-context.md
+
+  4) tests\storefront.spec.ts:6:6 › ar 390: storefront journey, semantics and screenshots ──────────
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByRole('article')
+    Expected: 1
+    Received: 0
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" getByRole('article') with timeout 5000ms
+      - waiting for getByRole('article')
+        13 × locator resolved to 0 elements
+           - unexpected value "0"
+
+
+      10 |   await page.addInitScript(()=>{localStorage.setItem('bazaar-auth',JSON.stringify({state:{accessToken:'DEMO-NOT-A-CREDENTIAL',role:'consumer',refreshToken:null},version:0}));});
+      11 |   const screenshot=async(name:string)=>{await expect(page.locator('html')).toHaveAttribute('dir',locale==='ar'?'rtl':'ltr'); expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBeTruthy();await page.screenshot({path:path.join('..','docs','storefront','after',`${locale}-${width}-${name}.png`),fullPage:true});};
+    > 12 |   await page.goto(`/${locale}`);await expect(page.getByRole('heading',{level:1})).toBeVisible();await expect(page.getByRole('article')).toHaveCount(1);await screenshot('home');
+         |                                                                                                                                         ^
+      13 |   expect(await page.locator('a a, a button').count()).toBe(0);
+      14 |   await page.goto(`/${locale}/search?q=cotton&sort=price_asc`);await expect(page.getByRole('article')).toHaveCount(1);await screenshot('search');
+      15 |   await page.goto(`/${locale}/products/demo-cotton`);await expect(page.getByRole('heading',{level:1})).toHaveText('DEMO — Cotton fabric');await expect(page.locator('table')).toBeVisible();await screenshot('product');
+        at [build]\bazaar-audit-verify\frontend\tests\storefront.spec.ts:12:137
+
+    Error Context: test-results\storefront-ar-390-storefro-99b4b-y-semantics-and-screenshots\error-context.md
+
+  5) tests\storefront.spec.ts:26:5 › filters preserve query and show empty state ───────────────────
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: 'No matching products' })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('heading', { name: 'No matching products' }) with timeout 5000ms
+      - waiting for getByRole('heading', { name: 'No matching products' })
+
+
+      24 |  });
+      25 | }
+    > 26 | test('filters preserve query and show empty state',async({page})=>{await page.goto('/en/products?q=nothing&min_price=1&sort=price_desc');await expect(page.getByRole('heading',{name:'No matching products'})).toBeVisible();await expect(page.locator('input[name="q"]')).toHaveValue('nothing');await expect(page.locator('select[name="sort"]')).toHaveValue('price_desc');});
+         |                                                                                                                                                                                                                ^
+      27 | test('price range rejects reversed boundaries',async({page})=>{await page.goto('/en/products?min_price=20&max_price=10');await expect(page.getByRole('alert').filter({hasText:'valid price range'})).toContainText('valid price range');});
+      28 |
+      29 | test('Urdu is RTL and language switching preserves filters',async({page})=>{await page.setViewportSize({width:390,height:900});await page.goto('/ur/products?q=cotton&sort=price_asc');await expect(page.locator('html')).toHaveAttribute('dir','rtl');expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBeTruthy();await page.getByRole('button',{name:'EN',exact:true}).click();await expect(page).toHaveURL(/\/en\/products\?q=cotton&sort=price_asc/);});
+        at [build]\bazaar-audit-verify\frontend\tests\storefront.spec.ts:26:208
+
+    Error Context: test-results\storefront-filters-preserve-query-and-show-empty-state\error-context.md
+
+  6) tests\storefront.spec.ts:31:5 › sandbox failure preserves cart and retry does not create another order 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.check: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByRole('radio', { name: /jazzcash/ })
+
+
+      37 |  });
+      38 |  await page.goto('/en/checkout');
+    > 39 |  await page.getByRole('radio',{name:/jazzcash/}).check();
+         |                                                  ^
+      40 |  for(const [name,value] of Object.entries({full_name:'DEMO buyer',phone:'03000000000',address_line1:'DEMO address',city:'DEMO city'}))await page.locator(`input[name="${name}"]`).fill(value);
+      41 |  await page.getByRole('button',{name:'Place order',exact:true}).click();
+      42 |  await expect(page.getByRole('alert').filter({hasText:'Payment could not start'})).toBeVisible();
+        at [build]\bazaar-audit-verify\frontend\tests\storefront.spec.ts:39:50
+
+    Error Context: test-results\storefront-sandbox-failure-5e033-es-not-create-another-order\error-context.md
+
+  7) tests\storefront.spec.ts:49:5 › mobile buying surfaces pass automated WCAG AA rules ───────────
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 10
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "id": "color-contrast",
+    +     "targets": Array [
+    +       Array [
+    +         ".bg-orange-500",
+    +       ],
+    +     ],
+    +   },
+    + ]
+
+      55 |  });
+      56 |  const source=readFileSync(path.join('node_modules','axe-core','axe.min.js'),'utf8');
+    > 57 |  const check=async()=>{await page.evaluate(source);const result=await page.evaluate<{violations:{id:string;nodes:{target:string[]}[]}[]}>('axe.run(document,{runOnly:{type:"tag",values:["wcag2a","wcag2aa","wcag21a","wcag21aa"]}})');expect(result.violations.map((v:{id:string;nodes:{target:string[]}[]})=>({id:v.id,targets:v.nodes.map(n=>n.target)}))).toEqual([]);};
+         |                                                                                                                                                                                                                                                                                                                                                               ^
+      58 |  for(const locale of ['en','ar','ur']){
+      59 |   for(const suffix of ['', '/products?q=cotton', '/products/demo-cotton', '/checkout']){await page.goto(`/${locale}${suffix}`);await check();}
+      60 |   await page.locator('header nav button').last().click();await expect(page.getByRole('dialog')).toBeVisible();await check();await page.keyboard.press('Escape');
+        at check ([build]\bazaar-audit-verify\frontend\tests\storefront.spec.ts:57:351)
+        at [build]\bazaar-audit-verify\frontend\tests\storefront.spec.ts:59:128
+
+    Error Context: test-results\storefront-mobile-buying-s-05cec-ass-automated-WCAG-AA-rules\error-context.md
+
+  8) tests\storefront.spec.ts:64:5 › hosted payment submits provider fields rather than the wrapper 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.check: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByRole('radio', { name: /jazzcash/ })
+
+
+      70 |   localStorage.setItem('bazaar-cart',JSON.stringify({state:{items:[{product_id:'10000000-0000-4000-8000-000000000001',variant_id:'30000000-0000-4000-8000-000000000001',name:'DEMO — Cotton fabric',slug:'demo-cotton',image_url:'/demo-product.svg',price:1250.5,quantity:1,stock_qty:12,seller_name:'DEMO seller'}]},version:0}));
+      71 |  });
+    > 72 |  await page.goto('/en/checkout');await page.getByRole('radio',{name:/jazzcash/}).check();
+         |                                                                                  ^
+      73 |  for(const [name,value] of Object.entries({full_name:'DEMO buyer',phone:'03000000000',address_line1:'DEMO address',city:'DEMO city'}))await page.locator(`input[name="${name}"]`).fill(value);
+      74 |  await page.getByRole('button',{name:'Place order',exact:true}).click();
+      75 |  await expect(page).toHaveURL('https://demo-gateway.invalid/checkout');
+        at [build]\bazaar-audit-verify\frontend\tests\storefront.spec.ts:72:82
+
+    Error Context: test-results\storefront-hosted-payment--a46a3-lds-rather-than-the-wrapper\error-context.md
+
+  8 failed
+    tests\storefront.spec.ts:6:6 › en 1440: storefront journey, semantics and screenshots ──────────
+    tests\storefront.spec.ts:6:6 › en 390: storefront journey, semantics and screenshots ───────────
+    tests\storefront.spec.ts:6:6 › ar 1440: storefront journey, semantics and screenshots ──────────
+    tests\storefront.spec.ts:6:6 › ar 390: storefront journey, semantics and screenshots ───────────
+    tests\storefront.spec.ts:26:5 › filters preserve query and show empty state ────────────────────
+    tests\storefront.spec.ts:31:5 › sandbox failure preserves cart and retry does not create another order 
+    tests\storefront.spec.ts:49:5 › mobile buying surfaces pass automated WCAG AA rules ────────────
+    tests\storefront.spec.ts:64:5 › hosted payment submits provider fields rather than the wrapper ─
+  2 passed (4.4m)

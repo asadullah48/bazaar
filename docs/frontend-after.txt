@@ -1,0 +1,86 @@
+npm notice run frontend@0.1.0 build
+npm notice run next build
+  ▲ Next.js 14.2.35
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully
+   Linting and checking validity of types ...
+
+./src/app/[locale]/admin/payouts/page.tsx
+44:6  Warning: React Hook useEffect has a missing dependency: 'load'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/app/[locale]/admin/products/page.tsx
+38:6  Warning: React Hook useEffect has a missing dependency: 'load'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/app/[locale]/admin/sellers/page.tsx
+38:6  Warning: React Hook useEffect has a missing dependency: 'load'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/app/[locale]/rfq/[id]/page.tsx
+50:6  Warning: React Hook useEffect has a missing dependency: 'reload'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/app/[locale]/seller/products/page.tsx
+38:6  Warning: React Hook useEffect has a missing dependency: 'loadProducts'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/components/home/flash-deals.tsx
+74:15  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./src/components/product/product-qr.tsx
+25:7  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/basic-features/eslint#disabling-rules
+   Collecting page data ...
+   Generating static pages (0/7) ...
+   Generating static pages (1/7) 
+   Generating static pages (3/7) 
+   Generating static pages (5/7) 
+ ✓ Generating static pages (7/7)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                              Size     First Load JS
+┌ ○ /_not-found                          876 B          88.1 kB
+├ ƒ /[locale]                            2.32 kB         121 kB
+├ ƒ /[locale]/account                    6.89 kB         115 kB
+├ ƒ /[locale]/admin                      2.83 kB         113 kB
+├ ƒ /[locale]/admin/campaigns            3.84 kB         112 kB
+├ ƒ /[locale]/admin/campaigns/new        3.17 kB         103 kB
+├ ƒ /[locale]/admin/payouts              4.27 kB        91.5 kB
+├ ƒ /[locale]/admin/products             4.27 kB        91.5 kB
+├ ƒ /[locale]/admin/sellers              4.19 kB        91.5 kB
+├ ƒ /[locale]/auth/forgot-password       5.15 kB         113 kB
+├ ƒ /[locale]/auth/login                 3.49 kB         114 kB
+├ ƒ /[locale]/auth/register              4.08 kB         114 kB
+├ ƒ /[locale]/auth/reset-password        5.62 kB         114 kB
+├ ƒ /[locale]/checkout                   7.72 kB         116 kB
+├ ƒ /[locale]/orders                     3.75 kB         112 kB
+├ ƒ /[locale]/orders/[id]                4.22 kB         115 kB
+├ ƒ /[locale]/products                   2.32 kB         121 kB
+├ ƒ /[locale]/products/[slug]            7.57 kB         126 kB
+├ ƒ /[locale]/rfq                        5.38 kB         114 kB
+├ ƒ /[locale]/rfq/[id]                   4.38 kB         115 kB
+├ ƒ /[locale]/rfq/new                    3.25 kB         114 kB
+├ ƒ /[locale]/search                     2.32 kB         121 kB
+├ ƒ /[locale]/seller                     1.86 kB         110 kB
+├ ƒ /[locale]/seller/analytics           3.75 kB          91 kB
+├ ƒ /[locale]/seller/financials          4.02 kB        91.3 kB
+├ ƒ /[locale]/seller/inventory           3.8 kB         91.1 kB
+├ ƒ /[locale]/seller/orders              3.98 kB         112 kB
+├ ƒ /[locale]/seller/orders/[id]         3.54 kB         114 kB
+├ ƒ /[locale]/seller/payouts             4.03 kB        91.3 kB
+├ ƒ /[locale]/seller/products            3.8 kB          114 kB
+├ ƒ /[locale]/seller/products/new        4.81 kB         107 kB
+├ ƒ /[locale]/sellers/[slug]             2.31 kB         121 kB
+├ ○ /manifest.webmanifest                0 B                0 B
+├ ○ /payment/failure                     1.14 kB        97.1 kB
+└ ○ /payment/success                     961 B          96.9 kB
++ First Load JS shared by all            87.3 kB
+  ├ chunks/2117-c08c90281f3631e2.js      31.7 kB
+  ├ chunks/fd9d1056-8928ab8342e6d041.js  53.6 kB
+  └ other shared chunks (total)          1.9 kB
+
+
+ƒ Middleware                             36.4 kB
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

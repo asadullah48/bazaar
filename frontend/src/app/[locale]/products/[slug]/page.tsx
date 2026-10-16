@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import Script from "next/script";
 import { getTranslations } from "next-intl/server";
-import { Heart, Store, ChevronRight } from "lucide-react";
+import { Store, ChevronRight } from "lucide-react";
 import { productsApi, ApiError } from "@/lib/api";
 import { toProduct } from "@/lib/to-product";
 import { ProductGallery } from "@/components/product/product-gallery";
@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
   const seo = product.seo_data as Record<string, string> | null | undefined;
   return {
-    title: seo?.title ?? `${product.name} — ShopUnity`,
+    title: seo?.title ?? `${product.name} — Bazaar`,
     description: seo?.meta_description,
     alternates: {
       canonical: `${base}/${locale}/products/${slug}`,
@@ -94,13 +94,13 @@ export default async function ProductDetailPage({ params }: Props) {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <Script id="product-jsonld" type="application/ld+json">{JSON.stringify(jsonLd)}</Script>
       {/* Breadcrumb */}
-      <nav className="flex items-center gap-1 text-xs text-gray-400 mb-6">
-        <Link href={`/${locale}`} className="hover:text-orange-500 transition-colors">
-          Home
+      <nav className="flex items-center gap-1 text-xs text-gray-600 dark:text-gray-400 mb-6">
+        <Link href={`/${locale}`} className="hover:text-orange-700 dark:text-orange-300 transition-colors">
+          {locale === "ar" ? "الرئيسية" : locale === "ur" ? "ہوم" : "Home"}
         </Link>
         <ChevronRight size={12} />
-        <Link href={`/${locale}/products`} className="hover:text-orange-500 transition-colors">
-          Products
+        <Link href={`/${locale}/products`} className="hover:text-orange-700 dark:text-orange-300 transition-colors">
+          {locale === "ar" ? "المنتجات" : locale === "ur" ? "مصنوعات" : "Products"}
         </Link>
         <ChevronRight size={12} />
         <span className="text-gray-600 dark:text-gray-300 truncate max-w-xs">
@@ -113,11 +113,11 @@ export default async function ProductDetailPage({ params }: Props) {
         <ProductGallery images={product.images} name={product.name} />
 
         {/* Info */}
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-5 border rounded-2xl p-5 h-fit md:sticky md:top-28">
           {/* Seller */}
           <Link
             href={`/${locale}/sellers/${product.seller.slug}`}
-            className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-orange-500 transition-colors w-fit"
+            className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-600 dark:text-gray-400 hover:text-orange-700 dark:text-orange-300 transition-colors w-fit"
           >
             <Store size={14} />
             {product.seller.display_name}
@@ -140,7 +140,7 @@ export default async function ProductDetailPage({ params }: Props) {
             <span
               className={`inline-flex items-center gap-1.5 text-sm font-medium ${
                 product.stock_qty > 0
-                  ? "text-green-600 dark:text-green-400"
+                  ? "text-green-700 dark:text-green-400"
                   : "text-red-500"
               }`}
             >
@@ -150,36 +150,27 @@ export default async function ProductDetailPage({ params }: Props) {
                 }`}
               />
               {product.stock_qty > 0
-                ? `${t("in_stock")} (${product.stock_qty} available)`
+                ? t("in_stock")
                 : t("out_of_stock")}
             </span>
           </div>
 
           {/* B2B badge */}
-          {product.is_b2b_eligible && (
+          {!!apiProduct.b2b_tiers?.length && (
             <span className="inline-flex items-center gap-1 text-xs font-semibold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 px-3 py-1 rounded-full w-fit">
-              B2B Wholesale Available
+              {locale === "ar" ? "متاح للجملة" : locale === "ur" ? "تھوک دستیاب" : "Wholesale available"}
             </span>
           )}
 
+          {!!apiProduct.b2b_tiers?.length && <section><h2 className="font-semibold">{locale === "ar" ? "أسعار الجملة" : locale === "ur" ? "تھوک قیمتیں" : "Wholesale prices"}</h2><p className="text-sm my-2">{locale === "en" ? "Request a quote to confirm wholesale terms. Cart uses retail pricing." : locale === "ar" ? "اطلب عرض سعر لتأكيد شروط الجملة. السلة تستخدم سعر التجزئة." : "تھوک شرائط کے لیے نرخ طلب کریں۔ ٹوکری میں پرچون قیمت ہے۔"}</p><table className="w-full text-start text-sm"><thead><tr><th scope="col">{locale === "en" ? "Quantity" : locale === "ar" ? "الكمية" : "مقدار"}</th><th scope="col">PKR</th></tr></thead><tbody>{apiProduct.b2b_tiers.map(tier => <tr key={tier.id}><td className="py-2">{tier.min_qty}–{tier.max_qty ?? "∞"}</td><td>{tier.price_per_unit.toLocaleString("en-PK")}</td></tr>)}</tbody></table><Link className="inline-block underline py-3" href={`/${locale}/rfq/new`}>{locale === "en" ? "Request quote" : locale === "ar" ? "طلب عرض سعر" : "نرخ طلب کریں"}</Link></section>}
           {/* Add to cart */}
           <AddToCartButton product={product} />
-
-          {/* Wishlist */}
-          <button className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-red-500 transition-colors w-fit">
-            <Heart size={16} />
-            {t("add_to_wishlist")}
-          </button>
-
-          {/* SKU */}
-          <p className="text-xs text-gray-400 dark:text-gray-600">
-            {t("sku")}: {product.id.slice(0, 8).toUpperCase()}
-          </p>
 
           <ProductQr productId={apiProduct.id} />
         </div>
       </div>
 
+      {(apiProduct.description || apiProduct.attributes) && <section className="border-t mt-10 pt-8"><h2 className="text-xl font-bold mb-4">{locale === "en" ? "Product details" : locale === "ar" ? "تفاصيل المنتج" : "مصنوعہ کی تفصیلات"}</h2><p className="whitespace-pre-wrap">{apiProduct.description}</p><dl className="mt-4 grid sm:grid-cols-2 gap-3">{Object.entries(apiProduct.attributes ?? {}).map(([key,value]) => <div key={key} className="border-b py-2"><dt className="font-semibold">{key}</dt><dd>{String(value)}</dd></div>)}</dl></section>}
       <ProductViewTracker productId={apiProduct.id} />
       {/* Reviews */}
       <ProductReviews productId={apiProduct.id} />

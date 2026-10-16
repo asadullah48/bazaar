@@ -209,6 +209,16 @@ class PublicProductSeller(BaseModel):
     slug: str
 
 
+class PublicProductVariant(BaseModel):
+    id: uuid.UUID
+    sku_code: Optional[str] = None
+    price: float
+    stock_qty: int
+    is_active: bool
+
+    model_config = {"from_attributes": True}
+
+
 class PublicProduct(BaseModel):
     id: uuid.UUID
     name: str
@@ -222,6 +232,10 @@ class PublicProduct(BaseModel):
     images: List[PublicProductImage]
     seller: PublicProductSeller
     seo_data: Optional[Dict] = None
+    description: Optional[str] = None
+    attributes: Optional[Dict] = None
+    variants: List[PublicProductVariant] = []
+    b2b_tiers: List[B2BTierResponse] = []
 
 
 class PublicProductList(BaseModel):

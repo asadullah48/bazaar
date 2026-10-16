@@ -2,7 +2,8 @@ import { notFound } from "next/navigation";
 import { Star, MapPin, Package } from "lucide-react";
 import { Suspense } from "react";
 import { sellersApi, ApiError } from "@/lib/api";
-import { catalogItemToProduct } from "@/lib/catalog-item-to-product";
+import { productsApi, ApiProduct } from "@/lib/api";
+import { toProduct } from "@/lib/to-product";
 import { ProductCard } from "@/components/product/product-card";
 import { ProductGridSkeleton } from "@/components/product/product-grid-skeleton";
 
@@ -15,12 +16,10 @@ async function SellerProducts({
   slug,
   locale,
   page,
-  storeName,
 }: {
   slug: string;
   locale: string;
   page: number;
-  storeName: string;
 }) {
   let data;
   try {
@@ -33,10 +32,8 @@ async function SellerProducts({
     );
   }
 
-  const seller = { id: "", display_name: storeName, slug };
-  const products = data.products.items.map((item) =>
-    catalogItemToProduct(item, seller)
-  );
+  const loaded = await Promise.all(data.products.items.filter(i => i.slug).map(i => productsApi.get(i.slug).catch(() => null)));
+  const products = loaded.filter((p): p is ApiProduct => p !== null).map(toProduct);
 
   return (
     <div className="space-y-8">
@@ -128,7 +125,6 @@ export default async function SellerStorefrontPage({ params, searchParams }: Pro
           slug={slug}
           locale={locale}
           page={page}
-          storeName={data.store_name}
         />
       </Suspense>
     </div>

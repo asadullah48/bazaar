@@ -9,6 +9,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.database import get_db
 from app.models.catalog import Product, ProductB2BTier, ProductImage, ProductVariant
 from app.models.user import SellerProfile
+from app.models.review import Review
 from app.schemas.product import (
     B2BTierResponse,
     CatalogListItem,
@@ -17,6 +18,7 @@ from app.schemas.product import (
     PublicProduct,
     PublicProductImage,
     PublicProductSeller,
+    PublicProductVariant,
     SellerStorefrontResponse,
     VariantResponse,
 )
@@ -159,6 +161,11 @@ async def get_product(slug: str, db: AsyncSession = Depends(get_db)):
     )
     sp = sp_result.scalar_one_or_none()
 
+    review_stats = (await db.execute(select(func.avg(Review.rating), func.count(Review.id)).where(
+        Review.product_id == product.id, Review.is_visible == True,
+    ))).one()
+    tiers = (await db.execute(select(ProductB2BTier).where(ProductB2BTier.product_id == product.id).order_by(ProductB2BTier.min_qty))).scalars().all()
+
     return PublicProduct(
         id=product.id,
         name=product.title,
@@ -166,8 +173,8 @@ async def get_product(slug: str, db: AsyncSession = Depends(get_db)):
         price=price,
         compare_price=None,
         stock_qty=stock_qty,
-        avg_rating=float(sp.total_rating) / sp.review_count if sp and sp.review_count else None,
-        review_count=sp.review_count if sp else 0,
+        avg_rating=float(review_stats[0]) if review_stats[0] is not None else None,
+        review_count=review_stats[1],
         is_b2b_eligible=product.is_b2b_eligible,
         images=[
             PublicProductImage(
@@ -184,6 +191,10 @@ async def get_product(slug: str, db: AsyncSession = Depends(get_db)):
             slug=sp.store_slug if sp else "",
         ),
         seo_data=product.seo_data,
+        description=product.description,
+        attributes=product.attributes,
+        variants=[PublicProductVariant.model_validate(v) for v in variants],
+        b2b_tiers=[B2BTierResponse.model_validate(t) for t in tiers],
     )
 
 

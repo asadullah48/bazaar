@@ -1,0 +1,217 @@
+{
+  "captures": 20,
+  "records": [
+    {
+      "locale": "en",
+      "width": 1440,
+      "page": "home",
+      "status": 200
+    },
+    {
+      "locale": "en",
+      "width": 1440,
+      "page": "home",
+      "url": "http://localhost:3007/en",
+      "overflow": false
+    },
+    {
+      "locale": "en",
+      "width": 1440,
+      "page": "search",
+      "status": 200
+    },
+    {
+      "locale": "en",
+      "width": 1440,
+      "page": "search",
+      "url": "http://localhost:3007/en/search?q=cotton",
+      "overflow": false
+    },
+    {
+      "locale": "en",
+      "width": 1440,
+      "page": "product",
+      "status": 200
+    },
+    {
+      "locale": "en",
+      "width": 1440,
+      "page": "product",
+      "url": "http://localhost:3007/en/products/demo-cotton",
+      "overflow": false
+    },
+    {
+      "locale": "en",
+      "width": 1440,
+      "page": "cart",
+      "url": "http://localhost:3007/en/products/demo-cotton",
+      "overflow": false
+    },
+    {
+      "locale": "en",
+      "width": 1440,
+      "page": "checkout",
+      "url": "http://localhost:3007/en/checkout",
+      "overflow": false
+    },
+    {
+      "locale": "en",
+      "width": 390,
+      "page": "home",
+      "status": 200
+    },
+    {
+      "locale": "en",
+      "width": 390,
+      "page": "home",
+      "url": "http://localhost:3007/en",
+      "overflow": true
+    },
+    {
+      "locale": "en",
+      "width": 390,
+      "page": "search",
+      "status": 200
+    },
+    {
+      "locale": "en",
+      "width": 390,
+      "page": "search",
+      "url": "http://localhost:3007/en/search?q=cotton",
+      "overflow": true
+    },
+    {
+      "locale": "en",
+      "width": 390,
+      "page": "product",
+      "status": 200
+    },
+    {
+      "locale": "en",
+      "width": 390,
+      "page": "product",
+      "url": "http://localhost:3007/en/products/demo-cotton",
+      "overflow": true
+    },
+    {
+      "locale": "en",
+      "width": 390,
+      "page": "cart",
+      "url": "http://localhost:3007/en/products/demo-cotton",
+      "overflow": true
+    },
+    {
+      "locale": "en",
+      "width": 390,
+      "page": "checkout",
+      "url": "http://localhost:3007/en/checkout",
+      "overflow": true
+    },
+    {
+      "locale": "ar",
+      "width": 1440,
+      "page": "home",
+      "status": 200
+    },
+    {
+      "locale": "ar",
+      "width": 1440,
+      "page": "home",
+      "url": "http://localhost:3007/ar",
+      "overflow": false
+    },
+    {
+      "locale": "ar",
+      "width": 1440,
+      "page": "search",
+      "status": 200
+    },
+    {
+      "locale": "ar",
+      "width": 1440,
+      "page": "search",
+      "url": "http://localhost:3007/ar/search?q=cotton",
+      "overflow": false
+    },
+    {
+      "locale": "ar",
+      "width": 1440,
+      "page": "product",
+      "status": 200
+    },
+    {
+      "locale": "ar",
+      "width": 1440,
+      "page": "product",
+      "url": "http://localhost:3007/ar/products/demo-cotton",
+      "overflow": false
+    },
+    {
+      "locale": "ar",
+      "width": 1440,
+      "page": "cart",
+      "url": "http://localhost:3007/ar/products/demo-cotton",
+      "overflow": false
+    },
+    {
+      "locale": "ar",
+      "width": 1440,
+      "page": "checkout",
+      "url": "http://localhost:3007/ar/checkout",
+      "overflow": false
+    },
+    {
+      "locale": "ar",
+      "width": 390,
+      "page": "home",
+      "status": 200
+    },
+    {
+      "locale": "ar",
+      "width": 390,
+      "page": "home",
+      "url": "http://localhost:3007/ar",
+      "overflow": true
+    },
+    {
+      "locale": "ar",
+      "width": 390,
+      "page": "search",
+      "status": 200
+    },
+    {
+      "locale": "ar",
+      "width": 390,
+      "page": "search",
+      "url": "http://localhost:3007/ar/search?q=cotton",
+      "overflow": true
+    },
+    {
+      "locale": "ar",
+      "width": 390,
+      "page": "product",
+      "status": 200
+    },
+    {
+      "locale": "ar",
+      "width": 390,
+      "page": "product",
+      "url": "http://localhost:3007/ar/products/demo-cotton",
+      "overflow": true
+    },
+    {
+      "locale": "ar",
+      "width": 390,
+      "page": "cart",
+      "url": "http://localhost:3007/ar/products/demo-cotton",
+      "overflow": true
+    },
+    {
+      "locale": "ar",
+      "width": 390,
+      "page": "checkout",
+      "url": "http://localhost:3007/ar/checkout",
+      "overflow": true
+    }
+  ]
+}

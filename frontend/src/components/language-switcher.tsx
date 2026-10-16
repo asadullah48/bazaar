@@ -23,7 +23,7 @@ export function LanguageSwitcher() {
     segments[1] = nextLocale;
     const newPath = segments.join("/") || "/";
     startTransition(() => {
-      router.push(newPath);
+      router.push(newPath + window.location.search);
     });
   }
 
@@ -35,10 +35,11 @@ export function LanguageSwitcher() {
           onClick={() => switchLocale(loc.code)}
           disabled={isPending}
           title={loc.nativeLabel}
+          aria-pressed={locale === loc.code}
           className={clsx(
             "px-2 py-1 rounded-md text-sm font-medium transition-colors",
             locale === loc.code
-              ? "bg-orange-500 text-white"
+              ? "bg-orange-700 text-white"
               : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
           )}
         >

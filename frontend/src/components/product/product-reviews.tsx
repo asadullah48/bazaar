@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import { useLocale } from "next-intl";
 import { Star } from "lucide-react";
 import { reviewsApi, PaginatedReviews, ReviewResponse } from "@/lib/api";
 import { useAuthStore } from "@/store/auth-store";
@@ -19,6 +20,8 @@ function StarPicker({
         <button
           key={i}
           type="button"
+          aria-label={`Rating ${i}`}
+          aria-pressed={value === i}
           onClick={() => onChange(i)}
           onMouseEnter={() => setHover(i)}
           onMouseLeave={() => setHover(0)}
@@ -43,6 +46,8 @@ interface Props {
 }
 
 export function ProductReviews({ productId }: Props) {
+  const locale = useLocale();
+  const text = (en:string, ar:string, ur:string) => locale === "ar" ? ar : locale === "ur" ? ur : en;
   const { accessToken, isAuthenticated } = useAuthStore();
   const [data, setData] = useState<PaginatedReviews | null>(null);
   const [page, setPage] = useState(1);
@@ -116,15 +121,10 @@ export function ProductReviews({ productId }: Props) {
     }
   }
 
-  const avg =
-    data && data.items.length > 0
-      ? data.items.reduce((s, r) => s + r.rating, 0) / data.items.length
-      : null;
-
   return (
     <section className="mt-12">
       <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-6">
-        Customer Reviews
+        {text("Customer reviews", "آراء العملاء", "خریداروں کی آراء")}
         {data && data.total > 0 && (
           <span className="text-sm font-normal text-gray-500 ms-2">
             ({data.total})
@@ -132,16 +132,9 @@ export function ProductReviews({ productId }: Props) {
         )}
       </h2>
 
-      {avg !== null && (
-        <div className="flex items-center gap-3 mb-6">
-          <Rating value={avg} size={20} />
-          <span className="text-sm text-gray-500">{avg.toFixed(1)} out of 5</span>
-        </div>
-      )}
-
       {/* Write review form */}
       {isAuthenticated() && !submitted && (
-        <form
+        <details><summary className="cursor-pointer py-3 font-semibold">{text("Write a review", "اكتب مراجعة", "اپنی رائے لکھیں")}</summary><form
           onSubmit={handleSubmit}
           className="mb-8 bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-2xl p-5 space-y-4"
         >
@@ -150,10 +143,11 @@ export function ProductReviews({ productId }: Props) {
           </h3>
 
           <div>
-            <label className="block text-sm text-gray-600 dark:text-gray-400 mb-1">
+            <label className="block text-sm text-gray-600 dark:text-gray-600 dark:text-gray-400 mb-1">
               Order ID
             </label>
             <input
+              aria-label="Order ID"
               value={orderId}
               onChange={(e) => setOrderId(e.target.value)}
               placeholder="Paste your Order UUID from My Orders"
@@ -162,17 +156,18 @@ export function ProductReviews({ productId }: Props) {
           </div>
 
           <div>
-            <label className="block text-sm text-gray-600 dark:text-gray-400 mb-1">
+            <label className="block text-sm text-gray-600 dark:text-gray-600 dark:text-gray-400 mb-1">
               Rating
             </label>
             <StarPicker value={rating} onChange={setRating} />
           </div>
 
           <div>
-            <label className="block text-sm text-gray-600 dark:text-gray-400 mb-1">
+            <label className="block text-sm text-gray-600 dark:text-gray-600 dark:text-gray-400 mb-1">
               Title (optional)
             </label>
             <input
+              aria-label="Review title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Summarise your experience"
@@ -181,17 +176,18 @@ export function ProductReviews({ productId }: Props) {
           </div>
 
           <div>
-            <label className="block text-sm text-gray-600 dark:text-gray-400 mb-1">
+            <label className="block text-sm text-gray-600 dark:text-gray-600 dark:text-gray-400 mb-1">
               Review <span className="text-xs">(min 20 chars)</span>
             </label>
             <textarea
+              aria-label="Review text"
               value={body}
               onChange={(e) => setBody(e.target.value)}
               rows={4}
               placeholder="Share your honest experience with this product…"
               className="w-full px-3 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-orange-400 resize-none"
             />
-            <p className="text-xs text-gray-400 mt-0.5 text-end">
+            <p className="text-xs text-gray-600 dark:text-gray-400 mt-0.5 text-end">
               {body.length}/20 min
             </p>
           </div>
@@ -203,11 +199,11 @@ export function ProductReviews({ productId }: Props) {
           <button
             type="submit"
             disabled={submitting}
-            className="px-5 py-2 rounded-xl bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold disabled:opacity-50 transition-colors"
+            className="px-5 py-2 rounded-xl bg-orange-700 hover:bg-orange-600 text-white text-sm font-semibold disabled:opacity-50 transition-colors"
           >
             {submitting ? "Submitting…" : "Submit Review"}
           </button>
-        </form>
+        </form></details>
       )}
 
       {submitted && (
@@ -218,9 +214,9 @@ export function ProductReviews({ productId }: Props) {
 
       {/* Review list */}
       {loading ? (
-        <p className="text-gray-400 text-sm">Loading reviews…</p>
+        <p className="text-gray-600 dark:text-gray-400 text-sm">{text("Loading reviews…", "جارٍ تحميل الآراء…", "آراء لوڈ ہو رہی ہیں…")}</p>
       ) : !data || data.items.length === 0 ? (
-        <p className="text-gray-400 text-sm">No reviews yet. Be the first!</p>
+        <p className="text-gray-600 dark:text-gray-400 text-sm">{text("No reviews yet.", "لا توجد آراء بعد.", "ابھی کوئی رائے نہیں۔")}</p>
       ) : (
         <div className="space-y-4">
           {data.items.map((r) => (
@@ -257,7 +253,7 @@ function ReviewCard({ review }: { review: ReviewResponse }) {
   return (
     <div className="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-2xl p-5">
       <div className="flex items-center gap-2 mb-2">
-        <Rating value={review.rating} size={14} />
+        <Rating value={review.rating} size={14} verifiedReview />
         {review.title && (
           <span className="font-semibold text-sm text-gray-900 dark:text-white">
             {review.title}
@@ -267,7 +263,7 @@ function ReviewCard({ review }: { review: ReviewResponse }) {
       {review.body && (
         <p className="text-sm text-gray-700 dark:text-gray-300">{review.body}</p>
       )}
-      <p className="text-xs text-gray-400 mt-2">
+      <p className="text-xs text-gray-600 dark:text-gray-400 mt-2">
         {new Date(review.created_at).toLocaleDateString()}
       </p>
     </div>

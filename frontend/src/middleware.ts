@@ -4,11 +4,11 @@ import { routing } from "./i18n/routing";
 
 const intlMiddleware = createMiddleware(routing);
 
-const PROTECTED = ["/checkout", "/orders", "/account", "/seller", "/admin"];
+const PROTECTED = ["/orders", "/account", "/seller", "/admin"];
 
 export default function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
-  const pathWithoutLocale = pathname.replace(/^\/(en|ar)/, "");
+  const pathWithoutLocale = pathname.replace(/^\/(en|ar|ur)(?=\/|$)/, "");
 
   if (PROTECTED.some((p) => pathWithoutLocale.startsWith(p))) {
     const raw = req.cookies.get("bazaar-auth")?.value;
