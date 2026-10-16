@@ -55,6 +55,31 @@ Raw output (machine-specific filesystem roots redacted): [frontend before](front
 
 The initial workspace build was blocked by external font DNS and an apostrophe-path metadata-loader defect. Both final builds used separate source copies without that path problem. Baseline backend assertions were unchanged; only isolated database connection details were adjusted. Current tests support an explicit test-only database override.
 
+## Known vulnerabilities
+
+`npm audit --json` on the pushed branch's original lockfile reported **12 vulnerable package entries: 1 critical, 9 high and 2 moderate**. These are package entries, including inherited dependency findings, not twelve independent exploits. [Raw before audit](storefront/npm-audit-before.json).
+
+| Package | Severity | Relationship reported by audit | Available fix and decision |
+|---|---|---|---|
+| `@next/eslint-plugin-next` | High | Transitive | Inherits `glob`; npm proposes eslint-config-next 16.4.2 (major). Instead, scoped override updates its glob to 10.5.0 without changing plugin/Next major. |
+| `braces` | High | Transitive | Latest published 3.0.3 remains affected. npm proposes Tailwind 4.3.3 (major) to leave the dependency chain; unchanged. |
+| `chokidar` | High | Transitive | Inherits `braces`; npm proposes Tailwind 4.3.3 (major); unchanged. |
+| `eslint-config-next` | High | Direct | Inherits plugin/glob finding; same scoped glob fix, keeping eslint-config-next 14.2.35. |
+| `fast-glob` | High | Transitive | Inherits micromatch/braces; npm proposes Tailwind 4.3.3 (major); unchanged. |
+| `glob` | High | Transitive | Compatible minor fix 10.3.10 → 10.5.0, scoped to @next/eslint-plugin-next. |
+| `micromatch` | High | Transitive | Inherits `braces`; npm proposes Tailwind 4.3.3 (major); unchanged. |
+| `next` | Critical | Direct | npm proposes Next 16.4.2 (major); unchanged at 14.2.35. No published 14.2 release beyond 14.2.35 was returned by the registry query. Removing the nested PostCSS finding does not fix Next's own advisories. |
+| `postcss` | High | Transitive vulnerable instance | Next's nested 8.4.31 is affected; scoped compatible minor override to 8.5.30. The separately declared direct PostCSS instance was already 8.5.30 and was not the vulnerable node. |
+| `postcss-nested` | Moderate | Transitive | Inherits selector-parser finding; npm proposes Tailwind 4.3.3 (major); unchanged. |
+| `postcss-selector-parser` | Moderate | Transitive | Fixed range starts at 7.1.6, a major change from installed 6.1.4. Latest published 6.x returned was 6.1.4; unchanged. |
+| `tailwindcss` | High | Direct | Inherits braces and selector-parser chains; npm proposes 4.3.3 (major). Latest published 3.x returned was 3.4.19; unchanged. |
+
+The two overrides are restricted to their affected parents and retain each dependency's major version. No `npm audit fix --force` or major upgrade was used. The [glob advisory](https://github.com/advisories/GHSA-5j98-mcp5-4vw2) identifies 10.5.0 as patched. Audit JSON includes every advisory URL and range, including [PostCSS source-map disclosure](https://github.com/advisories/GHSA-fxqj-rqcc-2cmp), [braces exhaustion](https://github.com/advisories/GHSA-vfj7-8cjw-p6xm), and [selector parsing exhaustion](https://github.com/advisories/GHSA-rj75-hqrm-r3gf).
+
+Next's own critical/high advisories remain unresolved under the requested 14.2.x constraint. This work does not establish exploitability or safety of a deployment. Major upgrades and security exploit testing were not performed. See the after audit and fresh-clone validation evidence below for measured results.
+
+After the compatible fixes, `npm audit --json` reports **8 entries: 1 critical, 5 high and 2 moderate**, and exits **1** because findings remain. [Raw after audit](storefront/npm-audit-after.json). The removed entries are `glob`, `@next/eslint-plugin-next`, `eslint-config-next` and `postcss`. The remaining entries are `next`, `braces`, `chokidar`, `fast-glob`, `micromatch`, `postcss-nested`, `postcss-selector-parser` and `tailwindcss`. Lockfile inspection confirms glob 10.5.0 and a deduplicated PostCSS 8.5.30, with Next and eslint-config-next both still 14.2.35.
+
 ## Mobile Lighthouse — Next.js 14 before and after
 
 One sequential run per page/locale, at 390px mobile emulation, with the same browser and Lighthouse settings. These earlier source-copy measurements precede the regenerated lockfile; they are not fresh-clone Lighthouse measurements. These are local, clearly labelled demo-fixture measurements, not production traffic benchmarks.

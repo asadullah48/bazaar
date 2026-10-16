@@ -1,5 +1,5 @@
 {
-  "filesChecked": 72,
+  "filesChecked": 74,
   "screenshotsChecked": 40,
   "metadataChunksRemoved": 0,
   "redactedFiles": 0,
@@ -71,6 +71,8 @@
     "docs/storefront/lighthouse-before-summary.json",
     "docs/storefront/lighthouse-before.txt",
     "docs/storefront/mobile-metrics.json",
+    "docs/storefront/npm-audit-after.json",
+    "docs/storefront/npm-audit-before.json",
     "docs/storefront/playwright-after.json",
     "docs/storefront/playwright-after.txt",
     "docs/storefront/screenshot-inventory.txt",
