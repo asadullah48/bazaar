@@ -17,14 +17,29 @@ This draft is UI/UX and bug fixes on **Next.js 14.2.35**. The framework upgrade 
 
 ## Exact build and test results
 
+### Authoritative fresh-clone validation
+
+Validated the **pushed** commit `316131d825ed7af9e87db8ff4e4130ddcbc21dcb` from a new clone outside the apostrophe path, with no source edits or reused `node_modules`/build cache. Platform: Windows, Node v24.19.0, npm 12.2.0. This is not a Linux validation claim.
+
+Command, from `frontend/`: `npm ci && npm run build && npx playwright test`.
+
+- `npm ci`: `added 523 packages, and audited 524 packages in 3m`; succeeded. Reported `12 vulnerabilities (2 moderate, 9 high, 1 critical)`, deprecation warnings and blocked install-script warnings.
+- `npm run build`: succeeded on **Next.js 14.2.35**, with 7 lint warnings. Webpack emitted cache-dependency parsing warnings; the browser server emitted standalone-start and metadataBase warnings. Exact output is retained.
+- `npx playwright test`: **`10 passed (24.2s)`**.
+- Overall command exit code: **0**.
+
+[Exact fresh-clone command output](storefront/fresh-clone-validation.txt). Refreshed after screenshots and Playwright JSON come from this run. Subsequent evidence-only commits do not change the validated source or lockfile. The missing SWC helper lock entry was regenerated from package.json, the unused seller-page `storeName` was removed, and the original TypeScript configuration was restored.
+
+The earlier successful build was performed in a separate source copy and did **not** establish that pushed commit `91e2114` built. That revision had the lockfile mismatch and unused-variable error reported by review. The new fresh-clone result supersedes that earlier claim.
+
 **The backend suite is not passing.** The same four pre-existing failures occur before and after.
 
 | Check | Before | After |
 |---|---|---|
-| Frontend production build | Next.js 14.2.35, completed, 7 lint warnings | Next.js 14.2.35, exit 0, 7 lint warnings |
+| Frontend production build | Next.js 14.2.35 source copy, completed, 7 lint warnings | Pushed commit 316131d fresh clone: Next.js 14.2.35, exit 0, 7 lint warnings |
 | Existing backend suite | 87 passed, 4 failed, 336 warnings in 675.23s | 87 passed, 4 failed, 336 warnings in 679.37s |
 | Added backend regressions (separate run) | Not present | 4 passed, 5 warnings in 11.11s |
-| Playwright | No frontend test script in baseline | 10 passed, 0 failed — 21.3s |
+| Playwright | No frontend test script in baseline | Fresh clone: 10 passed — 24.2s |
 | TypeScript | Not separately run | `npm run typecheck`, exit 0 |
 
 The current backend collects **95 tests** (0.48s); the original suite and new regressions were executed separately. Do not read this as a claim that the whole backend passed.
@@ -42,7 +57,7 @@ The initial workspace build was blocked by external font DNS and an apostrophe-p
 
 ## Mobile Lighthouse — Next.js 14 before and after
 
-One final sequential run per page/locale, at 390px mobile emulation, with the same browser and Lighthouse settings. Builds and regression tests were finished first. These are local, clearly labelled demo-fixture measurements, not production traffic benchmarks.
+One sequential run per page/locale, at 390px mobile emulation, with the same browser and Lighthouse settings. These earlier source-copy measurements precede the regenerated lockfile; they are not fresh-clone Lighthouse measurements. These are local, clearly labelled demo-fixture measurements, not production traffic benchmarks.
 
 | Page | Performance before → after | Accessibility before → after | CLS before → after |
 |---|---|---|---|
@@ -100,11 +115,13 @@ The existing backend failures remain open. Catalog cards currently use bounded d
 
 Use a checkout path without an apostrophe on Windows. Install the locked frontend dependencies. Audit scripts require a Node version supported by the locked Lighthouse package.
 
+For the clean validation above, use `npm ci && npm run build && npx playwright test` from `frontend/`. Playwright starts the DEMO API on port 8000 and the production app on port 3000 automatically; both ports must be free. On a machine without the Playwright Chromium browser, install it first with `npx playwright install chromium`. The following separate-port procedure reproduces the original source-copy audit:
+
 1. Start the fixture API from `frontend/`: set `DEMO_API_PORT=18000`, then run `node scripts/demo-api.cjs`. All fixture products/sellers are labelled DEMO.
 2. Build the changed app with `NEXT_PUBLIC_API_URL=http://127.0.0.1:18000` and `npm run build`. Copy `public` and `.next/static` into the corresponding standalone directories. Run `.next/standalone/server.js` with `PORT=3005` and loopback `HOSTNAME`.
 3. Set `STOREFRONT_URL=http://localhost:3005` and run `npm run test:e2e`.
 4. Serve the original baseline on a separate port. Set `BASELINE_URL` and run `node scripts/capture-before.cjs`. Run `node scripts/lighthouse.mjs before BASELINE_PORT`, then `node scripts/lighthouse.mjs after 3005`.
-5. Run `node scripts/screenshot-inventory.mjs`, then `node scripts/sanitize-evidence.mjs`. The hygiene report checks all published evidence text and screenshot metadata. PNG text/EXIF metadata is stripped when present; path redaction preserves counts, durations and errors. The final check covered 71 evidence files and 40 screenshots, with zero remaining machine-specific path matches. No PNG text/EXIF chunks were present.
+5. Run `node scripts/screenshot-inventory.mjs`, then `node scripts/sanitize-evidence.mjs`. The hygiene report checks all published evidence text and screenshot metadata. PNG text/EXIF metadata is stripped when present; path redaction preserves counts, durations and errors. The final check covered 72 evidence files and 40 screenshots, with zero remaining machine-specific path matches. No PNG text/EXIF chunks were present.
 
 ## Portfolio card changes needed — proposal only
 

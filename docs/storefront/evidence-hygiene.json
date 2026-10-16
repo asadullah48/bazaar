@@ -1,5 +1,5 @@
 {
-  "filesChecked": 71,
+  "filesChecked": 72,
   "screenshotsChecked": 40,
   "metadataChunksRemoved": 0,
   "redactedFiles": 0,
@@ -57,6 +57,7 @@
     "docs/storefront/before/en-390-home.png",
     "docs/storefront/before/en-390-product.png",
     "docs/storefront/before/en-390-search.png",
+    "docs/storefront/fresh-clone-validation.txt",
     "docs/storefront/lighthouse-after-ar-home.json",
     "docs/storefront/lighthouse-after-ar-search.json",
     "docs/storefront/lighthouse-after-en-home.json",
